@@ -1,3 +1,4 @@
+import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../config/api";
 import "../common/css/bootstrap.min.css";
@@ -40,9 +41,19 @@ const User = () => {
         setName(user.user_name)
         setEmail(user.user_email)
     }
-    
-    
-    
+     
+  }
+
+ 
+  function setResponse(res:any){
+
+    setUsers(res.data.items)
+    setPages(res.data.meta.totalPages)
+
+  }
+
+  const handleChange = (e:any,currentPage:any) => {
+    setPage(currentPage)
   }
 
   const [userEdit, setUserEdit] = useState({});
@@ -50,12 +61,18 @@ const User = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [users, setUsers] = useState<any[]>([]);
+  const [pages,setPages] = useState(0)
+  const [page,setPage] = useState(1)
 
-  const getUser = async () => {
-    await api.get("/user").then((response) => setUsers(response.data));
+  const getUser = async (page:number = 1) => {
+
+    await api.get(`/user?page=${page}&limit=6`).then((response) => {
+      setResponse(response)
+    });
   };
+  
+
 
   useEffect(() => {
     getUser();
@@ -69,6 +86,11 @@ const User = () => {
   useEffect(()=>{
     setUserToEdit(userEdit)
   },[userEdit])
+
+  useEffect(()=>{
+    getUser(page);
+  },[page])
+
 
   return (
     <>
@@ -144,6 +166,10 @@ const User = () => {
             ))}
         </tbody>
       </table>
+
+    <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+      
+
     </>
   );
 };
