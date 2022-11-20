@@ -6,6 +6,7 @@ import { AiOutlineInbox } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react'
+import './sidebar.css'
 
 
 const routes = [
@@ -83,11 +84,7 @@ const Sidebar = ({ children }:any) => {
 
                 <div className="top_section">
 
-                    {/* {isopen && <motion.h1 variants={showAnimation} 
-                                initial="hidden"
-                                animate="show"
-                                exit="hidden" className='logo'>Thunnar</motion.h1>} */}
-
+                   
                     {isopen && <motion.img  src={require('../common/assets/logo.png')} className="logo"></motion.img>}
 
                     <div className="bars">

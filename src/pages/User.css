@@ -33,4 +33,44 @@ td{
 
 h1{
     text-align: center;
+   
+}
+
+.btn-user-edit{
+    
+    width: 100%;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+td{
+    text-align: center;
+}
+
+.my-table{
+    border-radius: 15px;
+    margin-top: 80px;
+}
+
+
+
+.btn-actions input{
+    margin-left: 10px;
+}
+
+.links{
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.newUser{
+    position: absolute;
+    right: 0;
+    margin-bottom: 10px;
+}
+
+.btn-delete{
+    margin-left: 10px;
 }
