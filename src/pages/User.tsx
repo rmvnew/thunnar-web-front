@@ -23,10 +23,19 @@ const User = () => {
   const [users, setUsers] = useState<any[]>([])
   const [pages, setPages] = useState(0)
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState("")
 
   const getUser = async (page: number = 1) => {
 
     await api.get(`/user?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
+      setResponse(response)
+    });
+  };
+  
+  
+  const getUserByName = async (page: number = 1,name:string = "") => {
+
+    await api.get(`/user?page=${page}&limit=8&sort=DESC&orderBy=ID&user_name=${name}`).then((response) => {
       setResponse(response)
     });
   };
@@ -46,6 +55,10 @@ const User = () => {
   }
 
 
+  useEffect(()=>{
+    getUserByName(page,search)
+  },[search])
+
   useEffect(() => {
     getUser();
   }, []);
@@ -62,9 +75,21 @@ const User = () => {
       <h1>Gerenciamento de usuários</h1>
 
 
+
+
       <section className="links">
         <NavLink to={"/user/form"} className="btn btn-primary newUser">Novo usuário</NavLink>
       </section>
+
+   
+
+      <input
+        className="form-control form-control-lg search"
+        type="text"
+        placeholder="Busca de usuários"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
       <table className="my-table table table-striped">
         <thead>

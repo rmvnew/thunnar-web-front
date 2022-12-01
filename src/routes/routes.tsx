@@ -6,6 +6,7 @@ import User from '../pages/User';
 import Product from '../pages/Product';
 import Sidebar from '../components/Sidebar';
 import UserForm from '../pages/UserForm';
+import { RequireAuth } from '../contexts/auth/RequireAuth';
 
 
 const RouterElements = () => {
@@ -15,7 +16,7 @@ const RouterElements = () => {
             <Router>
                 <Sidebar>
                     <Routes>
-                        <Route path='/' element={<DashBoard />} />
+                        <Route path='/home' element={<RequireAuth><DashBoard /></RequireAuth>} />
                         <Route path='/user' element={<User />} />
                         <Route path='/user/form' element={<UserForm />} />
                         <Route path='/product' element={<Product />} />

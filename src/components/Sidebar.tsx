@@ -1,17 +1,20 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { FaHome, FaBars } from 'react-icons/fa'
-import { BiSearch } from 'react-icons/bi'
 import { AiOutlineInbox } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react'
+import { SlLogout } from "react-icons/sl";
+import { useContext, useState } from 'react'
 import './sidebar.css'
+import { AuthContext } from '../contexts/auth/AuthContext'
+
+
 
 
 const routes = [
     {
-        path: "/",
+        path: "/home",
         name: "Home",
         icon: <FaHome />
     },
@@ -27,7 +30,9 @@ const routes = [
     }
 ]
 
-const Sidebar = ({ children }:any) => {
+const Sidebar = ({ children }: any) => {
+
+    const auth = useContext(AuthContext)
 
     const [isopen, setIsOpen] = useState(false)
 
@@ -84,14 +89,15 @@ const Sidebar = ({ children }:any) => {
 
                 <div className="top_section">
 
-                   
-                    {isopen && <motion.img  src={require('../common/assets/logo.png')} className="logo"></motion.img>}
+
+                    {isopen && <motion.img src={require('../common/assets/logo.png')} className="logo"></motion.img>}
 
                     <div className="bars">
                         <FaBars onClick={toggle} />
                     </div>
                 </div>
-                <div className="search">
+
+                {/* <div className="search">
                     <div className="search_icon">
                         <BiSearch />
                     </div>
@@ -103,12 +109,14 @@ const Sidebar = ({ children }:any) => {
                             variants={inputAnimation}
                             placeholder='Search...' />)}
                     </AnimatePresence>
-                </div>
+                </div> */}
 
                 <section className='routes'>
                     {routes.map((route) => (
 
-                        <NavLink
+
+
+                         <NavLink
                             // activeClassName="active"
                             to={route.path} key={route.name} className="link">
                             <div className="icon">{route.icon}</div>
@@ -124,6 +132,21 @@ const Sidebar = ({ children }:any) => {
 
                     ))}
                 </section>
+
+                <div className="routes">
+                    {auth.user && <NavLink
+                        to={'/'} key={'Exit'} className="link">
+                        <div className="icon">{<SlLogout />}</div>
+                        <AnimatePresence>
+                            {isopen && (<motion.div
+                                variants={showAnimation}
+                                initial="hidden"
+                                animate="show"
+                                exit="hidden"
+                                className="link_text">{'Exit'}</motion.div>)}
+                        </AnimatePresence>
+                    </NavLink>}
+                </div>
             </motion.div>
             <main>
                 {children}

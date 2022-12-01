@@ -49,9 +49,13 @@ td{
 
 .my-table{
     border-radius: 15px;
-    margin-top: 80px;
+    margin-top: 10px;
 }
 
+
+.search{
+    margin-top: 80px;
+}
 
 
 .btn-actions input{
