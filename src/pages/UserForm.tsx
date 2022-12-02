@@ -1,11 +1,16 @@
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../hooks/useApi";
 import './UserForm.css'
 
 
 
+interface Profile {
+    id: number;
+    name: string;
+
+}
 
 const UserForm = () => {
 
@@ -19,18 +24,24 @@ const UserForm = () => {
 
 
     function createUser() {
-        if (name && email && password) {
+        if (name && email && password && cpf) {
             const user = {
                 name,
                 email,
                 password,
+                cpf,
+                options
             };
+
+            console.log('User: ',user);
 
             api
                 .post("/user", {
                     user_name: user.name,
                     user_email: user.email,
                     user_password: user.password,
+                    user_cpf: user.cpf,
+                    user_profile_id: user.options
                 })
                 .then((response) => {
                     navigate("/user")
@@ -82,8 +93,11 @@ const UserForm = () => {
         setEmail("");
         setPassword("");
         setIsUpdate(false)
+        setOptions("")
+        setCpf("")
 
     }
+
 
 
 
@@ -106,15 +120,42 @@ const UserForm = () => {
     const [userId, setUserId] = useState(0)
     const [password, setPassword] = useState("")
     const [isUpdate, setIsUpdate] = useState(false)
+    const [profile, setProfile] = useState<Profile[]>([])
+    const [options,setOptions] = useState("")
+    const [cpf,setCpf] = useState("")
+    
+    const getProfile = async () => {
+        await api.get('/profile')
+        .then(response => {
+            
+            const profiles = []
+            
+                for (let prof in response.data) {
+ 
+                    const profs: Profile = {
 
+                        id: response.data[prof].profile_id,
+                        name: response.data[prof].profile_name
+                    }
+                    profiles.push(profs)
+                }
 
+                setProfile(profiles)
+            }).catch(error => {
+                console.log('Error: ', error);
+            })
+    }
 
 
 
     useEffect(() => {
         setUser()
+        getProfile()
+       
+
     }, [])
 
+    
 
     return (
         <>
@@ -139,6 +180,16 @@ const UserForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    
+                    <label>Cpf</label>
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o cpf"
+                        value={cpf}
+                        onChange={(e) => setCpf(e.target.value)}
+                    />
+
 
                     {!isUpdate && <label>Senha</label>}
                     {!isUpdate && <input
@@ -149,6 +200,16 @@ const UserForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     }
+                    <label>Perfil</label>
+                    <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
+                    <option selected></option>
+                        {profile.map((data,i) => (
+
+                        <option key={i} value={data.id}>{data.name}</option>
+                        
+                       ))}
+
+                    </select>
                     <div className="btn-actions">
 
                         <input
