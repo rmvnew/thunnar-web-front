@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'
 
 
 
@@ -20,33 +21,39 @@ const Login = () => {
             const isLogged = await auth.signin(email, password)
 
             if (isLogged) {
-                navigate('/home')
+                navigate('/')
             } else {
                 alert('Não deu certo.')
             }
         }
 
-       
+
 
     }
 
     return (
         <>
-            <h2>Pagina fechada</h2>
-            <input
-                type="text"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Digite seu email"
-            />
-            <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Digite sua senha"
-            />
+            <div className="card">
+                <div className="inputs">
+                    <div className="myTop">
+                        <h2>Login</h2>
+                    </div>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="Digite seu email"
+                    />
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        placeholder="Digite sua senha"
+                    />
 
-            <button onClick={handleLogin}>Logar</button>
+                    <button onClick={handleLogin}>Logar</button>
+                </div>
+            </div>
         </>
     )
 

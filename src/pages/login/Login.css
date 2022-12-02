@@ -1,0 +1,83 @@
+:root {
+    --colorDefault: #35854b;
+    --colorDefaultHover: #236636;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto:wght@900&display=swap');
+
+.card {
+
+    width: 100vw;
+    height: 100vh;
+    background: #fcfcfd;
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: row; */
+    justify-content: center;
+    align-items: center;
+}
+
+
+.inputs {
+
+    border-radius: 15px;
+    position: relative;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.inputs input {
+
+    width: 400px;
+    margin-top: 15px;
+    height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.inputs button {
+
+    margin-top: 15px;
+    height: 40px;
+    border-radius: 10px;
+    width: 200px;
+    background-color: var(--colorDefault);
+    color: white;
+    font-size: 1.3rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.inputs button:hover {
+    background-color: var(--colorDefaultHover);
+    font-weight: bold;
+}
+
+.myTop {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    background-color: var(--colorDefault);
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    font-family: 'Permanent Marker', cursive;
+}
+
+h2{
+    font-size: 2.8rem;
+}

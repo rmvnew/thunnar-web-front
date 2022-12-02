@@ -5,16 +5,17 @@ import { AiOutlineInbox } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
 import { SlLogout } from "react-icons/sl";
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react';
 import './sidebar.css'
 import { AuthContext } from '../contexts/auth/AuthContext'
+import Login from '../pages/login/Login';
 
 
 
 
 const routes = [
     {
-        path: "/home",
+        path: "/",
         name: "Home",
         icon: <FaHome />
     },
@@ -31,6 +32,19 @@ const routes = [
 ]
 
 const Sidebar = ({ children }: any) => {
+
+    function removeToken() {
+        console.log('limpa');
+        localStorage.removeItem('authToken')
+    }
+
+    const storageData = localStorage.getItem('authToken')
+
+    const [isExit,setIsExit] = useState(false)
+
+    useEffect(() =>{
+        setIsExit(!isExit)
+    },[storageData])
 
     const auth = useContext(AuthContext)
 
@@ -116,7 +130,7 @@ const Sidebar = ({ children }: any) => {
 
 
 
-                         <NavLink
+                        <NavLink
                             // activeClassName="active"
                             to={route.path} key={route.name} className="link">
                             <div className="icon">{route.icon}</div>
@@ -134,11 +148,11 @@ const Sidebar = ({ children }: any) => {
                 </section>
 
                 <div className="routes">
-                    {auth.user && <NavLink
-                        to={'/'} key={'Exit'} className="link">
+                    {isExit && auth.user && <NavLink
+                        to={'/login'} key={'Exit'} className="link" onClick={() => removeToken()}>
                         <div className="icon">{<SlLogout />}</div>
                         <AnimatePresence>
-                            {isopen && (<motion.div
+                            {isopen && auth.user && (<motion.div
                                 variants={showAnimation}
                                 initial="hidden"
                                 animate="show"
