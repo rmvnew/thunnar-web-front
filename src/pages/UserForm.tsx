@@ -95,7 +95,7 @@ const UserForm = () => {
         setIsUpdate(false)
         setOptions("")
         setCpf("")
-
+        setSelect("")
     }
 
 
@@ -107,6 +107,8 @@ const UserForm = () => {
             setUserId(dataResult.user_id)
             setName(dataResult.user_name)
             setEmail(dataResult.user_email)
+            setCpf(dataResult.user_cpf)
+            setSelect(dataResult.user_profile)
         } else {
             setIsUpdate(false)
         }
@@ -123,6 +125,7 @@ const UserForm = () => {
     const [profile, setProfile] = useState<Profile[]>([])
     const [options,setOptions] = useState("")
     const [cpf,setCpf] = useState("")
+    const [select,setSelect] = useState("")
     
     const getProfile = async () => {
         await api.get('/profile')
@@ -202,7 +205,7 @@ const UserForm = () => {
                     }
                     <label>Perfil</label>
                     <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                    <option selected></option>
+                    <option selected>{select}</option>
                         {profile.map((data,i) => (
 
                         <option key={i} value={data.id}>{data.name}</option>

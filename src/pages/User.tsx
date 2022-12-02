@@ -30,6 +30,7 @@ const User = () => {
   const getUser = async (page: number = 1) => {
 
     await api.get(`/user?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
+      // console.log('>>>>>',response);
       setResponse(response)
     });
   };
@@ -99,6 +100,8 @@ const User = () => {
             <td>id</td>
             <td>Nome</td>
             <td>E-mail</td>
+            <td>Cpf</td>
+            <td>Perfil</td>
             <td>Status</td>
             <td>Opções</td>
           </tr>
@@ -110,6 +113,8 @@ const User = () => {
                 <td>{user.user_id}</td>
                 <td>{user.user_name}</td>
                 <td>{user.user_email}</td>
+                <td>{user.user_cpf}</td>
+                <td>{user.profile.profile_name}</td>
                 <td>{user.is_active === true ? "Ativo" : "Inativo"}</td>
                 <td>
 
@@ -119,7 +124,9 @@ const User = () => {
                       data: {
                         user_id: user.user_id,
                         user_name: user.user_name,
-                        user_email: user.user_email
+                        user_email: user.user_email,
+                        user_cpf:user.user_cpf,
+                        user_profile:user.profile.profile_name,
                       }
                     }} className="btn btn-warning">Editar</NavLink>
 
