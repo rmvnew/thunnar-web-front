@@ -1,7 +1,9 @@
-import { clear } from "console";
+
 import { useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
-import api from "../config/api";
+import { api } from "../hooks/useApi";
+import './UserForm.css'
+
 
 
 
@@ -116,61 +118,63 @@ const UserForm = () => {
 
     return (
         <>
-            <h1>Formulário de usuários</h1>
+            <div className="main">
+                <h1>Formulário de usuários</h1>
 
-            <div className="form">
-                <label>Nome</label>
-                <input
-                    className="form-control form-control-lg"
-                    type="text"
-                    placeholder="Digite o nome"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-
-                <label>E-mail</label>
-                <input
-                    className="form-control form-control-lg"
-                    type="text"
-                    placeholder="Digite o e-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-
-                {!isUpdate && <label>Senha</label>}
-                {!isUpdate && <input
-                    className="form-control form-control-lg"
-                    type="password"
-                    placeholder="Informe a senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                }
-                <div className="btn-actions">
-
+                <div className="form">
+                    <label>Nome</label>
                     <input
-                        type="submit"
-                        value={"Novo"}
-                        className="btn btn-primary"
-                        onClick={clearOperation}
-
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o nome"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
 
+                    <label>E-mail</label>
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o e-mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    {!isUpdate && <label>Senha</label>}
                     {!isUpdate && <input
-                        type="submit"
-                        value={"Salvar"}
-                        className="btn btn-primary"
-                        onClick={createUser}
-                    />}
+                        className="form-control form-control-lg"
+                        type="password"
+                        placeholder="Informe a senha"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    }
+                    <div className="btn-actions">
+
+                        <input
+                            type="submit"
+                            value={"Novo"}
+                            className="btn btn-primary"
+                            onClick={clearOperation}
+
+                        />
+
+                        {!isUpdate && <input
+                            type="submit"
+                            value={"Salvar"}
+                            className="btn btn-primary"
+                            onClick={createUser}
+                        />}
 
 
-                    {isUpdate && <input
-                        type="submit"
-                        value={"Atualizar"}
-                        className="btn btn-secondary"
-                        onClick={updateUser}
-                    />}
+                        {isUpdate && <input
+                            type="submit"
+                            value={"Atualizar"}
+                            className="btn btn-secondary"
+                            onClick={updateUser}
+                        />}
 
+                    </div>
                 </div>
             </div>
         </>

@@ -1,14 +1,16 @@
 import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../config/api";
 import "../common/css/bootstrap.min.css";
 import "./User.css";
 import { NavLink } from "react-router-dom";
+import { api } from "../hooks/useApi";
 
 const User = () => {
 
 
   function setResponse(res: any) {
+
+    // console.log('Res: ',res);
 
     setUsers(res.data.items)
     setPages(res.data.meta.totalPages)

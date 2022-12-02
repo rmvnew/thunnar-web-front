@@ -2,7 +2,7 @@ import { AuthContext } from "./AuthContext"
 import { useState, useEffect } from 'react';
 import { User } from "../../types/User";
 import { useApi } from '../../hooks/useApi';
-import { Link } from "react-router-dom";
+
 
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         const validateToken = async () => {
 
             if (storageData) {
-                const data = await api.validateToken(storageData)
+                const data = await api.validateToken()
 
                 if (data.data) {
                     setUser(data.data)

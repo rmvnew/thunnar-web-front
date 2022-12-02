@@ -1,4 +1,15 @@
 
+.main{
+    width: 90vw;
+    height: 90vh;
+    background: #fcfcfd;
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: row; */
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+}
 
 .my-table{
     border: solid 1px #000;

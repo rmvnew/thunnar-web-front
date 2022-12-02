@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import '../../common/css/bootstrap.min.css'
 import './Login.css'
 
 
@@ -21,7 +22,8 @@ const Login = () => {
             const isLogged = await auth.signin(email, password)
 
             if (isLogged) {
-                navigate('/')
+                // navigate('/')
+                window.location.href = '/'
             } else {
                 alert('Não deu certo.')
             }
@@ -39,19 +41,21 @@ const Login = () => {
                         <h2>Login</h2>
                     </div>
                     <input
+                        className='form-control form-control-lg'
                         type="text"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         placeholder="Digite seu email"
                     />
                     <input
+                        className='form-control form-control-lg'
                         type="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         placeholder="Digite sua senha"
                     />
 
-                    <button onClick={handleLogin}>Logar</button>
+                    <button className='btn btn-primary' onClick={handleLogin}>Logar</button>
                 </div>
             </div>
         </>
