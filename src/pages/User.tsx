@@ -30,7 +30,7 @@ const User = () => {
   const getUser = async (page: number = 1) => {
 
     await api.get(`/user?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
-      // console.log('>>>>>',response);
+      console.log('>>>>>',response);
       setResponse(response)
     });
   };
@@ -127,6 +127,7 @@ const User = () => {
                         user_email: user.user_email,
                         user_cpf:user.user_cpf,
                         user_profile:user.profile.profile_name,
+                        user_profile_id:user.profile.profile_id,
                       }
                     }} className="btn btn-warning">Editar</NavLink>
 

@@ -56,16 +56,20 @@ const UserForm = () => {
 
     function updateUser() {
 
-        if (userId && name && email) {
+        if (userId && name && email && cpf) {
             const user = {
                 name,
                 email,
+                cpf,
+                options
             }
 
             api
                 .put(`/user/${userId}`, {
                     user_name: user.name,
                     user_email: user.email,
+                    user_cpf: user.cpf,
+                    user_profile_id: user.options
                 })
                 .then(response => {
                     navigate("/user")
@@ -109,6 +113,7 @@ const UserForm = () => {
             setEmail(dataResult.user_email)
             setCpf(dataResult.user_cpf)
             setSelect(dataResult.user_profile)
+            setOptions(dataResult.user_profile_id)
         } else {
             setIsUpdate(false)
         }
