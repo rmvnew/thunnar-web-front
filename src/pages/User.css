@@ -5,16 +5,18 @@
     background: #fcfcfd;
     display: flex;
     flex-direction: column;
-    /* flex-direction: row; */
+    
     justify-content: center;
     align-items: center;
-    margin-left: 15px;
+    /* margin-left: 15px; */
+    background-color: aquamarine;
 }
 
 
 
 .my-table{
     border: solid 1px #000;
+    
 }
 
 td{
@@ -22,14 +24,7 @@ td{
     padding: 10px 10px;
 }
 
-.form{
 
-    /* background-color: rgb(59, 65, 99); */
-    width: 700px;
-    margin-bottom: 30px;
-    padding: 10px 15px;
-
-}
 
 .form label{
     margin-left: 15px;
@@ -63,11 +58,13 @@ td{
 .my-table{
     border-radius: 15px;
     margin-top: 10px;
+    width: 90%;
 }
 
 
 .search{
-    margin-top: 80px;
+    margin-top: 0px;
+    width: 90%;
 }
 
 
@@ -78,8 +75,9 @@ td{
 .links{
     position: relative;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 60px;
+    left: -100px;
 }
 
 .newUser{

@@ -4,7 +4,7 @@
     background: #fcfcfd;
     display: flex;
     flex-direction: column;
-    /* flex-direction: row; */
+    
     justify-content: center;
     align-items: center;
     margin-left: 15px;
@@ -16,5 +16,16 @@ select{
     
 }
 
+label{
+    margin-top: 10px;
+}
 
 
+.form{
+
+    /* background-color: rgb(59, 65, 99); */
+    width: 700px;
+    margin-bottom: 30px;
+    padding: 10px 15px;
+
+}
