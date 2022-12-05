@@ -39,7 +39,7 @@ const ProductForm = () => {
     }
 
     async function setCurrentInvoiceId() {
-        api.get(`invoice/number/${invoice}`)
+        api.get(`invoice/number/${invoice === ""? "0":invoice}`)
             .then(response => {
 
                 const id = response.data.invoice_id === undefined ? "" : response.data.invoice_id
@@ -48,12 +48,12 @@ const ProductForm = () => {
 
             }).catch(error => console.log(error))
 
-            return ""
+        return ""
     }
 
     async function createProduct() {
 
-       await setCurrentInvoiceId()
+        await setCurrentInvoiceId()
 
         if (validInput()) {
             const product: ProductInterface = {
@@ -69,17 +69,7 @@ const ProductForm = () => {
                 invoice: invoice_id
             }
 
-            // if (invoice) {
-            //     api.get(`invoice/number/${invoice}`)
-            //         .then(response => {
 
-            //             console.log('Invoice: ', response.data.invoice_id);
-
-            //             product.invoice = response.data.invoice_id
-
-            //         })
-
-            // }
 
             console.log('Product: ', product);
 
@@ -91,14 +81,14 @@ const ProductForm = () => {
                     product_location: product.productLocation,
                     product_quantity: product.quantity,
                     product_quantity_minimal: product.minimalQuantity,
-                    product_categoty_id: product.options,
+                    product_category_id: product.options,
                     product_price: product.price,
                     product_price_buy: product.priceBuy,
                     invoice_id: product.invoice
 
                 })
                 .then((response) => {
-                    // navigate("/product")
+                    navigate("/product")
                 })
                 .catch((error) => {
                     console.log(error);
@@ -108,36 +98,49 @@ const ProductForm = () => {
         }
     }
 
-    function updateUser() {
+    async function updateUser() {
 
-        if (producId && name && productCode) {
-            const user = {
-                name,
 
-                cpf: productCode,
-                options
+        await setCurrentInvoiceId()
+
+        if (validInput()) {
+            const product: ProductInterface = {
+                name: name,
+                barcode: barcode,
+                productCode: productCode,
+                productLocation: productLocation,
+                quantity: quantity,
+                minimalQuantity: minimalQuantity,
+                options: Number(options),
+                price: price,
+                priceBuy: priceBuy,
+                invoice: invoice_id
             }
 
-            api
-                .put(`/user/${producId}`, {
-                    user_name: user.name,
+            console.log(product);
 
-                    user_cpf: user.cpf,
-                    user_profile_id: user.options
+            api
+                .put(`/product/${producId}`, {
+                    product_name: product.name,
+                    product_barcode: product.barcode,
+                    product_code: product.productCode,
+                    product_location: product.productLocation,
+                    product_quantity: product.quantity,
+                    product_quantity_minimal: product.minimalQuantity,
+                    product_category_id: product.options,
+                    product_price: product.price,
+                    invoice_id: product.invoice,
+                    product_price_buy: product.priceBuy,
                 })
                 .then(response => {
-                    navigate("/user")
+                    navigate("/product")
                 })
                 .catch(error => {
                     const resultError = {
                         statusCode: error.response.data.statusCode,
                         message: error.response.data.message
                     }
-                    console.log(resultError);
-
-                    if (error.response.data.message == "O email informado não é válido!!") {
-                        //ação ao email errado
-                    }
+                    console.log('Error: ',resultError);
 
                 })
         } else {
@@ -198,7 +201,7 @@ const ProductForm = () => {
     const [select, setSelect] = useState("")
     const [options, setOptions] = useState("")
     const [invoice, setInvoice] = useState("")
-    const [invoice_id,setInvoiceId] = useState("")
+    const [invoice_id, setInvoiceId] = useState("")
     const [categories, setCategories] = useState<CategoryInterface[]>([])
 
     const [isUpdate, setIsUpdate] = useState(false)
@@ -236,6 +239,7 @@ const ProductForm = () => {
     }, [])
 
 
+    
 
     return (
         <>
@@ -370,7 +374,7 @@ const ProductForm = () => {
 
                             <label>Categoria</label>
                             <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                                <option defaultValue={select}></option>
+                                <option defaultValue={select}>{select}</option>
                                 {categories.map((data, i) => (
 
                                     <option key={i} value={data.id}>{data.name}</option>

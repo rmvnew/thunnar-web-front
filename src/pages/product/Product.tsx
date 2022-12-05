@@ -28,7 +28,7 @@ const Product = () => {
       const getProduct = async (page: number = 1) => {
     
         await api.get(`/product?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
-         
+         console.log(response);
           setResponse(response)
         });
       };
@@ -118,9 +118,9 @@ const Product = () => {
     
                       <div className="d-flex justify-content-around base-options">
     
-                        <NavLink to={"/user/form"} state={{
+                        <NavLink to={"/product/form"} state={{
                           data: {
-                            product_id: product.user_id,
+                            product_id: product.product_id,
                             product_name:product.product_name,
                             product_barcode:product.product_barcode,
                             product_code:product.product_code,
