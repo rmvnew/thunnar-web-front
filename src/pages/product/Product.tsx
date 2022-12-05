@@ -1,7 +1,7 @@
 import { Pagination } from "@mui/material"
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
-import { api } from "../hooks/useApi"
+import { api } from "../../hooks/useApi"
 
 
 
@@ -79,7 +79,7 @@ const Product = () => {
     
     
           <section className="links">
-            <NavLink to={"/user/form"} className="btn btn-primary newUser">Novo Produto</NavLink>
+            <NavLink to={"/product/form"} className="btn btn-primary newUser">Novo Produto</NavLink>
           </section>
     
        
@@ -121,6 +121,16 @@ const Product = () => {
                         <NavLink to={"/user/form"} state={{
                           data: {
                             product_id: product.user_id,
+                            product_name:product.product_name,
+                            product_barcode:product.product_barcode,
+                            product_code:product.product_code,
+                            product_location:product.product_location,
+                            product_quantity:product.product_quantity,
+                            product_quantity_minimal:product.product_quantity_minimal,
+                            product_price:product.product_price,
+                            product_price_buy:product.product_price_buy,
+                            category_id:product.category.category_id,
+                            category:product.category.category_name,
                             
                           }
                         }} className="btn btn-warning">Editar</NavLink>

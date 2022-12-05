@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
-import { api } from "../hooks/useApi";
+import { api } from "../../hooks/useApi";
 import './UserForm.css'
 
 
@@ -210,7 +210,7 @@ const UserForm = () => {
                     }
                     <label>Perfil</label>
                     <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                    <option selected>{select}</option>
+                    <option defaultValue={select}></option>
                         {profile.map((data,i) => (
 
                         <option key={i} value={data.id}>{data.name}</option>

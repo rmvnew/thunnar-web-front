@@ -1,9 +1,9 @@
 import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
-import "../common/css/bootstrap.min.css";
+import "../../common/css/bootstrap.min.css";
 import "./User.css";
 import { NavLink } from "react-router-dom";
-import { api } from "../hooks/useApi";
+import { api } from "../../hooks/useApi";
 
 const User = () => {
 
