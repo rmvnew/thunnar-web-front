@@ -1,23 +1,15 @@
 
 
-import { Alert, Snackbar } from "@mui/material";
+
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import AlertMessage from "../../components/AlertMessage";
-
-
 import { api } from "../../hooks/useApi";
 import './UserForm.css'
 import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
+import { Profile } from "../../interfaces/Profile.interface";
 
-
-
-interface Profile {
-    id: number;
-    name: string;
-
-}
 
 const UserForm = () => {
 
@@ -301,11 +293,7 @@ const UserForm = () => {
 
                     </div>
                 </div>
-                {/* {open && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                        This is a success message!
-                    </Alert>
-                </Snackbar>} */}
+                
 
                 {open && <AlertMessage props={alertProps} />}
 
