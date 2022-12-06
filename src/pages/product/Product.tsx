@@ -28,7 +28,7 @@ const Product = () => {
       const getProduct = async (page: number = 1) => {
     
         await api.get(`/product?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
-         console.log(response);
+         
           setResponse(response)
         });
       };
@@ -112,7 +112,8 @@ const Product = () => {
                     <td>{product.product_name}</td>
                     <td>{product.product_barcode}</td>
                     <td>{product.product_quantity}</td>
-                    <td>{product.product_price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
+                    {/* <td>{`R$ ${product.product_price.toString().replace('.',',')}`}</td> */}
+                    <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.product_price)}</td>
                     <td>{product.is_active === true ? "Ativo" : "Inativo"}</td>
                     <td>
     

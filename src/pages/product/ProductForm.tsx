@@ -117,7 +117,7 @@ const ProductForm = () => {
                 invoice: invoice_id
             }
 
-            console.log(product);
+            
 
             api
                 .put(`/product/${producId}`, {
