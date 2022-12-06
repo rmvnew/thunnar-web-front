@@ -9,6 +9,7 @@ import './UserForm.css'
 import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import { Profile } from "../../interfaces/Profile.interface";
+import { cpfMask } from "../../utils/mask";
 
 
 const UserForm = () => {
@@ -134,7 +135,7 @@ const UserForm = () => {
             setUserId(dataResult.user_id)
             setName(dataResult.user_name)
             setEmail(dataResult.user_email)
-            setCpf(dataResult.user_cpf)
+            setCpf(cpfMask(dataResult.user_cpf))
             setSelect(dataResult.user_profile)
             setOptions(dataResult.user_profile_id)
         } else {
@@ -243,7 +244,7 @@ const UserForm = () => {
                         type="text"
                         placeholder="Digite o cpf"
                         value={cpf}
-                        onChange={(e) => setCpf(e.target.value)}
+                        onChange={(e) => setCpf(cpfMask(e.target.value))}
                     />
 
 
