@@ -1,8 +1,15 @@
 
+
+import { Alert, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
+import AlertMessage from "../../components/AlertMessage";
+
+
 import { api } from "../../hooks/useApi";
 import './UserForm.css'
+import { AlertTypes } from '../../enums/enums';
+import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 
 
 
@@ -33,7 +40,7 @@ const UserForm = () => {
                 options
             };
 
-            console.log('User: ',user);
+            console.log('User: ', user);
 
             api
                 .post("/user", {
@@ -72,6 +79,7 @@ const UserForm = () => {
                     user_profile_id: user.options
                 })
                 .then(response => {
+
                     navigate("/user")
                 })
                 .catch(error => {
@@ -79,16 +87,39 @@ const UserForm = () => {
                         statusCode: error.response.data.statusCode,
                         message: error.response.data.message
                     }
-                    console.log(resultError);
+
+                    if (error.response.data.message == "O cpf informado é inválido!!") {
+
+                        
+                        ShowAlert(AlertTypes.WARNING, "O cpf informado é inválido!!", 4000)
+
+                    }
 
                     if (error.response.data.message == "O email informado não é válido!!") {
-                        //ação ao email errado
+
+                        ShowAlert(AlertTypes.WARNING, "O email informado não é válido!!", 4000)
+
                     }
 
                 })
         } else {
             alert("Preencha todos dados")
         }
+
+    }
+
+
+    function ShowAlert(type: AlertTypes, message: string, time: number) {
+
+        setAlertTypes(type)
+        setAlertMessage(message)
+        setOpen(true)
+
+        setTimeout(() => {
+            setOpen(false)
+            setAlertTypes("")
+            setAlertMessage("")
+        }, time)
 
     }
 
@@ -121,6 +152,15 @@ const UserForm = () => {
     }
 
 
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -128,18 +168,34 @@ const UserForm = () => {
     const [password, setPassword] = useState("")
     const [isUpdate, setIsUpdate] = useState(false)
     const [profile, setProfile] = useState<Profile[]>([])
-    const [options,setOptions] = useState("")
-    const [cpf,setCpf] = useState("")
-    const [select,setSelect] = useState("")
-    
+    const [options, setOptions] = useState("")
+    const [cpf, setCpf] = useState("")
+    const [select, setSelect] = useState("")
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("")
+    const [alertTypes, setAlertTypes] = useState("")
+    const [alertProps, setAlertProps] = useState({})
+
+    useEffect(() => {
+
+        const props: AlertTypesInterface = {
+            message: alertMessage,
+            aletTypes: alertTypes
+        }
+
+        setAlertProps(props)
+
+
+    }, [alertTypes])
+
     const getProfile = async () => {
         await api.get('/profile')
-        .then(response => {
-            
-            const profiles = []
-            
+            .then(response => {
+
+                const profiles = []
+
                 for (let prof in response.data) {
- 
+
                     const profs: Profile = {
 
                         id: response.data[prof].profile_id,
@@ -159,11 +215,11 @@ const UserForm = () => {
     useEffect(() => {
         setUser()
         getProfile()
-       
+
 
     }, [])
 
-    
+
 
     return (
         <>
@@ -188,7 +244,7 @@ const UserForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    
+
                     <label>Cpf</label>
                     <input
                         className="form-control form-control-lg"
@@ -210,12 +266,12 @@ const UserForm = () => {
                     }
                     <label>Perfil</label>
                     <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                    <option defaultValue={select}></option>
-                        {profile.map((data,i) => (
+                        <option defaultValue={select}></option>
+                        {profile.map((data, i) => (
 
-                        <option key={i} value={data.id}>{data.name}</option>
-                        
-                       ))}
+                            <option key={i} value={data.id}>{data.name}</option>
+
+                        ))}
 
                     </select>
                     <div className="btn-actions">
@@ -245,6 +301,15 @@ const UserForm = () => {
 
                     </div>
                 </div>
+                {/* {open && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        This is a success message!
+                    </Alert>
+                </Snackbar>} */}
+
+                {open && <AlertMessage props={alertProps} />}
+
+
             </div>
         </>
     )

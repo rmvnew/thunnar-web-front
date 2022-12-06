@@ -2,6 +2,8 @@ import { Pagination } from "@mui/material"
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { api } from "../../hooks/useApi"
+import { ImPencil2,ImBin } from "react-icons/im";
+import './Product.css'
 
 
 
@@ -46,7 +48,6 @@ const Product = () => {
       const deleteProduct = async (product_id: number = 0) => {
     
         
-    
         await api.delete(`/product/${product_id}`)
           .then(response => {
             getProduct();
@@ -117,7 +118,8 @@ const Product = () => {
                     <td>{product.is_active === true ? "Ativo" : "Inativo"}</td>
                     <td>
     
-                      <div className="d-flex justify-content-around base-options">
+                      {/* <div className="d-flex justify-content-around base-options"> */}
+                      <div className=" base-options">
     
                         <NavLink to={"/product/form"} state={{
                           data: {
@@ -134,11 +136,11 @@ const Product = () => {
                             category:product.category.category_name,
                             
                           }
-                        }} className="btn btn-warning">Editar</NavLink>
+                        }} className="btn btn-warning"><ImPencil2/></NavLink>
     
                         <button className="btn btn-danger btn-delete"
                           onClick={() => deleteProduct(product.product_id)}
-                        >Deletar</button>
+                        ><ImBin/></button>
     
                       </div>
     

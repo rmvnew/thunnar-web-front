@@ -4,6 +4,7 @@ import "../../common/css/bootstrap.min.css";
 import "./User.css";
 import { NavLink } from "react-router-dom";
 import { api } from "../../hooks/useApi";
+import { ImPencil2,ImBin } from "react-icons/im";
 
 const User = () => {
 
@@ -129,11 +130,11 @@ const User = () => {
                         user_profile:user.profile.profile_name,
                         user_profile_id:user.profile.profile_id,
                       }
-                    }} className="btn btn-warning">Editar</NavLink>
+                    }} className="btn btn-warning"><ImPencil2/></NavLink>
 
                     <button className="btn btn-danger btn-delete"
                       onClick={() => deleteUser(user.user_id)}
-                    >Deletar</button>
+                    ><ImBin/></button>
 
                   </div>
 
