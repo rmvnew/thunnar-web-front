@@ -106,6 +106,7 @@ const UserForm = () => {
 
         setAlertTypes(type)
         setAlertMessage(message)
+        setTime(time)
         setOpen(true)
 
         setTimeout(() => {
@@ -168,12 +169,14 @@ const UserForm = () => {
     const [alertMessage, setAlertMessage] = useState("")
     const [alertTypes, setAlertTypes] = useState("")
     const [alertProps, setAlertProps] = useState({})
+    const [time,setTime] = useState(0)
 
     useEffect(() => {
 
         const props: AlertTypesInterface = {
             message: alertMessage,
-            aletTypes: alertTypes
+            aletTypes: alertTypes,
+            time: time
         }
 
         setAlertProps(props)

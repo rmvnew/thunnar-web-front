@@ -3,6 +3,10 @@ import { AuthContext } from '../../contexts/auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../../common/css/bootstrap.min.css'
 import './Login.css'
+import { ModalDefault } from '../../components/Modal.default';
+import { RecoverForm } from '../../components/recover-password/recover-password';
+
+
 
 
 
@@ -33,6 +37,9 @@ const Login = () => {
 
     }
 
+    const ChildComp: React.FC = () => <h2>This is a child component</h2>
+
+
     return (
         <>
             <div className="card">
@@ -54,6 +61,8 @@ const Login = () => {
                         onChange={e => setPassword(e.target.value)}
                         placeholder="Digite sua senha"
                     />
+
+                    <ModalDefault body={<RecoverForm/>}/>
 
                     <button className='btn btn-primary' onClick={handleLogin}>Logar</button>
                 </div>

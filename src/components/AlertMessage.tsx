@@ -2,7 +2,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { AlertTypesInterface } from '../interfaces/AlertTypesInterface';
+
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -11,9 +11,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+const vertical = 'top'
+const horizontal = 'right'
+
 export default function AlertMessage({ props }: any) {
   const [open, setOpen] = React.useState(true);
-
 
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -27,15 +29,12 @@ export default function AlertMessage({ props }: any) {
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
 
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} autoHideDuration={props.time} onClose={handleClose}>
         <Alert onClose={handleClose} severity={props.aletTypes} sx={{ width: '100%' }}>
           {props.message}
         </Alert>
       </Snackbar>
-      {/* <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert> */}
+
     </Stack>
   );
 }
