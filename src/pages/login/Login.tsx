@@ -5,6 +5,9 @@ import '../../common/css/bootstrap.min.css'
 import './Login.css'
 import { ModalDefault } from '../../components/Modal.default';
 import { RecoverForm } from '../../components/recover-password/recover-password';
+import { AlertTypes } from '../../enums/enums';
+import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
+import AlertMessage from '../../components/AlertMessage';
 
 
 
@@ -13,11 +16,36 @@ import { RecoverForm } from '../../components/recover-password/recover-password'
 
 const Login = () => {
 
+
+    function showAlert(type: AlertTypes, message: string, time: number) {
+
+
+
+        const props: AlertTypesInterface = {
+            message: message,
+            aletTypes: type,
+            time: time
+        }
+
+        setAlertProps(props)
+
+        setOpen(true)
+
+        setTimeout(() => {
+            setOpen(false)
+
+        }, time)
+
+    }
+
+
     const auth = useContext(AuthContext)
-    const navigate = useNavigate()
+
 
     const [email, setEmail] = useState('rmvnew@gmail.com')
     const [password, setPassword] = useState('12345')
+    const [open, setOpen] = useState(false);
+    const [alertProps, setAlertProps] = useState({})
 
     const handleLogin = async () => {
 
@@ -25,11 +53,22 @@ const Login = () => {
 
             const isLogged = await auth.signin(email, password)
 
-            if (isLogged) {
-                // navigate('/')
-                window.location.href = '/'
+            console.log(isLogged.status);
+
+            if (isLogged.status) {
+                console.log('logou');
+                showAlert(AlertTypes.SUCCESS, "Bem vindo!!", 1000)
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 1000)
             } else {
-                alert('Não deu certo.')
+                console.log('não logou');
+                console.log(isLogged.code);
+                if (isLogged.code === 401) {
+                    showAlert(AlertTypes.ERROR, "Senha inválida", 4000)
+                } else if (isLogged.code === 404) {
+                    showAlert(AlertTypes.ERROR, "Usuário inválido", 4000)
+                }
             }
         }
 
@@ -37,7 +76,7 @@ const Login = () => {
 
     }
 
-    const ChildComp: React.FC = () => <h2>This is a child component</h2>
+
 
 
     return (
@@ -62,11 +101,12 @@ const Login = () => {
                         placeholder="Digite sua senha"
                     />
 
-                    <ModalDefault body={<RecoverForm/>}/>
+                    <ModalDefault body={<RecoverForm />} />
 
                     <button className='btn btn-primary' onClick={handleLogin}>Logar</button>
                 </div>
             </div>
+            {open && <AlertMessage props={alertProps} />}
         </>
     )
 

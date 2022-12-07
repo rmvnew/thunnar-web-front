@@ -43,13 +43,7 @@ export const ModalDefault = ({body}:{body:React.ReactNode}) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            {/* <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography> */}
-
+            
             {body}
 
           </Box>

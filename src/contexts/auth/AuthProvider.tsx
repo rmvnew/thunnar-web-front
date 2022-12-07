@@ -21,9 +21,9 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
                 if (data.data) {
                     setUser(data.data)
                 }
-            }else{
+            } else {
                 setUser(null)
-                
+
             }
 
 
@@ -32,23 +32,48 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         validateToken()
     }, [])
 
-    // window.addEventListener('storage', () => {
-    //     localStorage.removeItem('authToken')
-    //     window.location.href = '/'
-    // })
+
 
     const signin = async (email: string, password: string) => {
 
 
+
+
         const data = await api.signin(email, password)
 
-        console.log(data.access_token);
+
+
         if (data) {
-            setUser(data)
-            setToken(data.access_token)
-            return true
+
+
+
+
+
+            if (data.name == "AxiosError") {
+
+                return {
+                    message: data.response.data.message,
+                    code: data.response.data.statusCode,
+                    status: false
+                }
+            } else {
+
+               
+                setUser(data)
+                setToken(data.access_token)
+
+                return {
+                    message: 'pass',
+                    code: 200,
+                    status: true
+                }
+            }
         }
-        return false
+        return {
+            message: 'fail',
+            code: 0,
+            status: false
+        }
     }
 
     const signout = async () => {
