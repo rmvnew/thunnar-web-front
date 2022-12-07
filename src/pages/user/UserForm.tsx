@@ -262,7 +262,7 @@ const UserForm = () => {
                     }
                     <label>Perfil</label>
                     <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                        <option defaultValue={select}></option>
+                        <option defaultValue={select}>{select}</option>
                         {profile.map((data, i) => (
 
                             <option key={i} value={data.id}>{data.name}</option>
