@@ -5,6 +5,7 @@ import { api } from "../../hooks/useApi";
 import { CategoryInterface } from "../../interfaces/Category.interface";
 import './ProductForm.css'
 import { ProductInterface } from '../../interfaces/Product.interface';
+import { AnimatePageScaleY } from "../../components/AnimatePageScaleY";
 
 
 
@@ -39,7 +40,7 @@ const ProductForm = () => {
     }
 
     async function setCurrentInvoiceId() {
-        api.get(`invoice/number/${invoice === ""? "0":invoice}`)
+        api.get(`invoice/number/${invoice === "" ? "0" : invoice}`)
             .then(response => {
 
                 const id = response.data.invoice_id === undefined ? "" : response.data.invoice_id
@@ -117,7 +118,7 @@ const ProductForm = () => {
                 invoice: invoice_id
             }
 
-            
+
 
             api
                 .put(`/product/${producId}`, {
@@ -140,7 +141,7 @@ const ProductForm = () => {
                         statusCode: error.response.data.statusCode,
                         message: error.response.data.message
                     }
-                    console.log('Error: ',resultError);
+                    console.log('Error: ', resultError);
 
                 })
         } else {
@@ -168,7 +169,7 @@ const ProductForm = () => {
 
 
 
-    function setUser() {
+    function setProduct() {
         if (dataResult !== undefined) {
             setIsUpdate(true)
             setProductId(dataResult.product_id)
@@ -207,7 +208,7 @@ const ProductForm = () => {
     const [isUpdate, setIsUpdate] = useState(false)
     const [productCode, setProductCode] = useState("")
 
-    const getProfile = async () => {
+    const getCategory = async () => {
         await api.get('/category')
             .then(response => {
 
@@ -232,190 +233,192 @@ const ProductForm = () => {
 
 
     useEffect(() => {
-        setUser()
-        getProfile()
+        setProduct()
+        getCategory()
 
 
     }, [])
 
 
-    
+
 
     return (
         <>
-            <div className="main">
-                <h1>Gerenciamento de produtos</h1>
+            <AnimatePageScaleY>
+                <div className="main">
+                    <h1>Gerenciamento de produtos</h1>
 
-                <div className="form">
+                    <div className="form">
 
 
-                    <div className="row">
-                        <div className="col">
+                        <div className="row">
+                            <div className="col">
 
-                            <label>Nome</label>
+                                <label>Nome</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Digite o nome do produto"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="col-lg-4">
+
+                                <label>Código de barras</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Digite o código de barras"
+                                    value={barcode}
+                                    onChange={(e) => setBarcode(e.target.value)}
+                                />
+                            </div>
+
+
+                            <div className="col-lg-3">
+
+                                <label>Código do produto</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Cód do produto"
+                                    value={productCode}
+                                    onChange={(e) => setProductCode(e.target.value)}
+                                />
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div className="row">
+
+                            <div className="col">
+                                <label>Localização</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Digite a localização do produto"
+                                    value={productLocation}
+                                    onChange={(e) => setProductLocation(e.target.value)}
+                                />
+
+                            </div>
+
+                            <div className="col-lg-2">
+                                <label>Quantidade</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="number"
+                                    placeholder="Quantidade"
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(Number(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="col-lg-2">
+                                <label>Quantidade minima</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="number"
+                                    placeholder="Quantidade"
+                                    value={minimalQuantity}
+                                    onChange={(e) => setMinimalQuantity(Number(e.target.value))}
+                                />
+                            </div>
+
+                            <div className="col-lg-2">
+                                <label>Preço</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="number"
+                                    placeholder="Preço"
+                                    value={price}
+                                    onChange={(e) => setPrice(Number(e.target.value))}
+                                />
+                            </div>
+
+                        </div>
+
+
+
+                        <div className="row">
+
+
+
+
+                            <div className="col-lg-2">
+                                <label>Preço de compra</label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="number"
+                                    placeholder="Preço"
+                                    value={priceBuy}
+                                    onChange={(e) => setPriceBuy(Number(e.target.value))}
+                                />
+                            </div>
+
+                            {!isUpdate && <div className="col-lg-2">
+                                <label>Nota fiscal <i className="option">(Opcional)</i> </label>
+                                <input
+                                    className="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Número da nota"
+                                    value={invoice}
+                                    onChange={(e) => setInvoice(e.target.value)}
+                                />
+                            </div>}
+
+                            <div className="col-lg-3">
+
+                                <label>Categoria</label>
+                                <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
+                                    <option defaultValue={select}>{select}</option>
+                                    {categories.map((data, i) => (
+
+                                        <option key={i} value={data.id}>{data.name}</option>
+
+                                    ))}
+
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+                        <div className="btn-actions">
+
                             <input
-                                className="form-control form-control-lg"
-                                type="text"
-                                placeholder="Digite o nome do produto"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
+                                type="submit"
+                                value={"Novo"}
+                                className="btn btn-primary my-button"
+                                onClick={clearOperation}
 
-                        <div className="col-lg-4">
-
-                            <label>Código de barras</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="text"
-                                placeholder="Digite o código de barras"
-                                value={barcode}
-                                onChange={(e) => setBarcode(e.target.value)}
-                            />
-                        </div>
-
-
-                        <div className="col-lg-3">
-
-                            <label>Código do produto</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="text"
-                                placeholder="Cód do produto"
-                                value={productCode}
-                                onChange={(e) => setProductCode(e.target.value)}
                             />
 
-                        </div>
-                    </div>
+                            {!isUpdate && <input
+                                type="submit"
+                                value={"Salvar"}
+                                className="btn btn-primary my-button"
+                                onClick={createProduct}
+                            />}
 
 
-
-
-                    <div className="row">
-
-                        <div className="col">
-                            <label>Localização</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="text"
-                                placeholder="Digite a localização do produto"
-                                value={productLocation}
-                                onChange={(e) => setProductLocation(e.target.value)}
-                            />
+                            {isUpdate && <input
+                                type="submit"
+                                value={"Atualizar"}
+                                className="btn btn-secondary my-button"
+                                onClick={updateUser}
+                            />}
 
                         </div>
-
-                        <div className="col-lg-2">
-                            <label>Quantidade</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="number"
-                                placeholder="Quantidade"
-                                value={quantity}
-                                onChange={(e) => setQuantity(Number(e.target.value))}
-                            />
-                        </div>
-
-                        <div className="col-lg-2">
-                            <label>Quantidade minima</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="number"
-                                placeholder="Quantidade"
-                                value={minimalQuantity}
-                                onChange={(e) => setMinimalQuantity(Number(e.target.value))}
-                            />
-                        </div>
-
-                        <div className="col-lg-2">
-                            <label>Preço</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="number"
-                                placeholder="Preço"
-                                value={price}
-                                onChange={(e) => setPrice(Number(e.target.value))}
-                            />
-                        </div>
-
-                    </div>
-
-
-
-                    <div className="row">
-
-
-
-
-                        <div className="col-lg-2">
-                            <label>Preço de compra</label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="number"
-                                placeholder="Preço"
-                                value={priceBuy}
-                                onChange={(e) => setPriceBuy(Number(e.target.value))}
-                            />
-                        </div>
-
-                        <div className="col-lg-2">
-                            <label>Nota fiscal <i className="option">(Opcional)</i> </label>
-                            <input
-                                className="form-control form-control-lg"
-                                type="text"
-                                placeholder="Número da nota"
-                                value={invoice}
-                                onChange={(e) => setInvoice(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="col-lg-3">
-
-                            <label>Categoria</label>
-                            <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                                <option defaultValue={select}>{select}</option>
-                                {categories.map((data, i) => (
-
-                                    <option key={i} value={data.id}>{data.name}</option>
-
-                                ))}
-
-                            </select>
-                        </div>
-                    </div>
-
-
-
-
-                    <div className="btn-actions">
-
-                        <input
-                            type="submit"
-                            value={"Novo"}
-                            className="btn btn-primary"
-                            onClick={clearOperation}
-
-                        />
-
-                        {!isUpdate && <input
-                            type="submit"
-                            value={"Salvar"}
-                            className="btn btn-primary"
-                            onClick={createProduct}
-                        />}
-
-
-                        {isUpdate && <input
-                            type="submit"
-                            value={"Atualizar"}
-                            className="btn btn-secondary"
-                            onClick={updateUser}
-                        />}
-
                     </div>
                 </div>
-            </div>
+            </AnimatePageScaleY>
         </>
     )
 

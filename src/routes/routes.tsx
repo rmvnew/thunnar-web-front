@@ -10,6 +10,8 @@ import { RequireAuth } from '../contexts/auth/RequireAuth';
 import Login from '../pages/login/Login';
 import ProductForm from '../pages/product/ProductForm';
 
+import { motion, MotionConfig } from 'framer-motion';
+
 
 const RouterElements = () => {
 
@@ -17,14 +19,45 @@ const RouterElements = () => {
         <>
             <Router>
                 {/* <Sidebar> */}
-                    <Routes>
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/' element={<Sidebar><RequireAuth><DashBoard /></RequireAuth></Sidebar>} />
-                        <Route path='/user' element={<Sidebar><RequireAuth><User /></RequireAuth></Sidebar>} />
-                        <Route path='/user/form' element={<Sidebar><RequireAuth><UserForm /></RequireAuth></Sidebar>} />
-                        <Route path='/product' element={<Sidebar><RequireAuth><Product /></RequireAuth></Sidebar>} />
-                        <Route path='/product/form' element={<Sidebar><RequireAuth><ProductForm /></RequireAuth></Sidebar>} />
-                    </Routes>
+                <Routes>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/' element={
+                        <Sidebar>
+                            <RequireAuth>
+                                <DashBoard />
+                            </RequireAuth>
+                        </Sidebar>} />
+                    <Route path='/user' element={
+                        <Sidebar>
+                            <RequireAuth>
+                                <User />
+                            </RequireAuth>
+                        </Sidebar>
+                    } />
+                    <Route path='/user/form' element={
+                        <Sidebar>
+
+                            <RequireAuth>
+                                <UserForm />
+                            </RequireAuth>
+
+                        </Sidebar>
+                    } />
+                    <Route path='/product' element={
+                        <Sidebar>
+                            <RequireAuth>
+                                <Product />
+                            </RequireAuth>
+                        </Sidebar>
+                    } />
+                    <Route path='/product/form' element={
+                        <Sidebar>
+                            <RequireAuth>
+                                <ProductForm />
+                            </RequireAuth>
+                        </Sidebar>
+                    } />
+                </Routes>
                 {/* </Sidebar> */}
             </Router>
         </>

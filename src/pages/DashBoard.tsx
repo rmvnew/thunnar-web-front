@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion';
 import * as React from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../contexts/auth/AuthContext';
+import { AnimatePageLeft } from '../components/AnimatePageLeft';
 
 
 
@@ -17,8 +19,11 @@ const DashBoard = () => {
 
     return (
         <>
-            {/* <h1>{data}</h1> */}
-            <h1>{auth.user?.name}</h1>
+            <AnimatePageLeft>
+                {/* <h1>{data}</h1> */}
+                <h1>{auth.user?.name}</h1>
+            </AnimatePageLeft>
+
         </>
     )
 

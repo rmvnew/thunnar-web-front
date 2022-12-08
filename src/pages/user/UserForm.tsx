@@ -10,6 +10,7 @@ import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import { Profile } from "../../interfaces/Profile.interface";
 import { cpfMask } from "../../utils/mask";
+import { AnimatePageScaleY } from '../../components/AnimatePageScaleY';
 
 
 const UserForm = () => {
@@ -83,7 +84,7 @@ const UserForm = () => {
 
                     if (error.response.data.message == "O cpf informado é inválido!!") {
 
-                        
+
                         ShowAlert(AlertTypes.WARNING, "O cpf informado é inválido!!", 4000)
 
                     }
@@ -169,7 +170,7 @@ const UserForm = () => {
     const [alertMessage, setAlertMessage] = useState("")
     const [alertTypes, setAlertTypes] = useState("")
     const [alertProps, setAlertProps] = useState({})
-    const [time,setTime] = useState(0)
+    const [time, setTime] = useState(0)
 
     useEffect(() => {
 
@@ -219,90 +220,92 @@ const UserForm = () => {
 
     return (
         <>
-            <div className="main">
-                <h1>Formulário de usuários</h1>
+            <AnimatePageScaleY>
+                <div className="main">
+                    <h1>Formulário de usuários</h1>
 
-                <div className="form">
-                    <label>Nome</label>
-                    <input
-                        className="form-control form-control-lg"
-                        type="text"
-                        placeholder="Digite o nome"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-
-                    <label>E-mail</label>
-                    <input
-                        className="form-control form-control-lg"
-                        type="text"
-                        placeholder="Digite o e-mail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-
-                    <label>Cpf</label>
-                    <input
-                        className="form-control form-control-lg"
-                        type="text"
-                        placeholder="Digite o cpf"
-                        value={cpf}
-                        onChange={(e) => setCpf(cpfMask(e.target.value))}
-                    />
-
-
-                    {!isUpdate && <label>Senha</label>}
-                    {!isUpdate && <input
-                        className="form-control form-control-lg"
-                        type="password"
-                        placeholder="Informe a senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    }
-                    <label>Perfil</label>
-                    <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
-                        <option defaultValue={select}>{select}</option>
-                        {profile.map((data, i) => (
-
-                            <option key={i} value={data.id}>{data.name}</option>
-
-                        ))}
-
-                    </select>
-                    <div className="btn-actions">
-
+                    <div className="form">
+                        <label>Nome</label>
                         <input
-                            type="submit"
-                            value={"Novo"}
-                            className="btn btn-primary"
-                            onClick={clearOperation}
-
+                            className="form-control form-control-lg"
+                            type="text"
+                            placeholder="Digite o nome"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                         />
 
+                        <label>E-mail</label>
+                        <input
+                            className="form-control form-control-lg"
+                            type="text"
+                            placeholder="Digite o e-mail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+
+                        <label>Cpf</label>
+                        <input
+                            className="form-control form-control-lg"
+                            type="text"
+                            placeholder="Digite o cpf"
+                            value={cpf}
+                            onChange={(e) => setCpf(cpfMask(e.target.value))}
+                        />
+
+
+                        {!isUpdate && <label>Senha</label>}
                         {!isUpdate && <input
-                            type="submit"
-                            value={"Salvar"}
-                            className="btn btn-primary"
-                            onClick={createUser}
-                        />}
+                            className="form-control form-control-lg"
+                            type="password"
+                            placeholder="Informe a senha"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        }
+                        <label>Perfil</label>
+                        <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
+                            <option defaultValue={select}>{select}</option>
+                            {profile.map((data, i) => (
+
+                                <option key={i} value={data.id}>{data.name}</option>
+
+                            ))}
+
+                        </select>
+                        <div className="btn-actions">
+
+                            <input
+                                type="submit"
+                                value={"Novo"}
+                                className="btn btn-primary my-button"
+                                onClick={clearOperation}
+
+                            />
+
+                            {!isUpdate && <input
+                                type="submit"
+                                value={"Salvar"}
+                                className="btn btn-primary my-button"
+                                onClick={createUser}
+                            />}
 
 
-                        {isUpdate && <input
-                            type="submit"
-                            value={"Atualizar"}
-                            className="btn btn-secondary"
-                            onClick={updateUser}
-                        />}
+                            {isUpdate && <input
+                                type="submit"
+                                value={"Atualizar"}
+                                className="btn btn-secondary my-button"
+                                onClick={updateUser}
+                            />}
 
+                        </div>
                     </div>
+
+
+                    {open && <AlertMessage props={alertProps} />}
+
+
                 </div>
-                
-
-                {open && <AlertMessage props={alertProps} />}
-
-
-            </div>
+            </AnimatePageScaleY>
         </>
     )
 
