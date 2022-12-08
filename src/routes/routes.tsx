@@ -11,6 +11,7 @@ import Login from '../pages/login/Login';
 import ProductForm from '../pages/product/ProductForm';
 
 import { motion, MotionConfig } from 'framer-motion';
+import Footer from '../components/Footer';
 
 
 const RouterElements = () => {
@@ -23,38 +24,47 @@ const RouterElements = () => {
                     <Route path='/login' element={<Login />} />
                     <Route path='/' element={
                         <Sidebar>
-                            <RequireAuth>
-                                <DashBoard />
-                            </RequireAuth>
-                        </Sidebar>} />
+                            <Footer>
+                                <RequireAuth>
+                                    <DashBoard />
+                                </RequireAuth>
+                            </Footer>
+                        </Sidebar>
+                    } />
                     <Route path='/user' element={
                         <Sidebar>
-                            <RequireAuth>
-                                <User />
-                            </RequireAuth>
+                            <Footer>
+                                <RequireAuth>
+                                    <User />
+                                </RequireAuth>
+                            </Footer>
                         </Sidebar>
                     } />
                     <Route path='/user/form' element={
                         <Sidebar>
-
-                            <RequireAuth>
-                                <UserForm />
-                            </RequireAuth>
-
+                            <Footer>
+                                <RequireAuth>
+                                    <UserForm />
+                                </RequireAuth>
+                            </Footer>
                         </Sidebar>
                     } />
                     <Route path='/product' element={
                         <Sidebar>
-                            <RequireAuth>
-                                <Product />
-                            </RequireAuth>
+                            <Footer>
+                                <RequireAuth>
+                                    <Product />
+                                </RequireAuth>
+                            </Footer>
                         </Sidebar>
                     } />
                     <Route path='/product/form' element={
                         <Sidebar>
-                            <RequireAuth>
-                                <ProductForm />
-                            </RequireAuth>
+                            <Footer>
+                                <RequireAuth>
+                                    <ProductForm />
+                                </RequireAuth>
+                            </Footer>
                         </Sidebar>
                     } />
                 </Routes>

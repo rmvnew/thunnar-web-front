@@ -1,0 +1,119 @@
+* :root{
+    --sideBarColor: rgb(38, 67, 80);
+    --sideBarHoverColor: rgb(68, 113, 134);
+  }
+  
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+  .link:hover{
+    border-right: 4px solid white;
+    transition: 0.2s cubic-bezier(0.6, -0.28,0.735,0.045);
+    color: #FFF;
+    font-weight: bold;
+    background: rgb(68, 113, 134);
+  }
+
+  .active{
+  
+    border-right: 4px solid white;
+    transition: 0.2s cubic-bezier(0.6, -0.28,0.735,0.045);
+    background: rgb(68, 113, 134);
+    color: #FFF;
+  
+  }
+
+/* a{
+    text-decoration: none;
+} */
+
+/* a:hover{
+    color: rgb(134, 239, 255);
+} */
+
+.exit{
+    position: absolute;
+    bottom: 10px;
+   
+}
+
+  
+  .title{
+    font-size: 30px;
+  }
+  
+  .main-container{
+    display: flex;
+   
+  }
+  
+  
+  .sidebar{
+    background: var(--sideBarColor) ;
+    color: #FFF;
+    height: 100vh;
+  }
+  
+  .routes{
+    color: #FFF;
+  }
+  
+  .top_section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 10px;
+  }
+  
+  .logo{
+    font-size: 18px;
+    line-height: 0;
+  }
+  
+  .search{
+    display: flex;
+    align-items: center;
+    margin-top: 10px 0;
+    height: 30px;
+    padding: 10px;
+  }
+  
+  .search input{
+    border: none;
+    
+    margin-left: 10px;
+    border-radius: 5px;
+    background: #FFF;
+    padding: 5px 10px;
+  }
+  
+  a{
+    text-decoration: none;
+  }
+  
+  .link{
+    display: flex;
+    color: #FFF;
+    gap: 10px;
+    padding: 5px 10px;
+    transition: 0.2s cubic-bezier(0.6, -0.28,0.735,0.045);
+  }
+  
+ 
+  
+  .link_text{
+    white-space: nowrap;
+    font-size: 15px;
+    
+  }
+  
+ 
+  
+  .logo{
+    width: 150px;
+    height: 100%;
+  } 

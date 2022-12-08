@@ -3,9 +3,9 @@ import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
-import './Product.css'
 import { AnimatePageLeft } from "../../components/AnimatePageLeft";
-import { AnimatePageScaleY } from "../../components/AnimatePageScaleY";
+import './Product.css'
+
 
 
 

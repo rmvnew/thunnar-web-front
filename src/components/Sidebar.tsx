@@ -6,9 +6,9 @@ import { FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
 import { SlLogout } from "react-icons/sl";
 import { useContext, useState, useEffect } from 'react';
-import './sidebar.css'
-import { AuthContext } from '../contexts/auth/AuthContext'
-import Login from '../pages/login/Login';
+import { AuthContext } from '../contexts/auth/AuthContext';
+import './Sidebar.css'
+// import Login from '../pages/login/Login';
 
 
 
@@ -40,36 +40,36 @@ const Sidebar = ({ children }: any) => {
 
     const storageData = localStorage.getItem('authToken')
 
-    const [isExit,setIsExit] = useState(false)
+    const [isExit, setIsExit] = useState(false)
 
-    useEffect(() =>{
+    useEffect(() => {
         setIsExit(!isExit)
-    },[storageData])
+    }, [storageData])
 
     const auth = useContext(AuthContext)
 
-    const [isopen, setIsOpen] = useState(false)
+    const [isopen, setIsOpen] = useState(true)
 
     const toggle = () => setIsOpen(!isopen)
 
-    const inputAnimation = {
-        hidden: {
-            width: 0,
-            padding: 0,
-            opacity: 0,
-            transition: {
-                duration: 0.2
-            }
-        },
-        show: {
-            width: "140px",
-            padding: "5px 15px",
-            opacity: 1,
-            transition: {
-                duration: 0.5
-            }
-        }
-    }
+    // const inputAnimation = {
+    //     hidden: {
+    //         width: 0,
+    //         padding: 0,
+    //         opacity: 0,
+    //         transition: {
+    //             duration: 0.2
+    //         }
+    //     },
+    //     show: {
+    //         width: "140px",
+    //         padding: "5px 15px",
+    //         opacity: 1,
+    //         transition: {
+    //             duration: 0.5
+    //         }
+    //     }
+    // }
 
     const showAnimation = {
         hidden: {
@@ -92,7 +92,7 @@ const Sidebar = ({ children }: any) => {
     return (
         <div className="main-container">
             <motion.div animate={{
-                width: isopen ? "200px" : "40px", transition: {
+                width: isopen ? "200px" : "50px", transition: {
                     duration: 0.5,
                     type: "spring",
                     damping: 11,
@@ -147,20 +147,28 @@ const Sidebar = ({ children }: any) => {
                     ))}
                 </section>
 
-                <div className="routes">
-                    {isExit && auth.user && <NavLink
-                        to={'/login'} key={'Exit'} className="link" onClick={() => removeToken()}>
-                        <div className="icon">{<SlLogout />}</div>
-                        <AnimatePresence>
-                            {isopen && auth.user && (<motion.div
-                                variants={showAnimation}
-                                initial="hidden"
-                                animate="show"
-                                exit="hidden"
-                                className="link_text">{'Exit'}</motion.div>)}
-                        </AnimatePresence>
-                    </NavLink>}
-                </div>
+                <section className="routes exit">
+                    <motion.div animate={{
+                        width: isopen ? "200px" : "50px", transition: {
+                            duration: 0.5,
+                            type: "spring",
+                            damping: 11,
+                        }
+                    }} >
+                        {isExit && auth.user && <NavLink
+                            to={'/login'} key={'Exit'} className="link" onClick={() => removeToken()}>
+                            <div className="icon">{<SlLogout />}</div>
+                            <AnimatePresence>
+                                {isopen && auth.user && (<motion.div
+                                    variants={showAnimation}
+                                    initial="hidden"
+                                    animate="show"
+                                    exit="hidden"
+                                    className="link_text">{'Exit'}</motion.div>)}
+                            </AnimatePresence>
+                        </NavLink>}
+                    </motion.div>
+                </section>
             </motion.div>
             <main>
                 {children}
