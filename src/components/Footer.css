@@ -6,22 +6,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto:wght@900&family=Zen+Dots&display=swap');
 
 
-.footer {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    background: var(--sideBarColor);
-}
 
 
-.footer p {
+
+p {
     font-family: 'Zen Dots', cursive;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     font-style: italic;
     text-align: center;
     font-weight: bold;
-    padding-top: 10px;
     color: #fff;
+    
+    transform: translateY(50%); 
+
 }
 
 
@@ -30,13 +27,13 @@
 }
 
 .area {
-    
-    display: flex;
-    width: 85%;
-    height: 45px;
-    
-}
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 35px;
+    background: var(--sideBarColor);
 
-.name-left{
-    margin-left: 20px;
+
+
+
 }

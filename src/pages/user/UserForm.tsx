@@ -11,6 +11,7 @@ import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import { Profile } from "../../interfaces/Profile.interface";
 import { cpfMask } from "../../utils/mask";
 import { AnimatePageScaleY } from '../../components/AnimatePageScaleY';
+import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 
 
 const UserForm = () => {
@@ -220,8 +221,8 @@ const UserForm = () => {
 
     return (
         <>
-            <AnimatePageScaleY>
-                <div className="main">
+            <AnimatePageOpacity>
+                <div className="main-user-form">
                     <h1>Formulário de usuários</h1>
 
                     <div className="form">
@@ -305,7 +306,7 @@ const UserForm = () => {
 
 
                 </div>
-            </AnimatePageScaleY>
+            </AnimatePageOpacity>
         </>
     )
 

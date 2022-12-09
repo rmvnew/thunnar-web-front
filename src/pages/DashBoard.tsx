@@ -2,6 +2,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../contexts/auth/AuthContext';
 import { AnimatePageLeft } from '../components/AnimatePageLeft';
+import { AnimatePageOpacity } from '../components/AnimatePageOpacity';
 
 
 
@@ -14,10 +15,10 @@ const DashBoard = () => {
 
     return (
         <>
-            <AnimatePageLeft>
+            <AnimatePageOpacity>
                 
                 <h1>{auth.user?.name}</h1>
-            </AnimatePageLeft>
+            </AnimatePageOpacity>
 
         </>
     )

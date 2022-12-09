@@ -16,12 +16,12 @@ const Footer = ({ children }: any) => {
     return (
         <>
             {children}
-            <div className='footer'>
-                <div className="area d-flex justify-content-between">
+            {/* <div className='footer'> */}
+                <div className="area d-flex justify-content-around">
                     <p className='name-left'>USUÁRIO: <span className='name'>{auth.user?.name}</span></p>
                     <p className='name-right'>PERFIL: <span className='name'>{auth.user?.profile}</span></p>
                 </div>
-            </div>
+            {/* </div> */}
 
         </>
     )

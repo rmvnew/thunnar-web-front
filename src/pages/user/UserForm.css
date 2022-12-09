@@ -1,14 +1,15 @@
-.main{
-    width: 90vw;
-    height: 90vh;
-    background: #fcfcfd;
+.main-user-form {
     display: flex;
+    width: 85vw;
+    height: 80vh;
     flex-direction: column;
-    
     justify-content: center;
     align-items: center;
-    margin-left: 15px;
+    margin-left: 20px;
+
 }
+
+
 
 select{
     margin-top: 0px;

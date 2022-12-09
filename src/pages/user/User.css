@@ -1,23 +1,22 @@
-
-.main{
-    width: 70vw;
-    height: 80vh;
-    background: #fcfcfd;
+.main-user {
     display: flex;
+    width: 85vw;
+    height: 80vh;
     flex-direction: column;
-    
-    justify-content: center;
+
     align-items: center;
-    /* margin-left: 15px; */
-    background-color: aquamarine;
+    margin-left: 20px;
+
+
+
+
+}
+
+.search-user {
+    margin-bottom: 10px;
 }
 
 
-
-.my-table{
-    border: solid 1px #000;
-    
-}
 
 td{
     border: solid 1px #000;
@@ -55,35 +54,27 @@ td{
     text-align: center;
 }
 
-.my-table{
-    border-radius: 15px;
-    margin-top: 10px;
-    width: 90%;
-}
 
 
-.search{
-    margin-top: 0px;
-    width: 90%;
-}
+
 
 
 .btn-actions input{
     margin-left: 10px;
 }
 
-.links{
-    position: relative;
+
+
+.new-user {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 60px;
-    left: -100px;
 }
 
-.newUser{
-    position: absolute;
-    right: 0;
+.btn-user{
     margin-bottom: 10px;
+    width: 200px;
 }
 
 .btn-delete{

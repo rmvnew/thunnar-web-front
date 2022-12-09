@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
-import { AnimatePageLeft } from "../../components/AnimatePageLeft";
+import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
+import '../../App.css'
 import './Product.css'
 
 
@@ -76,22 +77,25 @@ const Product = () => {
 
   return (
 
-    <AnimatePageLeft>
+    <AnimatePageOpacity>
 
-      <div className="main">
-        <h1>Gerenciamento de usuários</h1>
-
+      <div className="main-product">
 
 
+        <div className="title">
+          <h1>Gerenciamento de usuários</h1>
+        </div>
 
-        <section className="links">
-          <NavLink to={"/product/form"} className="btn btn-primary newUser">Novo Produto</NavLink>
+
+
+        <section className="new-product">
+          <NavLink to={"/product/form"} className="btn btn-primary btn-product">Novo Produto</NavLink>
         </section>
 
 
 
         <input
-          className="form-control form-control-lg search"
+          className="form-control form-control-lg search-product"
           type="text"
           placeholder="Busca de produtos"
           value={search}
@@ -157,7 +161,7 @@ const Product = () => {
 
         <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
       </div>
-    </AnimatePageLeft>
+    </AnimatePageOpacity>
 
   );
 }

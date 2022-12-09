@@ -1,7 +1,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { FaHome, FaBars } from 'react-icons/fa'
-import { AiOutlineInbox } from 'react-icons/ai'
+import { AiOutlineInbox,AiFillSnippets } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
 import { SlLogout } from "react-icons/sl";
@@ -28,6 +28,11 @@ const routes = [
         path: "/user",
         name: "User",
         icon: <FiUser />
+    },
+    {
+        path: "/work-order",
+        name: "WorkOrder",
+        icon: <AiFillSnippets />
     }
 ]
 

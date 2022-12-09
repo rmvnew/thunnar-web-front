@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../../hooks/useApi";
 import { CategoryInterface } from "../../interfaces/Category.interface";
-import './ProductForm.css'
 import { ProductInterface } from '../../interfaces/Product.interface';
-import { AnimatePageScaleY } from "../../components/AnimatePageScaleY";
+import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
+import '../../App.css'
+import './ProductForm.css'
 
 
 
@@ -244,8 +245,10 @@ const ProductForm = () => {
 
     return (
         <>
-            <AnimatePageScaleY>
-                <div className="main">
+            <AnimatePageOpacity>
+
+
+                <div className="main-product-form">
                     <h1>Gerenciamento de produtos</h1>
 
                     <div className="form">
@@ -418,7 +421,7 @@ const ProductForm = () => {
                         </div>
                     </div>
                 </div>
-            </AnimatePageScaleY>
+            </AnimatePageOpacity>
         </>
     )
 

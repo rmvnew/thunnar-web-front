@@ -5,7 +5,7 @@ import "./User.css";
 import { NavLink } from "react-router-dom";
 import { api } from "../../hooks/useApi";
 import { ImPencil2, ImBin } from "react-icons/im";
-import { AnimatePageLeft } from "../../components/AnimatePageLeft";
+import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 
 const User = () => {
 
@@ -76,21 +76,23 @@ const User = () => {
 
 
   return (
-    <AnimatePageLeft>
-      <div className="main">
-        <h1>Gerenciamento de usuários</h1>
+    <AnimatePageOpacity>
+      <div className="main-user">
+        <div className="title">
+          <h1>Gerenciamento de usuários</h1>
+        </div>
 
 
 
 
-        <section className="links">
-          <NavLink to={"/user/form"} className="btn btn-primary newUser">Novo usuário</NavLink>
+        <section className="new-user">
+          <NavLink to={"/user/form"} className="btn btn-primary btn-user">Novo usuário</NavLink>
         </section>
 
 
 
         <input
-          className="form-control form-control-lg search"
+          className="form-control form-control-lg search-user"
           type="text"
           placeholder="Busca de usuários"
           value={search}
@@ -148,7 +150,7 @@ const User = () => {
 
         <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
       </div>
-    </AnimatePageLeft>
+    </AnimatePageOpacity>
   );
 };
 
