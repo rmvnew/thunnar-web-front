@@ -1,6 +1,6 @@
 
-import * as React from 'react';
-import { BrowserRouter as Router, Routes, Route, RouterProvider } from 'react-router-dom'
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import DashBoard from '../pages/DashBoard';
 import User from '../pages/user/User';
 import Product from '../pages/product/Product';
@@ -9,8 +9,6 @@ import UserForm from '../pages/user/UserForm';
 import { RequireAuth } from '../contexts/auth/RequireAuth';
 import Login from '../pages/login/Login';
 import ProductForm from '../pages/product/ProductForm';
-
-import { motion, MotionConfig } from 'framer-motion';
 import Footer from '../components/Footer';
 import { WorkOrder } from '../pages/work-order/Work-order';
 
@@ -26,63 +24,63 @@ const RouterElements = () => {
                     <Route path='/login' element={<Login />} />
 
                     <Route path='/' element={
-                        <Footer>
-                            <Sidebar>
-                                <RequireAuth>
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
                                     <DashBoard />
-                                </RequireAuth>
-                            </Sidebar>
-                        </Footer>
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
                     } />
 
                     <Route path='/user' element={
-                        <Footer>
-                            <Sidebar>
-                                <RequireAuth>
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
                                     <User />
-                                </RequireAuth>
-                            </Sidebar>
-                        </Footer>
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
                     } />
 
                     <Route path='/user/form' element={
-                        <Footer>
-                            <Sidebar>
-                                <RequireAuth>
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
                                     <UserForm />
-                                </RequireAuth>
-                            </Sidebar>
-                        </Footer>
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
                     } />
 
                     <Route path='/product' element={
-                        <Footer>
-                            <Sidebar>
-                                <RequireAuth>
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
                                     <Product />
-                                </RequireAuth>
-                            </Sidebar>
-                        </Footer>
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
                     } />
 
                     <Route path='/product/form' element={
-                        <Footer>
-                            <Sidebar>
-                                <RequireAuth>
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
                                     <ProductForm />
-                                </RequireAuth>
-                            </Sidebar>
-                        </Footer>
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
                     } />
 
                     <Route path='/work-order' element={
-                        <Footer>
-                            <Sidebar>
-                                <RequireAuth>
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
                                     <WorkOrder />
-                                </RequireAuth>
-                            </Sidebar>
-                        </Footer>
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
                     } />
                 </Routes>
                 {/* </Sidebar> */}

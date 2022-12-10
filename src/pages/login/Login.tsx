@@ -1,13 +1,12 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/auth/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import '../../common/css/bootstrap.min.css'
-import './Login.css'
 import { ModalDefault } from '../../components/Modal.default';
 import { RecoverForm } from '../../components/recover-password/recover-password';
 import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import AlertMessage from '../../components/AlertMessage';
+import { LoginCard, LoginInputs, LoginTitle } from './LoginStyled';
 
 
 
@@ -81,11 +80,12 @@ const Login = () => {
 
     return (
         <>
-            <div className="card">
-                <div className="inputs">
-                    <div className="myTop">
+            <LoginCard>
+                <LoginInputs>
+                    <LoginTitle>
                         <h2>Login</h2>
-                    </div>
+                    </LoginTitle>
+                    
                     <input
                         className='form-control form-control-lg'
                         type="text"
@@ -104,8 +104,8 @@ const Login = () => {
                     <ModalDefault body={<RecoverForm />} />
 
                     <button className='btn btn-primary' onClick={handleLogin}>Logar</button>
-                </div>
-            </div>
+                </LoginInputs>
+            </LoginCard>
             {open && <AlertMessage props={alertProps} />}
         </>
     )

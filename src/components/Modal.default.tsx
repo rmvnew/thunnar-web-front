@@ -5,6 +5,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import { LoginRecoverText } from '../pages/login/LoginStyled';
 
 
 const style = {
@@ -29,7 +30,8 @@ export const ModalDefault = ({body}:{body:React.ReactNode}) => {
 
   return (
     <div>
-      <a className='recover-text' onClick={handleOpen}>Esqueci a senha</a>
+      <LoginRecoverText onClick={handleOpen}>Esqueci a senha</LoginRecoverText>
+      {/* <a className='recover-text' onClick={handleOpen}>Esqueci a senha</a> */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
