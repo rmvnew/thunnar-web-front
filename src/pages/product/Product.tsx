@@ -5,7 +5,7 @@ import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
 import '../../App.css'
-import { ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTitle } from "./ProductStyled";
+import { ProductBaseOption, ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTitle } from "./ProductStyled";
 
 
 
@@ -122,13 +122,12 @@ const Product = () => {
                   <td>{product.product_name}</td>
                   <td>{product.product_barcode}</td>
                   <td>{product.product_quantity}</td>
-                  {/* <td>{`R$ ${product.product_price.toString().replace('.',',')}`}</td> */}
                   <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.product_price)}</td>
                   <td>{product.is_active === true ? "Ativo" : "Inativo"}</td>
                   <td>
 
-                    {/* <div className="d-flex justify-content-around base-options"> */}
-                    <div className=" base-options">
+                   
+                    <ProductBaseOption >
 
                       <NavLink to={"/product/form"} state={{
                         data: {
@@ -147,11 +146,11 @@ const Product = () => {
                         }
                       }} className="btn btn-warning"><ImPencil2 /></NavLink>
 
-                      <button className="btn btn-danger btn-delete"
+                      <button className="btn btn-danger "
                         onClick={() => deleteProduct(product.product_id)}
                       ><ImBin /></button>
 
-                    </div>
+                    </ProductBaseOption>
 
                   </td>
                 </tr>

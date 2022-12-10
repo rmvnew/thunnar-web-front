@@ -32,6 +32,14 @@ export const ProductButtonNewProduct = styled(NavLink)`
     width: 200px;
 `
 
+export const ProductBaseOption = styled.div`
+    display: flex;
+   
+    justify-content: space-around;
+    
+     
+`
+
 export const ProductTable = styled.table`
     margin-top: 10px;
     thead{
