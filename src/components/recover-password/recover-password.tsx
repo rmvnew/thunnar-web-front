@@ -1,11 +1,11 @@
-import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+
+import { useState } from 'react';
 import { AlertTypes } from '../../enums/enums';
 import { api } from '../../hooks/useApi';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import { cpfMask } from '../../utils/mask';
 import AlertMessage from '../AlertMessage';
-import './recover-password.css'
+import { RecoverInputPass, RecoverPassButtonSave, RecoverPassLabel, RecoverTitle } from './RecoverPasswordStyled';
 
 
 
@@ -68,8 +68,9 @@ export const RecoverForm = () => {
 
     return (
         <div>
-            <h3>Reconfigurar Senha</h3>
-            <label >Cpf</label>
+            <RecoverTitle>Reconfigurar Senha</RecoverTitle>
+
+            <RecoverPassLabel>CPF</RecoverPassLabel>
             <input
                 className="form-control form-control-lg"
                 type="text"
@@ -78,7 +79,8 @@ export const RecoverForm = () => {
                 onChange={(e) => setCpf(cpfMask(e.target.value))}
             />
 
-            <label >Senha</label>
+            <RecoverPassLabel >Senha</RecoverPassLabel>
+
             <input
                 className="form-control form-control-lg"
                 type="password"
@@ -87,16 +89,17 @@ export const RecoverForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <label >Repita a Senha</label>
-            <input
-                className="form-control form-control-lg last"
+            <RecoverPassLabel >Repita a Senha</RecoverPassLabel>
+            <RecoverInputPass
+                className="form-control form-control-lg"
                 type="password"
                 placeholder="Digite a senha"
                 value={rePassword}
                 onChange={(e) => setRePassword(e.target.value)}
             />
 
-            <Button onClick={checkPassword} className='btn-save' variant="outlined">Salvar</Button>
+
+            <RecoverPassButtonSave onClick={checkPassword} variant="outlined">hehe</RecoverPassButtonSave>
 
             {open && <AlertMessage props={alertProps} />}
 
