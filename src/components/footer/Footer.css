@@ -1,15 +1,15 @@
-:root {
+/* :root {
     --sideBarColor: rgb(38, 67, 80);
     --nameColor: rgb(0, 255, 30);
-}
+} */
 
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto:wght@900&family=Zen+Dots&display=swap');
-
-
+/* @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto:wght@900&family=Zen+Dots&display=swap'); */
 
 
 
-p {
+
+
+/* p {
     font-family: 'Zen Dots', cursive;
     font-size: 0.9rem;
     font-style: italic;
@@ -19,14 +19,14 @@ p {
     
     transform: translateY(50%); 
 
-}
+} */
 
 
-.name {
+/* .name {
     color: var(--nameColor);
-}
+} */
 
-.area {
+/* .area {
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -36,4 +36,4 @@ p {
 
 
 
-}
+} */

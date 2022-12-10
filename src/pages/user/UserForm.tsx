@@ -10,7 +10,6 @@ import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import { Profile } from "../../interfaces/Profile.interface";
 import { cpfMask } from "../../utils/mask";
-import { AnimatePageScaleY } from '../../components/AnimatePageScaleY';
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 
 

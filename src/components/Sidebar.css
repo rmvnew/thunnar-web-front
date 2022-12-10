@@ -45,7 +45,7 @@
   
   
   .sidebar{
-    background: var(--sideBarColor) ;
+    background: rgb(38, 67, 80) ;
     color: #FFF;
     height: 100vh;
   }

@@ -9,7 +9,7 @@ import UserForm from '../pages/user/UserForm';
 import { RequireAuth } from '../contexts/auth/RequireAuth';
 import Login from '../pages/login/Login';
 import ProductForm from '../pages/product/ProductForm';
-import Footer from '../components/Footer';
+import Footer from '../components/footer/Footer';
 import { WorkOrder } from '../pages/work-order/Work-order';
 
 
