@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import DashBoard from '../pages/DashBoard';
 import User from '../pages/user/User';
 import Product from '../pages/product/Product';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/sidebar/Sidebar';
 import UserForm from '../pages/user/UserForm';
 import { RequireAuth } from '../contexts/auth/RequireAuth';
 import Login from '../pages/login/Login';

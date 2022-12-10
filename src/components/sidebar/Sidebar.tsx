@@ -6,9 +6,9 @@ import { FiUser } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
 import { SlLogout } from "react-icons/sl";
 import { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../contexts/auth/AuthContext';
+import { AuthContext } from '../../contexts/auth/AuthContext';
 import './Sidebar.css'
-// import Login from '../pages/login/Login';
+
 
 
 
@@ -57,24 +57,7 @@ const Sidebar = ({ children }: any) => {
 
     const toggle = () => setIsOpen(!isopen)
 
-    // const inputAnimation = {
-    //     hidden: {
-    //         width: 0,
-    //         padding: 0,
-    //         opacity: 0,
-    //         transition: {
-    //             duration: 0.2
-    //         }
-    //     },
-    //     show: {
-    //         width: "140px",
-    //         padding: "5px 15px",
-    //         opacity: 1,
-    //         transition: {
-    //             duration: 0.5
-    //         }
-    //     }
-    // }
+    
 
     const showAnimation = {
         hidden: {
@@ -109,26 +92,14 @@ const Sidebar = ({ children }: any) => {
                 <div className="top_section">
 
 
-                    {isopen && <motion.img src={require('../common/assets/logo.png')} className="logo"></motion.img>}
+                    {isopen && <motion.img src={require('../../common/assets/logo.png')} className="logo"></motion.img>}
 
                     <div className="bars">
                         <FaBars onClick={toggle} />
                     </div>
                 </div>
 
-                {/* <div className="search">
-                    <div className="search_icon">
-                        <BiSearch />
-                    </div>
-                    <AnimatePresence>
-                        {isopen && (<motion.input
-                            initial="hidden"
-                            animate="show"
-                            exit="hidden"
-                            variants={inputAnimation}
-                            placeholder='Search...' />)}
-                    </AnimatePresence>
-                </div> */}
+               
 
                 <section className='routes'>
                     {routes.map((route) => (
@@ -136,7 +107,7 @@ const Sidebar = ({ children }: any) => {
 
 
                         <NavLink
-                            // activeClassName="active"
+                           
                             to={route.path} key={route.name} className="link">
                             <div className="icon">{route.icon}</div>
                             <AnimatePresence>
