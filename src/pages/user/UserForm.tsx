@@ -5,12 +5,12 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import AlertMessage from "../../components/AlertMessage";
 import { api } from "../../hooks/useApi";
-import './UserForm.css'
 import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import { Profile } from "../../interfaces/Profile.interface";
 import { cpfMask } from "../../utils/mask";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
+import { UserFormForm, UserFormLabel, UserFormMain, UserInputButton } from "./UserFormStyled";
 
 
 const UserForm = () => {
@@ -221,11 +221,11 @@ const UserForm = () => {
     return (
         <>
             <AnimatePageOpacity>
-                <div className="main-user-form">
+                <UserFormMain >
                     <h1>Formulário de usuários</h1>
 
-                    <div className="form">
-                        <label>Nome</label>
+                    <UserFormForm >
+                        <UserFormLabel>Nome</UserFormLabel>
                         <input
                             className="form-control form-control-lg"
                             type="text"
@@ -234,7 +234,7 @@ const UserForm = () => {
                             onChange={(e) => setName(e.target.value)}
                         />
 
-                        <label>E-mail</label>
+                        <UserFormLabel>E-mail</UserFormLabel>
                         <input
                             className="form-control form-control-lg"
                             type="text"
@@ -243,7 +243,7 @@ const UserForm = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
 
-                        <label>Cpf</label>
+                        <UserFormLabel>Cpf</UserFormLabel>
                         <input
                             className="form-control form-control-lg"
                             type="text"
@@ -253,7 +253,7 @@ const UserForm = () => {
                         />
 
 
-                        {!isUpdate && <label>Senha</label>}
+                        {!isUpdate && <UserFormLabel>Senha</UserFormLabel>}
                         {!isUpdate && <input
                             className="form-control form-control-lg"
                             type="password"
@@ -262,7 +262,7 @@ const UserForm = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         }
-                        <label>Perfil</label>
+                        <UserFormLabel>Perfil</UserFormLabel>
                         <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
                             <option defaultValue={select}>{select}</option>
                             {profile.map((data, i) => (
@@ -274,37 +274,37 @@ const UserForm = () => {
                         </select>
                         <div className="btn-actions">
 
-                            <input
+                            <UserInputButton
                                 type="submit"
                                 value={"Novo"}
-                                className="btn btn-primary my-button"
+                                className="btn btn-primary"
                                 onClick={clearOperation}
 
                             />
 
-                            {!isUpdate && <input
+                            {!isUpdate && <UserInputButton
                                 type="submit"
                                 value={"Salvar"}
-                                className="btn btn-primary my-button"
+                                className="btn btn-primary "
                                 onClick={createUser}
                             />}
 
 
-                            {isUpdate && <input
+                            {isUpdate && <UserInputButton
                                 type="submit"
                                 value={"Atualizar"}
-                                className="btn btn-secondary my-button"
+                                className="btn btn-secondary "
                                 onClick={updateUser}
                             />}
 
                         </div>
-                    </div>
+                    </UserFormForm>
 
 
                     {open && <AlertMessage props={alertProps} />}
 
 
-                </div>
+                </UserFormMain>
             </AnimatePageOpacity>
         </>
     )

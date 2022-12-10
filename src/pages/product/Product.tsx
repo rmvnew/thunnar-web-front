@@ -5,7 +5,7 @@ import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
 import '../../App.css'
-import { ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct } from "./ProductStyled";
+import { ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTitle } from "./ProductStyled";
 
 
 
@@ -82,9 +82,9 @@ const Product = () => {
       <ProductMain >
 
 
-        <div className="title">
-          <h1>Gerenciamento de usuários</h1>
-        </div>
+        
+          <ProductTitle>Gerenciamento de usuários</ProductTitle>
+        
 
 
 
@@ -102,7 +102,7 @@ const Product = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <table className="my-table table table-striped">
+        <ProductTable className="table table-striped">
           <thead>
             <tr>
               <td>id</td>
@@ -157,7 +157,7 @@ const Product = () => {
                 </tr>
               ))}
           </tbody>
-        </table>
+        </ProductTable>
 
         <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
       </ProductMain>

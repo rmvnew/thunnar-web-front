@@ -1,11 +1,11 @@
 import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import "../../common/css/bootstrap.min.css";
-import "./User.css";
 import { NavLink } from "react-router-dom";
 import { api } from "../../hooks/useApi";
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
+import { UserBaseOption, UserBtnNewUser, UserInputSearch, UserMain, UserNewUser, UserTable, UserTitle } from "./UserStyled";
 
 const User = () => {
 
@@ -77,29 +77,28 @@ const User = () => {
 
   return (
     <AnimatePageOpacity>
-      <div className="main-user">
-        <div className="title">
-          <h1>Gerenciamento de usuários</h1>
-        </div>
+      <UserMain >
+
+        
+          <UserTitle>Gerenciamento de usuários</UserTitle>
+        
+
+
+        <UserNewUser >
+          <UserBtnNewUser to={"/user/form"} className="btn btn-primary">Novo usuário</UserBtnNewUser>
+        </UserNewUser>
 
 
 
-
-        <section className="new-user">
-          <NavLink to={"/user/form"} className="btn btn-primary btn-user">Novo usuário</NavLink>
-        </section>
-
-
-
-        <input
-          className="form-control form-control-lg search-user"
+        <UserInputSearch
+          className="form-control form-control-lg "
           type="text"
           placeholder="Busca de usuários"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <table className="my-table table table-striped">
+        <UserTable className="my-table table table-striped">
           <thead>
             <tr>
               <td>id</td>
@@ -123,7 +122,7 @@ const User = () => {
                   <td>{user.is_active === true ? "Ativo" : "Inativo"}</td>
                   <td>
 
-                    <div className="d-flex justify-content-around base-options">
+                    <UserBaseOption >
 
                       <NavLink to={"/user/form"} state={{
                         data: {
@@ -136,20 +135,20 @@ const User = () => {
                         }
                       }} className="btn btn-warning"><ImPencil2 /></NavLink>
 
-                      <button className="btn btn-danger btn-delete"
+                      <button className="btn btn-danger"
                         onClick={() => deleteUser(user.user_id)}
                       ><ImBin /></button>
 
-                    </div>
+                    </UserBaseOption>
 
                   </td>
                 </tr>
               ))}
           </tbody>
-        </table>
+        </UserTable>
 
         <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
-      </div>
+      </UserMain>
     </AnimatePageOpacity>
   );
 };

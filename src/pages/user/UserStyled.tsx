@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 
 
-export const ProductTitle = styled.h1`
+
+export const UserTitle = styled.h1`
     margin: 50px;
     text-align: center;
 `
 
-export const ProductMain = styled.div`
+
+export const UserMain = styled.div`
     display: flex;
     width: 85vw;
     height: 80vh;
@@ -16,23 +18,36 @@ export const ProductMain = styled.div`
     margin-left: 20px;
 
 `
-export const ProductInputSearch = styled.input`
-    margin-bottom: 10px;
-`
 
-export const ProductSectionNewProduct = styled.section`
+export const UserNewUser = styled.section`
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;
     width: 100%;
-`
 
-export const ProductButtonNewProduct = styled(NavLink)`
+`
+export const UserBtnNewUser = styled(NavLink)`
     margin-bottom: 10px;
     width: 200px;
+
 `
 
-export const ProductTable = styled.table`
+export const UserInputSearch = styled.input`
+     margin-bottom: 10px;
+`
+
+export const UserBaseOption = styled.div`
+    display: flex;
+   
+    justify-content: space-around;
+    
+     
+`
+
+
+
+
+export const UserTable = styled.table`
     margin-top: 10px;
     thead{
         background-color:rgb(38, 67, 80);
@@ -46,3 +61,4 @@ export const ProductTable = styled.table`
         text-align: center;
     }
 `
+
