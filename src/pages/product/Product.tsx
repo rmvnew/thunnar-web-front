@@ -5,7 +5,7 @@ import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
 import '../../App.css'
-import './Product.css'
+import { ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct } from "./ProductStyled";
 
 
 
@@ -79,7 +79,7 @@ const Product = () => {
 
     <AnimatePageOpacity>
 
-      <div className="main-product">
+      <ProductMain >
 
 
         <div className="title">
@@ -88,14 +88,14 @@ const Product = () => {
 
 
 
-        <section className="new-product">
-          <NavLink to={"/product/form"} className="btn btn-primary btn-product">Novo Produto</NavLink>
-        </section>
+        <ProductSectionNewProduct >
+          <ProductButtonNewProduct to={"/product/form"} className="btn btn-primary ">Novo Produto</ProductButtonNewProduct>
+        </ProductSectionNewProduct>
 
 
 
-        <input
-          className="form-control form-control-lg search-product"
+        <ProductInputSearch
+          className="form-control form-control-lg "
           type="text"
           placeholder="Busca de produtos"
           value={search}
@@ -160,7 +160,7 @@ const Product = () => {
         </table>
 
         <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
-      </div>
+      </ProductMain>
     </AnimatePageOpacity>
 
   );

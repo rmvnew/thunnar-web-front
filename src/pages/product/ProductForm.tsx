@@ -6,7 +6,7 @@ import { CategoryInterface } from "../../interfaces/Category.interface";
 import { ProductInterface } from '../../interfaces/Product.interface';
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 import '../../App.css'
-import './ProductForm.css'
+import { ProductFormForm, ProductFormLabelOptional, ProductFormMain, ProductFormSelect } from "./ProductFormStyled";
 
 
 
@@ -248,10 +248,10 @@ const ProductForm = () => {
             <AnimatePageOpacity>
 
 
-                <div className="main-product-form">
+                <ProductFormMain >
                     <h1>Gerenciamento de produtos</h1>
 
-                    <div className="form">
+                    <ProductFormForm >
 
 
                         <div className="row">
@@ -365,7 +365,7 @@ const ProductForm = () => {
                             </div>
 
                             {!isUpdate && <div className="col-lg-2">
-                                <label>Nota fiscal <i className="option">(Opcional)</i> </label>
+                                <label>Nota fiscal <ProductFormLabelOptional >(Opcional)</ProductFormLabelOptional> </label>
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
@@ -378,7 +378,7 @@ const ProductForm = () => {
                             <div className="col-lg-3">
 
                                 <label>Categoria</label>
-                                <select onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
+                                <ProductFormSelect onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
                                     <option defaultValue={select}>{select}</option>
                                     {categories.map((data, i) => (
 
@@ -386,7 +386,7 @@ const ProductForm = () => {
 
                                     ))}
 
-                                </select>
+                                </ProductFormSelect>
                             </div>
                         </div>
 
@@ -419,8 +419,8 @@ const ProductForm = () => {
                             />}
 
                         </div>
-                    </div>
-                </div>
+                    </ProductFormForm>
+                </ProductFormMain>
             </AnimatePageOpacity>
         </>
     )
