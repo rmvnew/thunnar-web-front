@@ -4,7 +4,7 @@ import { ImBin, ImPencil2 } from "react-icons/im"
 import { NavLink } from "react-router-dom"
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
-import './Work-order.css'
+import { WorkOrderButtonNewOrder, WorkOrderInputSearch, WorkOrderMain, WorkorderNewOrder, WorkOrderTable, WorkOrderTitle } from "./WorkOrderStyled"
 
 
 
@@ -77,24 +77,24 @@ export const WorkOrder = () => {
     return (
         <>
             <AnimatePageOpacity>
-                <div className="main-work-order">
-                    <div className="title">
-                        <h1>Gerenciador de Ordem de Serviço</h1>
-                    </div>
+                <WorkOrderMain >
+                    
+                        <WorkOrderTitle>Gerenciador de Ordem de Serviço</WorkOrderTitle>
+                    
 
-                    <section className="new-work-order">
-                        <NavLink to={"/product/form"} className="btn btn-primary btn-work-order">Novo Produto</NavLink>
-                    </section>
+                    <WorkorderNewOrder >
+                        <WorkOrderButtonNewOrder to={"/product/form"} className="btn btn-primary ">Novo Produto</WorkOrderButtonNewOrder>
+                    </WorkorderNewOrder>
 
-                    <input
-                        className="form-control form-control-lg search-work-order"
+                    <WorkOrderInputSearch
+                        className="form-control form-control-lg "
                         type="text"
                         placeholder="Busca de usuários"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
 
-                    <table className="my-table table table-striped">
+                    <WorkOrderTable className="table table-striped">
                         <thead>
                             <tr>
                                 <td>id</td>
@@ -137,9 +137,9 @@ export const WorkOrder = () => {
                                     </tr>
                                 ))}
                         </tbody>
-                    </table>
+                    </WorkOrderTable>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
-                </div>
+                </WorkOrderMain>
             </AnimatePageOpacity>
         </>
     )
