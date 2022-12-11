@@ -6,7 +6,7 @@ import { CategoryInterface } from "../../interfaces/Category.interface";
 import { ProductInterface } from '../../interfaces/Product.interface';
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 import '../../App.css'
-import { ProductFormForm, ProductFormLabelOptional, ProductFormMain, ProductFormSelect } from "./ProductFormStyled";
+import { ProductFormForm, ProductFormLabelOptional, ProductFormMain, ProductFormSelect, ProductFormText, ProductInputButton, ProductLabel } from "./ProductFormStyled";
 
 
 
@@ -249,7 +249,7 @@ const ProductForm = () => {
 
 
                 <ProductFormMain >
-                    <h1>Gerenciamento de produtos</h1>
+                    <ProductFormText>Gerenciamento de produtos</ProductFormText>
 
                     <ProductFormForm >
 
@@ -257,7 +257,7 @@ const ProductForm = () => {
                         <div className="row">
                             <div className="col">
 
-                                <label>Nome</label>
+                                <ProductLabel>Nome</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
@@ -269,7 +269,7 @@ const ProductForm = () => {
 
                             <div className="col-lg-4">
 
-                                <label>Código de barras</label>
+                                <ProductLabel>Código de barras</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
@@ -282,7 +282,7 @@ const ProductForm = () => {
 
                             <div className="col-lg-3">
 
-                                <label>Código do produto</label>
+                                <ProductLabel>Código do produto</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
@@ -300,7 +300,7 @@ const ProductForm = () => {
                         <div className="row">
 
                             <div className="col">
-                                <label>Localização</label>
+                                <ProductLabel>Localização</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
@@ -312,7 +312,7 @@ const ProductForm = () => {
                             </div>
 
                             <div className="col-lg-2">
-                                <label>Quantidade</label>
+                                <ProductLabel>Quantidade</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="number"
@@ -323,7 +323,7 @@ const ProductForm = () => {
                             </div>
 
                             <div className="col-lg-2">
-                                <label>Quantidade minima</label>
+                                <ProductLabel>Quantidade minima</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="number"
@@ -334,7 +334,7 @@ const ProductForm = () => {
                             </div>
 
                             <div className="col-lg-2">
-                                <label>Preço</label>
+                                <ProductLabel>Preço</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="number"
@@ -354,7 +354,7 @@ const ProductForm = () => {
 
 
                             <div className="col-lg-2">
-                                <label>Preço de compra</label>
+                                <ProductLabel>Preço de compra</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="number"
@@ -365,7 +365,7 @@ const ProductForm = () => {
                             </div>
 
                             {!isUpdate && <div className="col-lg-2">
-                                <label>Nota fiscal <ProductFormLabelOptional >(Opcional)</ProductFormLabelOptional> </label>
+                                <ProductLabel>Nota fiscal <ProductFormLabelOptional >(Opcional)</ProductFormLabelOptional> </ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
@@ -377,7 +377,7 @@ const ProductForm = () => {
 
                             <div className="col-lg-3">
 
-                                <label>Categoria</label>
+                                <ProductLabel>Categoria</ProductLabel>
                                 <ProductFormSelect onChange={e => setOptions(e.target.value)} className="form-select form-select-lg mb-3" aria-label="Default select example">
                                     <option defaultValue={select}>{select}</option>
                                     {categories.map((data, i) => (
@@ -395,26 +395,26 @@ const ProductForm = () => {
 
                         <div className="btn-actions">
 
-                            <input
+                            <ProductInputButton
                                 type="submit"
                                 value={"Novo"}
-                                className="btn btn-primary my-button"
+                                className="btn btn-primary"
                                 onClick={clearOperation}
 
                             />
 
-                            {!isUpdate && <input
+                            {!isUpdate && <ProductInputButton
                                 type="submit"
                                 value={"Salvar"}
-                                className="btn btn-primary my-button"
+                                className="btn btn-primary"
                                 onClick={createProduct}
                             />}
 
 
-                            {isUpdate && <input
+                            {isUpdate && <ProductInputButton
                                 type="submit"
                                 value={"Atualizar"}
-                                className="btn btn-secondary my-button"
+                                className="btn btn-secondary"
                                 onClick={updateUser}
                             />}
 

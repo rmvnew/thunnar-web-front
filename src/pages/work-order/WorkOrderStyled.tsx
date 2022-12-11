@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from "react-router-dom"
+import { WorkOrder } from './Work-order';
 
 
 export const WorkOrderTitle = styled.h1`
@@ -29,6 +30,25 @@ export const WorkorderNewOrder = styled.section`
 
 export const WorkOrderButtonNewOrder = styled(NavLink)`
     width: 200px;
+`
+
+export const WorkOrderButtonComplet = styled.button`
+    &:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        width: max-content;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px 5px;
+        transition: opacity 1s ease-in-out;
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 110%;
+    }
 `
 
 export const WorkOrderTable = styled.table`

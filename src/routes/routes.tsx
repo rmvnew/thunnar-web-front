@@ -11,6 +11,7 @@ import Login from '../pages/login/Login';
 import ProductForm from '../pages/product/ProductForm';
 import Footer from '../components/footer/Footer';
 import { WorkOrder } from '../pages/work-order/Work-order';
+import { WorkOrderForm } from '../pages/work-order/WorkOrderForm';
 
 
 const RouterElements = () => {
@@ -78,6 +79,16 @@ const RouterElements = () => {
                             <Footer>
                                 <Sidebar>
                                     <WorkOrder />
+                                </Sidebar>
+                            </Footer>
+                        </RequireAuth>
+                    } />
+                    
+                    <Route path='/work-order/form' element={
+                        <RequireAuth>
+                            <Footer>
+                                <Sidebar>
+                                    <WorkOrderForm />
                                 </Sidebar>
                             </Footer>
                         </RequireAuth>

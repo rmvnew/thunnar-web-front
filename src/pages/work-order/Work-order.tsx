@@ -1,6 +1,7 @@
 import { Pagination } from "@mui/material"
 import { useEffect, useState } from "react"
 import { ImBin, ImPencil2 } from "react-icons/im"
+import { FiCheck } from "react-icons/fi";
 import { NavLink } from "react-router-dom"
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
@@ -8,11 +9,18 @@ import { WorkOrderButtonNewOrder, WorkOrderInputSearch, WorkOrderMain, Workorder
 
 
 
+
+
+
 export const WorkOrder = () => {
+
+    function getCurrentDate(date: Date) {
+
+    }
 
     function setResponse(res: any) {
 
-        setUsers(res.data.items)
+        setServiceOrder(res.data.items)
         setPages(res.data.meta.totalPages)
 
     }
@@ -22,54 +30,58 @@ export const WorkOrder = () => {
     }
 
 
-    const [users, setUsers] = useState<any[]>([])
+    const [serviceOrder, setServiceOrder] = useState<any[]>([])
     const [pages, setPages] = useState(0)
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState("")
 
-    const getUser = async (page: number = 1) => {
+    const getServiceOrder = async (page: number = 1) => {
 
-        await api.get(`/user?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
+        await api.get(`/service-order?page=${page}&limit=8&sort=DESC&orderBy=ID`).then((response) => {
 
             setResponse(response)
         });
     };
 
 
-    const getUserByName = async (page: number = 1, name: string = "") => {
+    const getServiceOrderByNameClient = async (page: number = 1, name: string = "") => {
 
-        await api.get(`/user?page=${page}&limit=8&sort=DESC&orderBy=ID&user_name=${name}`).then((response) => {
+        await api.get(`/service-order?page=${page}&limit=8&sort=DESC&orderBy=ID&search=${name}`).then((response) => {
             setResponse(response)
         });
     };
 
 
 
-    const deleteUser = async (user_id: number = 0) => {
+    const deleteOrder = async (order_id: number = 0) => {
 
-        console.log(user_id);
+        console.log(order_id);
 
-        await api.delete(`/user/${user_id}`)
+        await api.delete(`/service-order/${order_id}`)
             .then(response => {
-                getUser();
+                getServiceOrder();
             }).catch(error => {
                 console.log(error);
             })
     }
 
+    const completOrder = async (order_id: number = 0) =>{
+
+    }
+
 
     useEffect(() => {
-        getUserByName(page, search)
+        getServiceOrderByNameClient(page, search)
     }, [search])
 
     useEffect(() => {
-        getUser();
+        getServiceOrder();
     }, []);
 
 
 
     useEffect(() => {
-        getUser(page);
+        getServiceOrder(page);
     }, [page])
 
 
@@ -78,18 +90,18 @@ export const WorkOrder = () => {
         <>
             <AnimatePageOpacity>
                 <WorkOrderMain >
-                    
-                        <WorkOrderTitle>Gerenciador de Ordem de Serviço</WorkOrderTitle>
-                    
+
+                    <WorkOrderTitle>Gerenciador de Ordem de Serviço</WorkOrderTitle>
+
 
                     <WorkorderNewOrder >
-                        <WorkOrderButtonNewOrder to={"/product/form"} className="btn btn-primary ">Novo Produto</WorkOrderButtonNewOrder>
+                        <WorkOrderButtonNewOrder to={"/work-order/form"} className="btn btn-primary ">Nova Ordem</WorkOrderButtonNewOrder>
                     </WorkorderNewOrder>
 
                     <WorkOrderInputSearch
                         className="form-control form-control-lg "
                         type="text"
-                        placeholder="Busca de usuários"
+                        placeholder="Busca de cliente"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
@@ -97,39 +109,47 @@ export const WorkOrder = () => {
                     <WorkOrderTable className="table table-striped">
                         <thead>
                             <tr>
-                                <td>id</td>
-                                <td>Nome</td>
-                                <td>E-mail</td>
-                                <td>Cpf</td>
-                                <td>Perfil</td>
-                                <td>Status</td>
+                                <td>Nr Ordem</td>
+                                <td>Nome do cliente</td>
+                                <td>Telefone Cliente</td>
+                                <td>Data de inicio</td>
+                                <td>Previsão de entrega</td>
                                 <td>Opções</td>
+
+
+
                             </tr>
                         </thead>
                         <tbody>
-                            {users &&
-                                users.map((user) => (
-                                    <tr key={user.user_id}>
-                                        <td>{user.user_id}</td>
-                                        <td>{user.user_name}</td>
-                                        <td>{user.user_email}</td>
-                                        <td>{user.user_cpf}</td>
-                                        <td>{user.profile.profile_name}</td>
-                                        <td>{user.is_active === true ? "Ativo" : "Inativo"}</td>
+                            {serviceOrder &&
+                                serviceOrder.map((so) => (
+                                    <tr key={so.service_orde_number}>
+                                        <td>{so.service_orde_number}</td>
+                                        <td>{so.client.client_name}</td>
+                                        <td>{so.client.client_phone}</td>
+                                        <td>{so.service_order_date}</td>
+                                        <td>{so.service_order_expiration}</td>
+
                                         <td>
 
                                             <div className="d-flex justify-content-around base-options">
 
-                                                <NavLink to={"/user/form"} state={{
+                                                <button className="btn btn-success btn-delete"
+                                                    onClick={() => completOrder(so.service_order_id)}
+                                                    data-hover="Fechar Ordem"
+                                                ><FiCheck /></button>
+
+                                                <NavLink to={"/work-order/form"} state={{
                                                     data: {
-                                                        user_id: user.user_id,
+                                                        WorkOrder: so
 
                                                     }
                                                 }} className="btn btn-warning"><ImPencil2 /></NavLink>
 
                                                 <button className="btn btn-danger btn-delete"
-                                                    onClick={() => deleteUser(user.user_id)}
+                                                    onClick={() => deleteOrder(so.service_order_id)}
                                                 ><ImBin /></button>
+                                                
 
                                             </div>
 
