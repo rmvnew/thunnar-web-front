@@ -75,7 +75,7 @@ export const LoginRecoverText = styled.a`
     position: absolute;
     right: 80px;
     margin-top: 7px;
-    color: #FFF;
+    color: #ffffff;
 
     &:hover{
         font-weight: 600;
