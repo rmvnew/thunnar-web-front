@@ -1,59 +1,40 @@
 
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useState } from "react"
 import { ImSearch, ImUserPlus } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { WorkOrderClientButton, WorkOrderClientCardButtons, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title } from "./WorkOrderFormStyled"
-import { ModalDefault } from "../../components/Modal.default";
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { ModalClient } from '../../components/client/Modal.client';
 
 
-
-
-
-
 export const WorkOrderForm = () => {
 
-    const location = useLocation()
-    const dataResult = location.state?.data
-
-
-    function setUser() {
-        if (dataResult !== undefined) {
-            setIsUpdate(true)
-
-
-        } else {
-            setIsUpdate(false)
-        }
-
-    }
-
-    function show(obj: any) {
-        console.log(obj);
+   
+    function exit(obj: any) {
+       
         setShowModal(obj.statusModal)
     }
-
     
+    
+    function getClient(obj:any){
+        
+        console.log('object: ',obj);
+        setClientName(obj.client.client_name)
+        setClientPhone(obj.client.client_phone)
+        setShowModal(obj.status)
+        
+    }
 
-    function closeModal(status:boolean = false){
+    function closeModal(status: boolean = false) {
         setShowModal(status)
     }
 
-    const [isUpdate, setIsUpdate] = useState(false)
+   
     const [order, setOrder] = useState(0)
     const [clientName, setClientName] = useState("")
     const [clientPhone, setClientPhone] = useState("")
     const [showModal, setShowModal] = useState(false)
 
-
-    useEffect(() => {
-        setUser()
-
-
-
-    }, [])
 
     return (
         <>
@@ -115,7 +96,7 @@ export const WorkOrderForm = () => {
                         </div>
                     </div>
 
-                    {showModal && <ModalClient body={<SearchClient teste={show} />} />}
+                    {showModal && <ModalClient body={<SearchClient exit={exit} setCurrentClient={getClient}/>}  />}
                 </WorkOrderForm_Main>
 
 

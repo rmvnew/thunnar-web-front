@@ -121,8 +121,7 @@ export const WorkOrder = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {serviceOrder &&
-                                serviceOrder.map((so) => (
+                            {serviceOrder.map((so) => (
                                     <tr key={so.service_orde_number}>
                                         <td>{so.service_orde_number}</td>
                                         <td>{so.client.client_name}</td>
@@ -142,7 +141,6 @@ export const WorkOrder = () => {
                                                 <NavLink to={"/work-order/form"} state={{
                                                     data: {
                                                         WorkOrder: so
-
                                                     }
                                                 }} className="btn btn-warning"><ImPencil2 /></NavLink>
 
