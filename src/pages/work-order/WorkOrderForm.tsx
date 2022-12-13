@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useContext, useState, useEffect } from 'react';
 import { ImSearch, ImUserPlus } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { WorkOrderClientButton, WorkOrderClientCardButtons, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title } from "./WorkOrderFormStyled"
@@ -7,10 +7,25 @@ import { SearchClient } from "../../components/client/search-client/SearchClient
 import { ModalSearchClient } from '../../components/client/search-client/Modal.search.client';
 import { ModalCreateClient } from '../../components/client/create-client/Modal.create.client';
 import { CreateClient } from "../../components/client/create-client/CreateClient";
+import { AuthContext } from "../../contexts/auth/AuthContext";
+import { api } from '../../hooks/useApi';
 
 
 export const WorkOrderForm = () => {
 
+
+    const auth = useContext(AuthContext)
+
+    const getIdUserByName = async (name: string = "") => {
+
+        await api.get(`/user/get-id/${name}`).then((response) => {
+
+
+            setUserId(response.data[0].user_id)
+
+
+        });
+    };
 
     function exit(obj: any) {
 
@@ -23,15 +38,16 @@ export const WorkOrderForm = () => {
         setClientName(obj.client.client_name)
         setClientPhone(obj.client.client_phone)
         setShowModalSearchClient(obj.status)
-        
+
     }
-    
-    
+
+
     function afterCreateClient(obj: any) {
-        
+
         setSowModalCreateClient(obj.showModal)
         setClientName(obj.client.client_name)
         setClientPhone(obj.client.client_phone)
+        setClientId(obj.client.client_id)
 
     }
 
@@ -55,7 +71,14 @@ export const WorkOrderForm = () => {
     const [clientPhone, setClientPhone] = useState("")
     const [showModalSearchClient, setShowModalSearchClient] = useState(false)
     const [ShowModalCreateClient, setSowModalCreateClient] = useState(false)
+    const [clientId, setClientId] = useState(0)
+    const [userId, setUserId] = useState(0)
 
+
+    useEffect(() => {
+        
+        getIdUserByName(auth.user?.name);
+    }, [])
 
     return (
         <>
@@ -114,7 +137,7 @@ export const WorkOrderForm = () => {
                         </div>
                         <div className="col">
 
-                        </div>
+                        </div>// console.log(auth.user?.name);
                     </div>
 
                     {showModalSearchClient && <ModalSearchClient body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
