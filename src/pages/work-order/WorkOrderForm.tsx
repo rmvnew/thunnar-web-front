@@ -23,11 +23,19 @@ export const WorkOrderForm = () => {
         setClientName(obj.client.client_name)
         setClientPhone(obj.client.client_phone)
         setShowModalSearchClient(obj.status)
+        
+    }
+    
+    
+    function afterCreateClient(obj: any) {
+        
+        setSowModalCreateClient(obj.showModal)
+        setClientName(obj.client.client_name)
+        setClientPhone(obj.client.client_phone)
 
     }
 
-
-    function afterCreateClient(obj: any) {
+    function closeModalCreateClient(obj: any) {
 
         setSowModalCreateClient(obj.showModal)
 
@@ -110,7 +118,7 @@ export const WorkOrderForm = () => {
                     </div>
 
                     {showModalSearchClient && <ModalSearchClient body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
-                    {ShowModalCreateClient && <ModalCreateClient body={<CreateClient afterCreate={afterCreateClient} />} />}
+                    {ShowModalCreateClient && <ModalCreateClient body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
                 </WorkOrderForm_Main>
 
 

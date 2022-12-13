@@ -43,7 +43,7 @@ export const CreateClient = (props: any) => {
                 phone: adjustingPhoneNumber(clientPhone)
             };
 
-            console.log('Client: ', client);
+            // console.log('Client: ', client);
 
             api
                 .post("/client", {
@@ -53,12 +53,16 @@ export const CreateClient = (props: any) => {
                 })
                 .then((res) => {
 
-                    console.log('Bom;', res);
+                    // console.log('Bom;', res);
+                    props.getNewClient({
+                        client: res.data,
+                        showModal: false
+                    })
 
                 })
                 .catch((error) => {
 
-                    console.log(error);
+                   
 
                     if (error.response.data.message.indexOf('não pode ter mais que 11 caracteres!') >= 0) {
                         showAlert(AlertTypes.ERROR, 'não pode ter mais que 11 caracteres!', 3000)
