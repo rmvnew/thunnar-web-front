@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react"
 import { api } from "../../../hooks/useApi"
 import { SearchClientButtonSearch, SearchClientLabel, SearchClientTitle } from "./SearchClientStyled"
-import { AlertTypes } from '../../../enums/enums';
+import { AlertTypes, ValidType } from '../../../enums/enums';
 import { AlertTypesInterface } from "../../../interfaces/AlertTypesInterface"
 import AlertMessage from "../../AlertMessage"
+import { Validations } from '../../../common/validations';
 
 
 
@@ -34,14 +35,31 @@ export const SearchClient = (props: any) => {
     }
 
 
+    function verifiCpf(cpf: string) {
+
+        if (Validations.getInstance().validRegex(/[a-zA-Z!@#$%^&*(),.?":{}|<>]/gm, cpf)) {
+            showAlert(AlertTypes.ERROR, "Não pode conter letras", 5000)
+        } else {
+
+            setCurrentCpf(cpf)
+
+        }
+
+    }
+
+
 
     const [currentCpf, setCurrentCpf] = useState("")
     const [search, setSearch] = useState("")
     const [alertProps, setAlertProps] = useState({})
     const [open, setOpen] = useState(false);
 
-    const searchClient = () => {
-        setSearch(currentCpf)
+    const searchCurrentClient = () => {
+        if (Validations.getInstance().verifyLength(currentCpf, 'cpf', 11, 11)) {
+            setSearch(currentCpf)
+        } else {
+            showAlert(AlertTypes.ERROR, "Cpf deve conter 11 digitos!", 5000)
+        }
     }
 
 
@@ -50,13 +68,13 @@ export const SearchClient = (props: any) => {
         await api.get(`/client/cpf/${cpf}`).then((response) => {
             setResponse(response)
         }).catch(error => {
-            
-            if(error.response.data.message.indexOf('not found') >= 0){
+
+            if (error.response.data.message.indexOf('not found') >= 0) {
 
                 showAlert(AlertTypes.ERROR, "Cliente não encontrado!", 5000)
-            
+
             }
-            
+
         })
     };
 
@@ -105,10 +123,10 @@ export const SearchClient = (props: any) => {
                 type="text"
                 placeholder="Digite o cpf"
                 value={currentCpf}
-                onChange={(e) => setCurrentCpf(e.target.value)}
+                onChange={(e) => verifiCpf(e.target.value)}
 
             />
-            <SearchClientButtonSearch className="btn btn-primary" onClick={searchClient}>Buscar</SearchClientButtonSearch>
+            <SearchClientButtonSearch className="btn btn-primary" onClick={searchCurrentClient}>Buscar</SearchClientButtonSearch>
             <SearchClientButtonSearch className="btn btn-secondary" onClick={callTeste}>Sair</SearchClientButtonSearch>
             {open && <AlertMessage props={alertProps} />}
         </>
