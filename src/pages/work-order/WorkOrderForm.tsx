@@ -4,35 +4,49 @@ import { ImSearch, ImUserPlus } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { WorkOrderClientButton, WorkOrderClientCardButtons, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
-import { ModalClient } from '../../components/client/Modal.client';
+import { ModalSearchClient } from '../../components/client/search-client/Modal.search.client';
+import { ModalCreateClient } from '../../components/client/create-client/Modal.create.client';
+import { CreateClient } from "../../components/client/create-client/CreateClient";
 
 
 export const WorkOrderForm = () => {
 
-   
+
     function exit(obj: any) {
-       
-        setShowModalSearch(obj.statusModal)
+
+        setShowModalSearchClient(obj.statusModal)
     }
-    
-    
-    function getClient(obj:any){
-        
+
+
+    function afterSearchClient(obj: any) {
+
         setClientName(obj.client.client_name)
         setClientPhone(obj.client.client_phone)
-        setShowModalSearch(obj.status)
-        
+        setShowModalSearchClient(obj.status)
+
     }
 
-    function closeModal(status: boolean = false) {
-        setShowModalSearch(status)
+
+    function afterCreateClient(obj: any) {
+
+        setSowModalCreateClient(obj.showModal)
+
     }
 
-   
+    function changeStatusModalSearchClient(status: boolean = false) {
+        setShowModalSearchClient(status)
+    }
+
+    function changeStatusModalCreateClient(status: boolean = false) {
+        setSowModalCreateClient(status)
+    }
+
+
     const [order, setOrder] = useState(0)
     const [clientName, setClientName] = useState("")
     const [clientPhone, setClientPhone] = useState("")
-    const [showModalSearch, setShowModalSearch] = useState(false)
+    const [showModalSearchClient, setShowModalSearchClient] = useState(false)
+    const [ShowModalCreateClient, setSowModalCreateClient] = useState(false)
 
 
     return (
@@ -53,11 +67,11 @@ export const WorkOrderForm = () => {
                             <div className="row">
 
                                 <WorkOrderClientCardButtons >
-                                    <WorkOrderClientButton onClick={() => closeModal(true)} className="btn btn-primary" >
+                                    <WorkOrderClientButton onClick={() => changeStatusModalSearchClient(true)} className="btn btn-primary" >
                                         <ImSearch /> Buscar Cliente
                                     </WorkOrderClientButton>
 
-                                    <WorkOrderClientButton className="btn btn-primary">
+                                    <WorkOrderClientButton onClick={() => changeStatusModalCreateClient(true)} className="btn btn-primary">
                                         <ImUserPlus /> Novo Cliente
                                     </WorkOrderClientButton>
                                 </WorkOrderClientCardButtons>
@@ -95,7 +109,8 @@ export const WorkOrderForm = () => {
                         </div>
                     </div>
 
-                    {showModalSearch && <ModalClient body={<SearchClient exit={exit} setCurrentClient={getClient}/>}  />}
+                    {showModalSearchClient && <ModalSearchClient body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
+                    {ShowModalCreateClient && <ModalCreateClient body={<CreateClient afterCreate={afterCreateClient} />} />}
                 </WorkOrderForm_Main>
 
 
