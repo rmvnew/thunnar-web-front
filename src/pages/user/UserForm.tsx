@@ -164,8 +164,8 @@ const UserForm = () => {
     const [isUpdate, setIsUpdate] = useState(false)
     const [profile, setProfile] = useState<Profile[]>([])
     const [options, setOptions] = useState("")
-    const [cpf, setCpf] = useState("")
     const [select, setSelect] = useState("")
+    const [cpf, setCpf] = useState("")
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("")
     const [alertTypes, setAlertTypes] = useState("")

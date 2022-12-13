@@ -9,6 +9,7 @@ import { ModalCreateClient } from '../../components/client/create-client/Modal.c
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
 import { api } from '../../hooks/useApi';
+import { Technician } from '../../interfaces/Technician.interface';
 
 
 export const WorkOrderForm = () => {
@@ -18,7 +19,7 @@ export const WorkOrderForm = () => {
 
     const getIdUserByName = async (name: string = "") => {
 
-        await api.get(`/user/get-id/${name}`).then((response) => {
+        await api.get(`/user/get-id/${name}`).then(response => {
 
 
             setUserId(response.data[0].user_id)
@@ -26,6 +27,26 @@ export const WorkOrderForm = () => {
 
         });
     };
+
+
+    const getTechnician = async () => {
+        await api.get(`/technician`).then(response => {
+
+            let technicians = []
+
+            for (let tec in response.data) {
+                const tecs: Technician = {
+                    id: response.data[tec].technician_id,
+                    name: response.data[tec].technician_name,
+                    phone: response.data[tec].technician_phone
+                }
+                technicians.push(tecs)
+            }
+
+            setTechnicians(technicians)
+
+        })
+    }
 
     function exit(obj: any) {
 
@@ -73,10 +94,13 @@ export const WorkOrderForm = () => {
     const [ShowModalCreateClient, setSowModalCreateClient] = useState(false)
     const [clientId, setClientId] = useState(0)
     const [userId, setUserId] = useState(0)
+    const [options, setOptions] = useState("")
+    const [select, setSelect] = useState("")
+    const [technicians, setTechnicians] = useState<Technician[]>([])
 
 
     useEffect(() => {
-        
+        getTechnician()
         getIdUserByName(auth.user?.name);
     }, [])
 
@@ -134,11 +158,32 @@ export const WorkOrderForm = () => {
                                     />
                                 </div>
                             </div>
+
+                            <div className="row">
+                                <div className="col-lg-7">
+                                    <WorkOrderForm_Label>Técnico</WorkOrderForm_Label>
+
+                                    <select onChange={e => setOptions(e.target.value)} className="form-select form-select mb-3" aria-label="Default select example">
+                                        <option defaultValue={select}>{select}</option>
+                                        {technicians.map((data, i) => (
+
+                                            <option key={i} value={data.id}>{data.name}</option>
+
+                                        ))}
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+
                         </div>
                         <div className="col">
 
-                        </div>// console.log(auth.user?.name);
+                        </div>
                     </div>
+
+
 
                     {showModalSearchClient && <ModalSearchClient body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
                     {ShowModalCreateClient && <ModalCreateClient body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
