@@ -1,7 +1,10 @@
-import { Pagination } from "@mui/material"
+
 import { useEffect, useState } from "react"
 import { api } from "../../../hooks/useApi"
 import { SearchClientButtonSearch, SearchClientLabel, SearchClientTitle } from "./SearchClientStyled"
+import { AlertTypes } from '../../../enums/enums';
+import { AlertTypesInterface } from "../../../interfaces/AlertTypesInterface"
+import AlertMessage from "../../AlertMessage"
 
 
 
@@ -26,7 +29,7 @@ export const SearchClient = (props: any) => {
             status: false
         })
 
-        
+
 
     }
 
@@ -34,6 +37,8 @@ export const SearchClient = (props: any) => {
 
     const [currentCpf, setCurrentCpf] = useState("")
     const [search, setSearch] = useState("")
+    const [alertProps, setAlertProps] = useState({})
+    const [open, setOpen] = useState(false);
 
     const searchClient = () => {
         setSearch(currentCpf)
@@ -44,8 +49,14 @@ export const SearchClient = (props: any) => {
 
         await api.get(`/client/cpf/${cpf}`).then((response) => {
             setResponse(response)
-        }).catch(error =>{
-            console.log('Error: ',error);
+        }).catch(error => {
+            
+            if(error.response.data.message.indexOf('not found') >= 0){
+
+                showAlert(AlertTypes.ERROR, "Cliente não encontrado!", 5000)
+            
+            }
+            
         })
     };
 
@@ -58,6 +69,29 @@ export const SearchClient = (props: any) => {
             getUserByName(search)
         }
     }, [search])
+
+
+
+    function showAlert(type: AlertTypes, message: string, time: number) {
+
+
+
+        const props: AlertTypesInterface = {
+            message: message,
+            aletTypes: type,
+            time: time
+        }
+
+        setAlertProps(props)
+
+        setOpen(true)
+
+        setTimeout(() => {
+            setOpen(false)
+
+        }, time)
+
+    }
 
 
     return (
@@ -76,7 +110,7 @@ export const SearchClient = (props: any) => {
             />
             <SearchClientButtonSearch className="btn btn-primary" onClick={searchClient}>Buscar</SearchClientButtonSearch>
             <SearchClientButtonSearch className="btn btn-secondary" onClick={callTeste}>Sair</SearchClientButtonSearch>
-
+            {open && <AlertMessage props={alertProps} />}
         </>
 
     )

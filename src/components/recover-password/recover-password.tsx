@@ -58,12 +58,12 @@ export const RecoverForm = () => {
 
     }
 
+    const [alertProps, setAlertProps] = useState({})
+    const [open, setOpen] = useState(false);
     const [cpf, setCpf] = useState("")
     const [password, setPassword] = useState("")
     const [rePassword, setRePassword] = useState("")
 
-    const [open, setOpen] = useState(false);
-    const [alertProps, setAlertProps] = useState({})
 
 
     return (
@@ -99,7 +99,7 @@ export const RecoverForm = () => {
             />
 
 
-            <RecoverPassButtonSave onClick={checkPassword} variant="outlined">hehe</RecoverPassButtonSave>
+            <RecoverPassButtonSave onClick={checkPassword} variant="outlined">Registrar</RecoverPassButtonSave>
 
             {open && <AlertMessage props={alertProps} />}
 

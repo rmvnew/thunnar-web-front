@@ -12,28 +12,27 @@ export const WorkOrderForm = () => {
    
     function exit(obj: any) {
        
-        setShowModal(obj.statusModal)
+        setShowModalSearch(obj.statusModal)
     }
     
     
     function getClient(obj:any){
         
-        console.log('object: ',obj);
         setClientName(obj.client.client_name)
         setClientPhone(obj.client.client_phone)
-        setShowModal(obj.status)
+        setShowModalSearch(obj.status)
         
     }
 
     function closeModal(status: boolean = false) {
-        setShowModal(status)
+        setShowModalSearch(status)
     }
 
    
     const [order, setOrder] = useState(0)
     const [clientName, setClientName] = useState("")
     const [clientPhone, setClientPhone] = useState("")
-    const [showModal, setShowModal] = useState(false)
+    const [showModalSearch, setShowModalSearch] = useState(false)
 
 
     return (
@@ -96,7 +95,7 @@ export const WorkOrderForm = () => {
                         </div>
                     </div>
 
-                    {showModal && <ModalClient body={<SearchClient exit={exit} setCurrentClient={getClient}/>}  />}
+                    {showModalSearch && <ModalClient body={<SearchClient exit={exit} setCurrentClient={getClient}/>}  />}
                 </WorkOrderForm_Main>
 
 
