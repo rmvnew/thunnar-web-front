@@ -4,6 +4,7 @@ import { api } from "../../../hooks/useApi";
 import { AlertTypes } from "../../../enums/enums";
 import { AlertTypesInterface } from "../../../interfaces/AlertTypesInterface";
 import AlertMessage from "../../AlertMessage";
+import { phoneMask } from "../../../utils/mask";
 
 
 
@@ -89,13 +90,13 @@ export const CreateClient = (props: any) => {
         return phone
     }
 
-    const phoneMask = (value: string) => {
-        if (!value) return ""
-        value = value.replace(/\D/g, '')
-        value = value.replace(/(\d{2})(\d)/, "($1) $2")
-        value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-        setClientPhone(value)
-    }
+    // const phoneMask = (value: string) => {
+    //     if (!value) return ""
+    //     value = value.replace(/\D/g, '')
+    //     value = value.replace(/(\d{2})(\d)/, "($1) $2")
+    //     value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+    //     setClientPhone(value)
+    // }
 
     function cpfMask(cpf: string) {
         cpf = cpf.replace(/\D/g, "")

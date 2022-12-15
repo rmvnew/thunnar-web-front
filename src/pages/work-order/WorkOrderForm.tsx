@@ -11,6 +11,7 @@ import { AuthContext } from "../../contexts/auth/AuthContext";
 import { api } from '../../hooks/useApi';
 import { Technician } from '../../interfaces/Technician.interface';
 import { useNavigate } from 'react-router-dom';
+import { phoneMask } from '../../utils/mask';
 
 
 export const WorkOrderForm = () => {
@@ -201,8 +202,9 @@ export const WorkOrderForm = () => {
                                         className="form-control form-control"
                                         type="text"
                                         placeholder="Digite o telefone"
+                                        maxLength={15}
                                         value={clientPhone}
-                                        onChange={(e) => setClientPhone(e.target.value)}
+                                        onChange={(e) => setClientPhone(phoneMask(e.target.value))}
                                     />
                                 </div>
 
