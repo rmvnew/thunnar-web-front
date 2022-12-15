@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 export const WorkOrderForm_Header = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&family=Zen+Dots&display=swap');
+    font-family: 'Zen Dots', cursive;
     display: flex;
     flex-direction: row;
     position: fixed;
@@ -16,7 +17,6 @@ export const WorkOrderForm_Header = styled.div`
     height: 80px;
     align-items: center;
     color: #FFF;
-    font-family: 'Zen Dots', cursive;
 
 `
 
@@ -80,3 +80,49 @@ export const WorkOrderClientButton = styled.button`
 
 `
 
+export const WorkOrderClientCard = styled.div`
+
+    background-color: rgb(38, 67, 80);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-left: 5px;
+    margin-top: 10px;
+    color: #FFF;
+
+    
+`
+
+export const WorkOrderClientInputs = styled.input`
+
+    margin-bottom: 20px;
+    margin-left: 10px;
+    width: 90%;
+
+    
+`
+
+export const WorkOrderproblemInput = styled.input`
+
+    margin-left: 10px;
+    width: 97%;
+    margin-bottom: 20px;
+
+    
+`
+
+export const WorkOrderButtonSave = styled.button`
+
+    width: 200px;
+    margin-left: 10px;
+    margin-top: 20px;
+
+    
+`
+
+export const WorkOrderTitle = styled.h2`
+    @import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&family=Zen+Dots&display=swap');
+    font-family: 'Zen Dots', cursive;
+    margin: 10px;
+    text-align: center;
+   
+`
