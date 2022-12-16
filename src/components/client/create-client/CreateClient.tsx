@@ -63,7 +63,7 @@ export const CreateClient = (props: any) => {
                 })
                 .catch((error) => {
 
-                   
+
 
                     if (error.response.data.message.indexOf('não pode ter mais que 11 caracteres!') >= 0) {
                         showAlert(AlertTypes.ERROR, 'não pode ter mais que 11 caracteres!', 3000)
@@ -159,7 +159,7 @@ export const CreateClient = (props: any) => {
                             placeholder="Digite o telefone do cliente"
                             maxLength={15}
                             value={clientPhone}
-                            onChange={e => phoneMask(e.target.value)}
+                            onChange={e => setClientPhone(phoneMask(e.target.value))}
                         />
                     </div>
                 </div>

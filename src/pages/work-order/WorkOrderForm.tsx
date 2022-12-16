@@ -1,8 +1,9 @@
 
 import { useContext, useState, useEffect } from 'react';
-import { ImSearch, ImUserPlus } from "react-icons/im";
+import { ImSearch, ImUserPlus, ImPencil2 } from "react-icons/im";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonSave } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonSave, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { ModalSearchClient } from '../../components/client/search-client/Modal.search.client';
 import { ModalCreateClient } from '../../components/client/create-client/Modal.create.client';
@@ -12,6 +13,8 @@ import { api } from '../../hooks/useApi';
 import { Technician } from '../../interfaces/Technician.interface';
 import { useNavigate } from 'react-router-dom';
 import { phoneMask } from '../../utils/mask';
+import { Device } from '../../interfaces/Device.interface';
+import { Pas } from '../../interfaces/Pas.interface';
 
 
 export const WorkOrderForm = () => {
@@ -23,21 +26,12 @@ export const WorkOrderForm = () => {
 
 
     function createOrder() {
-        if (clientId && options && brand && model && probelmReported) {
+        if (clientId && options && devices.length > 0) {
             const order = {
                 client_id: clientId,
                 user_id: userId,
                 options: Number(options),
-                devices: [
-                    {
-                        device_brand: brand,
-                        device_model: model,
-                        device_serial_number: serialNumber,
-                        device_imei: imei,
-                        device_problem_reported: probelmReported,
-                        parts_and_services: parts_and_services
-                    }
-                ]
+                devices: devices
             };
 
             console.log('Order: ', order);
@@ -59,6 +53,86 @@ export const WorkOrderForm = () => {
             alert("Preencha todos dados")
         }
     }
+
+
+    function createDevice() {
+
+        let dev = devices
+
+        if (brand && model && probelmReported) {
+
+            const device: Device = {
+                device_brand: brand,
+                device_model: model,
+                device_serial_number: serialNumber,
+                device_imei: imei,
+                device_problem_reported: probelmReported,
+                parts_and_services: parts_and_services
+            }
+
+            dev.push(device)
+
+            setDevices(dev)
+            clearDevice()
+
+        }
+
+    }
+
+
+    function loadDeviceToEdit(id: number) {
+
+        setBrand(devices[id].device_brand)
+        setModel(devices[id].device_model)
+        setSerialNumber(devices[id].device_serial_number)
+        setImei(devices[id].device_imei)
+        setProblemReported(devices[id].device_problem_reported)
+        setParts_and_services(devices[id].parts_and_services!)
+        setDeviceId(id)
+        setEditDevice(true)
+
+
+    }
+
+
+    function updateDeviceAfterEdit() {
+
+        let dev = devices
+
+        if (brand && model && probelmReported) {
+
+            const device: Device = {
+                device_brand: brand,
+                device_model: model,
+                device_serial_number: serialNumber,
+                device_imei: imei,
+                device_problem_reported: probelmReported,
+                parts_and_services: parts_and_services
+            }
+
+            dev[deviceId] = device
+
+            setDevices(dev)
+            clearDevice()
+
+        }
+    }
+
+
+
+    function clearDevice() {
+        setBrand("")
+        setModel("")
+        setSerialNumber("")
+        setImei("")
+        setProblemReported("")
+        setParts_and_services([])
+        setDeviceId(0)
+        setEditDevice(false)
+    }
+
+    const [devices, setDevices] = useState<Device[]>([])
+    const [parts_and_services, setParts_and_services] = useState<Pas[]>([])
 
 
     const getIdUserByName = async (name: string = "") => {
@@ -146,7 +220,8 @@ export const WorkOrderForm = () => {
     const [serialNumber, setSerialNumber] = useState("")
     const [imei, setImei] = useState("")
     const [probelmReported, setProblemReported] = useState("")
-    const [parts_and_services, setParts_and_services] = useState([])
+    const [deviceId, setDeviceId] = useState(0)
+    const [editDevice, setEditDevice] = useState(false)
 
 
     useEffect(() => {
@@ -167,6 +242,26 @@ export const WorkOrderForm = () => {
 
                 <WorkOrderForm_Main>
                     <div className="row">
+
+                        <WorkOrderTopCard>
+
+                            <WorkOrderTopCardInternal>
+                                <WorkOrderForm_Label>Data de inicio</WorkOrderForm_Label>
+                                <h2>Data aqui</h2>
+                            </WorkOrderTopCardInternal>
+
+                            <WorkOrderTopCardInternal>
+                                <WorkOrderForm_Label>Previsão de entrega</WorkOrderForm_Label>
+                                <h2>Data aqui</h2>
+                            </WorkOrderTopCardInternal>
+
+                            <WorkOrderTopCardInternal>
+                                <WorkOrderForm_Label>Valor da ordem</WorkOrderForm_Label>
+                                <h2>Valor aqui</h2>
+                            </WorkOrderTopCardInternal>
+
+                        </WorkOrderTopCard>
+
 
                         {/* aqui */}
                         <div className="col">
@@ -234,7 +329,7 @@ export const WorkOrderForm = () => {
                             <WorkOrderClientCard className="row">
                                 <div className="row">
 
-                                    <WorkOrderTitle>Aparelho</WorkOrderTitle>
+                                    <WorkOrderTitle>Cadastro de aparelho</WorkOrderTitle>
 
                                     <div className="col-lg-6">
                                         <WorkOrderForm_Label>Marca</WorkOrderForm_Label>
@@ -304,17 +399,91 @@ export const WorkOrderForm = () => {
                                         value={probelmReported}
                                         onChange={(e) => setProblemReported(e.target.value)}
                                     />
+
+                                    {editDevice && <WorkOrderButtonDevice className='btn btn-secondary' onClick={updateDeviceAfterEdit}>Atualizar</WorkOrderButtonDevice>}
+                                    {!editDevice && <WorkOrderButtonDevice className='btn btn-primary' onClick={createDevice}><MdOutlinePlaylistAdd /> Adicionar</WorkOrderButtonDevice>}
+
                                 </div>
                             </WorkOrderClientCard>
 
 
-                            <WorkOrderButtonSave className='btn btn-primary' onClick={createOrder}>Salvar</WorkOrderButtonSave>
 
 
-                        </div>
+                        </div >
 
                         <div className="col">
 
+
+                            <WorkOrderTableCard className='table-responsive-sm'>
+
+                                <WorkOrderInternalTebla>
+                                    <WorkOrderTitle>lista de aparelhos</WorkOrderTitle>
+
+                                    <table className='table table-striped'>
+                                        <thead >
+                                            <tr>
+                                                <td>Id</td>
+                                                <td>Marca</td>
+                                                <td>Modelo</td>
+                                                <td>Sérial</td>
+                                                <td>Editar</td>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {devices && devices.map((device, i) => (
+                                                <tr key={i}>
+                                                    <td>{i}</td>
+                                                    <td>{device.device_brand}</td>
+                                                    <td>{device.device_model}</td>
+                                                    <td>{device.device_serial_number}</td>
+                                                    <td>{<button className='btn btn-warning' onClick={() => loadDeviceToEdit(i)}><ImPencil2 /></button>}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </WorkOrderInternalTebla>
+                            </WorkOrderTableCard>
+
+                            <WorkOrderButtonSave className='btn btn-primary' onClick={createOrder}>Salvar</WorkOrderButtonSave>
+                            {/* <WorkOrderClientCard className="row">
+
+                                <WorkOrderTitle>Cliente</WorkOrderTitle>
+
+                                <WorkOrderClientCardButtons >
+                                    <WorkOrderClientButton onClick={() => changeStatusModalSearchClient(true)} className="btn btn-primary" >
+                                        <ImSearch /> Buscar Cliente
+                                    </WorkOrderClientButton>
+
+                                    <WorkOrderClientButton onClick={() => changeStatusModalCreateClient(true)} className="btn btn-primary">
+                                        <ImUserPlus /> Novo Cliente
+                                    </WorkOrderClientButton>
+                                </WorkOrderClientCardButtons>
+
+                                <div className="col-lg-7">
+                                    <WorkOrderForm_Label>Nome do cliente</WorkOrderForm_Label>
+                                    <WorkOrderClientInputs
+                                        className="form-control form-control"
+                                        type="text"
+                                        placeholder="Digite o nome do cliente"
+                                        value={clientName}
+                                        onChange={(e) => setClientName(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="col-lg-5">
+                                    <WorkOrderForm_Label>Telefone do cliente</WorkOrderForm_Label>
+                                    <WorkOrderClientInputs
+                                        className="form-control form-control"
+                                        type="text"
+                                        placeholder="Digite o telefone"
+                                        maxLength={15}
+                                        value={clientPhone}
+                                        onChange={(e) => setClientPhone(phoneMask(e.target.value))}
+                                    />
+                                </div>
+
+                            </WorkOrderClientCard> */}
                         </div>
                     </div>
 

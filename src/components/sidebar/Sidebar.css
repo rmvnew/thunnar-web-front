@@ -66,6 +66,23 @@
    
    
 }
+
+@media screen and (max-height: 850px) {
+    
+    .sidebar{
+      background: rgb(38, 67, 80) ;
+      color: #FFF;
+      height: 210vh;
+    }
+
+    .exit{
+      position: relative;
+      top: 10px;
+     
+  }
+   
+   
+}
   
   .routes{
     color: #FFF;
