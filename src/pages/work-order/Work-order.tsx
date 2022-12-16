@@ -122,8 +122,8 @@ export const WorkOrder = () => {
                         </thead>
                         <tbody>
                             {serviceOrder.map((so) => (
-                                    <tr key={so.service_orde_number}>
-                                        <td>{so.service_orde_number}</td>
+                                    <tr key={so.service_order_number}>
+                                        <td>{so.service_order_number}</td>
                                         <td>{so.client.client_name}</td>
                                         <td>{so.client.client_phone}</td>
                                         <td>{so.service_order_date}</td>

@@ -114,10 +114,10 @@ export const WorkOrderproblemInput = styled.input`
     
 `
 
-export const WorkOrderButtonSave = styled.button`
+export const WorkOrderButtonController = styled.button`
 
     width: 200px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     margin-top: 20px;
 
     
@@ -179,7 +179,7 @@ export const WorkOrderTableCard = styled.div`
     padding-top: 10px;
     border-radius: 10px;
     color: #FFF;
-    height: 270px;
+    height: 290px;
     
     
     table{
@@ -214,5 +214,20 @@ export const WorkOrderInternalTebla = styled.div`
     overflow: scroll;
     
    
+    
+`
+
+export const WorkOrderSelectTechnician = styled.select`
+
+    margin-left: 10px;
+    
+   
+    
+`
+
+export const WorkOrderDeviceCard = styled.div`
+
+    width: 95%;
+    margin-left: 10px;
     
 `
