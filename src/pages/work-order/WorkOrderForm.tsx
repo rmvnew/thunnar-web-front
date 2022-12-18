@@ -36,8 +36,13 @@ export const WorkOrderForm = () => {
 
 
             await api.get(`service-order/${dataResult.WorkOrder.service_order_id}`).then(result => {
-                // console.log('Res: ',result.data.devices);
+                console.log('Res: ',result.data);
 
+                const initialDate = new Date(result.data.service_order_date)
+                const finalDate = new Date(result.data.service_order_expiration)
+
+                setOrderDate(initialDate)
+                setOrderDateExpiration(finalDate)
                 setOrderId(dataResult.WorkOrder.service_order_id)
                 setOrderNumber(result.data.service_order_number)
                 setClientId(result.data.client.client_id)
@@ -46,9 +51,10 @@ export const WorkOrderForm = () => {
                 setOptions(result.data.technician.technician_id)
                 setSelect(result.data.technician.technician_name)
                 setDevices(result.data.devices)
-                // setParts_and_services(result.data.devices.parts_and_services)
                 setOrderEdit(true)
-                sumPos()
+
+
+
 
 
             })
@@ -213,33 +219,46 @@ export const WorkOrderForm = () => {
 
     function createPos(obj: any) {
 
+        // console.log(devices[devicePosition].parts_and_services);
+
         // console.log(obj.pos);
 
-        let list: Pas[] = parts_and_services
+        let list = devices[devicePosition].parts_and_services!
 
+        // console.log('List - 1: ',list);
+        
         const pos: Pas = {
             pas_id: 0,
             pas_description: obj.pos.description,
             pas_quantity: obj.pos.quantity,
             pas_price: obj.pos.price
         }
-
+        
         // devices[devicePosition].parts_and_services?.push(pos)
         list.push(pos)
+        // console.log('List - 2: ',list);
+
         setParts_and_services(list)
+
+        // console.log('pos',parts_and_services);
         setHaveDetails(true)
         setShowModalPos(obj.showModal)
+        setCreatedPos(true)
 
-        devices[devicePosition].parts_and_services = parts_and_services
+
     }
 
     const sumPos = () => {
+
 
         let value = 0
 
         devices.forEach(data => {
 
             const result = data.parts_and_services!.reduce((a, b) => a + b.pas_price, 0)
+
+            // console.log(result);
+
             value += result
 
         })
@@ -255,6 +274,7 @@ export const WorkOrderForm = () => {
         setDevicePosition(0)
         setDeviceId(0)
         setShowPosList(false)
+        setCreatedPos(false)
     }
 
     function clearDevice() {
@@ -382,6 +402,7 @@ export const WorkOrderForm = () => {
     const [orderValue, setOrderValue] = useState(0.0)
     const [devices, setDevices] = useState<Device[]>([])
     const [parts_and_services, setParts_and_services] = useState<Pas[]>([])
+    const [createdPos, setCreatedPos] = useState(false)
     const [showPosList, setShowPosList] = useState(false)
     const [listPos, setListPos] = useState<Pas[]>([])
 
@@ -392,9 +413,20 @@ export const WorkOrderForm = () => {
         setOrder()
     }, [])
 
-    // useEffect(()=>{
-    //     sumPos()
-    // },[parts_and_services])
+    useEffect(() => {
+        setTimeout(() => {
+            sumPos()
+        }, 2000)
+    }, [orderEdit])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (parts_and_services.length > 0) {
+                devices[devicePosition].parts_and_services = parts_and_services
+                console.log('Dev: ', devices);
+            }
+        }, 1000)
+    }, [createdPos])
 
     return (
         <>
@@ -424,7 +456,7 @@ export const WorkOrderForm = () => {
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label>Valor da ordem</WorkOrderForm_Label>
-                                <h2>{orderValue.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h2>
+                                <h2>{orderValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
                             </WorkOrderTopCardInternal>
 
                         </WorkOrderTopCard>
@@ -645,7 +677,7 @@ export const WorkOrderForm = () => {
                             </WorkOrderTableCard>}
 
                             {!orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={createOrder}><GiSave /> Salvar</WorkOrderButtonController>}
-                            {orderEdit && <WorkOrderButtonController className='btn btn-secondary' onClick={updateOrder}><GrUpdate /> Atualizar</WorkOrderButtonController>}
+                            {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={updateOrder}><GrUpdate /> Atualizar</WorkOrderButtonController>}
 
                         </div>
                     </div>

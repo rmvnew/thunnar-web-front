@@ -30,7 +30,7 @@ export const WorkOrderForm_Main = styled.div`
    margin-top: 100px;
    width: 80vw;
    height: 90vh;
-   overflow: scroll;
+   /* overflow: scroll; */
     
     
     
@@ -93,6 +93,46 @@ export const WorkOrderClientCard = styled.div`
     margin-top: 10px;
     color: #FFF;
 
+    &:hover{
+        box-shadow: #066ba6 0px 3px 5px;
+    }
+
+    
+`
+
+export const WorkOrderTableCard = styled.div`
+
+
+    background-color: rgb(38, 67, 80);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-radius: 10px;
+    color: #FFF;
+    height: 294px;
+    
+    
+    table{
+        text-align: center;
+        width: 95%;
+        /* margin-left: 15px; */
+
+        tr{
+            background-color: #FFF;
+            
+            td{
+                border: 2px solid #000;
+                align-items: center;
+                justify-content: center;
+                
+            }
+        }
+
+    }
+
+    &:hover{
+        box-shadow: #066ba6 0px 3px 5px;
+    }
+   
     
 `
 
@@ -119,6 +159,7 @@ export const WorkOrderButtonController = styled.button`
     width: 200px;
     /* margin-left: 10px; */
     margin-top: 20px;
+    color: #FFF;
 
     
 `
@@ -147,6 +188,7 @@ export const WorkOrderTopCard = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    width: 98%;
     background-color: rgb(38, 67, 80);
     margin-left: 20px;
     border-radius: 10px;
@@ -171,37 +213,7 @@ export const WorkOrderTopCardInternal = styled.div`
     }
 `
 
-export const WorkOrderTableCard = styled.div`
 
-
-    background-color: rgb(38, 67, 80);
-    margin-top: 10px;
-    padding-top: 10px;
-    border-radius: 10px;
-    color: #FFF;
-    height: 290px;
-    
-    
-    table{
-        text-align: center;
-        width: 95%;
-        /* margin-left: 15px; */
-
-        tr{
-            background-color: #FFF;
-            
-            td{
-                border: 2px solid #000;
-                align-items: center;
-                justify-content: center;
-                
-            }
-        }
-
-    }
-   
-    
-`
 
 export const WorkOrderInternalTebla = styled.div`
 
