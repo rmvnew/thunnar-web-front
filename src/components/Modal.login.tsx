@@ -20,7 +20,7 @@ const style = {
   p: 7,
 };
 
-export const ModalDefault = ({body}:{body:React.ReactNode}) => {
+export const ModalLogin = ({body}:{body:React.ReactNode}) => {
 
   
 

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/auth/AuthContext';
 import '../../common/css/bootstrap.min.css'
-import { ModalDefault } from '../../components/Modal.default';
+import { ModalLogin } from '../../components/Modal.login';
 import { RecoverForm } from '../../components/recover-password/recover-password';
 import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
@@ -101,7 +101,7 @@ const Login = () => {
                         placeholder="Digite sua senha"
                     />
 
-                    <ModalDefault body={<RecoverForm />} />
+                    <ModalLogin body={<RecoverForm />} />
 
                     <button className='btn btn-primary' onClick={handleLogin}>Logar</button>
                 </LoginInputs>

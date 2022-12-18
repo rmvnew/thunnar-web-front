@@ -47,6 +47,7 @@ export const WorkOrder = () => {
     const getServiceOrderByNameClient = async (page: number = 1, name: string = "") => {
 
         await api.get(`/service-order?page=${page}&limit=8&sort=DESC&orderBy=ID&search=${name}`).then((response) => {
+            // console.log('Res: ',response);
             setResponse(response)
         });
     };

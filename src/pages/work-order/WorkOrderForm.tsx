@@ -3,13 +3,12 @@ import { useContext, useState, useEffect } from 'react';
 import { ImSearch, ImUserPlus, ImPencil2 } from "react-icons/im";
 import { GiSave } from "react-icons/gi";
 import { GrUpdate } from "react-icons/gr";
-import { FcServices } from "react-icons/fc";
+import { BiAddToQueue } from "react-icons/bi";
+import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla, WorkOrderSelectTechnician, WorkOrderDeviceCard } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
-import { ModalSearchClient } from '../../components/client/search-client/Modal.search.client';
-import { ModalCreateClient } from '../../components/client/create-client/Modal.create.client';
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
 import { api } from '../../hooks/useApi';
@@ -18,6 +17,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { phoneMask } from '../../utils/mask';
 import { Device } from '../../interfaces/Device.interface';
 import { Pas } from '../../interfaces/Pas.interface';
+import { ModalDefault } from '../../components/Modal';
+import { Pos } from '../../components/PartsOrService/Pas';
 
 
 export const WorkOrderForm = () => {
@@ -30,20 +31,27 @@ export const WorkOrderForm = () => {
     const navigate = useNavigate()
 
 
-    function setOrder() {
+    const setOrder = async () => {
         if (dataResult !== undefined) {
 
-            // console.log('Order: ', dataResult.WorkOrder);
 
-            setOrderId(dataResult.WorkOrder.service_order_id)
-            setOrderNumber(dataResult.WorkOrder.service_order_number)
-            setClientId(dataResult.WorkOrder.client.client_id)
-            setClientName(dataResult.WorkOrder.client.client_name)
-            setClientPhone(dataResult.WorkOrder.client.client_phone)
-            setOptions(dataResult.WorkOrder.technician.technician_id)
-            setSelect(dataResult.WorkOrder.technician.technician_name)
-            setDevices(dataResult.WorkOrder.devices)
-            setOrderEdit(true)
+            await api.get(`service-order/${dataResult.WorkOrder.service_order_id}`).then(result => {
+                // console.log('Res: ',result.data);
+
+                setOrderId(dataResult.WorkOrder.service_order_id)
+                setOrderNumber(result.data.service_order_number)
+                setClientId(result.data.client.client_id)
+                setClientName(result.data.client.client_name)
+                setClientPhone(result.data.client.client_phone)
+                setOptions(result.data.technician.technician_id)
+                setSelect(result.data.technician.technician_name)
+                setDevices(result.data.devices)
+                setOrderEdit(true)
+
+
+            })
+
+
 
         }
     }
@@ -72,6 +80,7 @@ export const WorkOrderForm = () => {
                     devices: order.devices
                 })
                 .then((response) => {
+                    clear()
                     navigate("/work-order")
                 })
                 .catch((error) => {
@@ -81,7 +90,7 @@ export const WorkOrderForm = () => {
             alert("Preencha todos dados")
         }
     }
-    
+
     function updateOrder() {
 
         // console.log('ClientId: ', clientId);
@@ -96,7 +105,7 @@ export const WorkOrderForm = () => {
                 devices: devices
             };
 
-            console.log('Order: ', order);
+            // console.log('Order: ', order);
 
             api
                 .put(`/service-order/${orderId}`, {
@@ -106,6 +115,8 @@ export const WorkOrderForm = () => {
                     devices: order.devices
                 })
                 .then((response) => {
+
+                    clear()
                     navigate("/work-order")
                 })
                 .catch((error) => {
@@ -115,6 +126,8 @@ export const WorkOrderForm = () => {
             alert("Preencha todos dados")
         }
     }
+
+
 
 
     function createDevice() {
@@ -143,10 +156,10 @@ export const WorkOrderForm = () => {
     }
 
 
-    function loadDeviceToEdit(id: number,position:number) {
+    function loadDeviceToEdit(id: number, position: number) {
 
-        console.log('load id: ',id);
-       
+        console.log('load id: ', id);
+
         setDeviceId(id)
         setBrand(devices[position].device_brand)
         setModel(devices[position].device_model)
@@ -162,8 +175,6 @@ export const WorkOrderForm = () => {
 
     function updateDeviceAfterEdit() {
 
-        let dev = devices
-
         if (brand && model && probelmReported) {
 
             const device: Device = {
@@ -176,23 +187,14 @@ export const WorkOrderForm = () => {
                 parts_and_services: parts_and_services
             }
 
-            // dev[deviceId] = device
+            const currentDev = devices.map(data => {
 
-           
-
-            const currentDev = dev.map(data =>{
-
-                console.log(data.device_id);
-                console.log(deviceId);
-
-                if(data.device_id == deviceId){
+                if (data.device_id == deviceId) {
                     return device
-                }else{
+                } else {
                     return data
                 }
             })
-
-            console.log(currentDev);
 
             setDevices(currentDev)
             clearDevice()
@@ -201,9 +203,41 @@ export const WorkOrderForm = () => {
     }
 
 
+    function showModalCreatePos(device_id: number, devicePosition: number) {
+        setDevicePosition(devicePosition)
+        setDeviceId(device_id)
+        setShowModalPos(true)
+    }
+
+    function createPos(obj: any) {
+
+        // console.log(obj.pos);
+
+        let list: Pas[] = parts_and_services
+
+        const pos: Pas = {
+            pas_id: 0,
+            pas_description: obj.pos.description,
+            pas_quantity: obj.pos.quantity,
+            pas_price: obj.pos.price
+        }
+
+        // devices[devicePosition].parts_and_services?.push(pos)
+        list.push(pos)
+        setParts_and_services(list)
+        setHaveDetails(true)
+        setShowModalPos(obj.showModal)
+
+        devices[devicePosition].parts_and_services = parts_and_services
+    }
+
     function clear() {
         setOrderEdit(false)
         clearDevice()
+        setParts_and_services([])
+        setDevicePosition(0)
+        setDeviceId(0)
+        setShowPosList(false)
     }
 
     function clearDevice() {
@@ -212,9 +246,8 @@ export const WorkOrderForm = () => {
         setSerialNumber("")
         setImei("")
         setProblemReported("")
-        setParts_and_services([])
-        setDeviceId(0)
         setEditDevice(false)
+        setHaveDetails(false)
 
     }
 
@@ -257,6 +290,18 @@ export const WorkOrderForm = () => {
         setShowModalSearchClient(obj.statusModal)
     }
 
+    function closeModalPos(obj: any) {
+        setShowModalPos(false)
+    }
+
+    function showListPos(device_id: number, device_position: number) {
+
+        const listPos = devices[device_position].parts_and_services
+        setListPos(listPos!)
+        setShowPosList(true)
+
+    }
+
 
     function afterSearchClient(obj: any) {
 
@@ -293,13 +338,15 @@ export const WorkOrderForm = () => {
     }
 
 
-    const [orderId,setOrderId] = useState(0)
+    const [orderId, setOrderId] = useState(0)
     const [orderNumber, setOrderNumber] = useState(0)
     const [orderEdit, setOrderEdit] = useState(false)
+    const [haveDetails, setHaveDetails] = useState(false)
     const [clientName, setClientName] = useState("")
     const [clientPhone, setClientPhone] = useState("")
     const [showModalSearchClient, setShowModalSearchClient] = useState(false)
     const [ShowModalCreateClient, setSowModalCreateClient] = useState(false)
+    const [ShowModalPos, setShowModalPos] = useState(false)
     const [clientId, setClientId] = useState(0)
     const [userId, setUserId] = useState(0)
     const [options, setOptions] = useState("")
@@ -311,12 +358,15 @@ export const WorkOrderForm = () => {
     const [imei, setImei] = useState("")
     const [probelmReported, setProblemReported] = useState("")
     const [deviceId, setDeviceId] = useState(0)
+    const [devicePosition, setDevicePosition] = useState(0)
     const [editDevice, setEditDevice] = useState(false)
     const [orderDate, setOrderDate] = useState(new Date())
     const [orderDateExpiration, setOrderDateExpiration] = useState(new Date())
     const [orderValue, setOrderValue] = useState(0.0)
     const [devices, setDevices] = useState<Device[]>([])
     const [parts_and_services, setParts_and_services] = useState<Pas[]>([])
+    const [showPosList, setShowPosList] = useState(false)
+    const [listPos, setListPos] = useState<Pas[]>([])
 
 
     useEffect(() => {
@@ -519,8 +569,9 @@ export const WorkOrderForm = () => {
                                                 <td>Marca</td>
                                                 <td>Modelo</td>
                                                 <td>Sérial</td>
+                                                {orderEdit && <td>Pos</td>}
                                                 <td>Editar</td>
-                                                <td>Pos</td>
+                                                <td>Detalhes</td>
 
                                             </tr>
                                         </thead>
@@ -531,8 +582,10 @@ export const WorkOrderForm = () => {
                                                     <td>{device.device_brand}</td>
                                                     <td>{device.device_model}</td>
                                                     <td>{device.device_serial_number}</td>
-                                                    <td>{<button className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id,i)}><ImPencil2 /></button>}</td>
-                                                    <td>{<button className='btn btn-secondary'><FcServices/></button>}</td>
+                                                    {orderEdit && <td>{<button className='btn btn-warning' onClick={() => showModalCreatePos(device.device_id === 0 ? i : device.device_id, i)}><BiAddToQueue /></button>}</td>}
+                                                    <td>{<button className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id, i)}><ImPencil2 /></button>}</td>
+                                                    {devices[i].parts_and_services && <td>{<button className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></button>}</td>}
+                                                    {!devices[i].parts_and_services && <td>{<button className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></button>}</td>}
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -540,7 +593,7 @@ export const WorkOrderForm = () => {
                                 </WorkOrderInternalTebla>
                             </WorkOrderTableCard>
 
-                            {orderEdit && <WorkOrderTableCard >
+                            {showPosList && <WorkOrderTableCard >
 
                                 <WorkOrderInternalTebla>
                                     <WorkOrderTitle>lista de peças e/ou serviços</WorkOrderTitle>
@@ -549,20 +602,20 @@ export const WorkOrderForm = () => {
                                         <thead >
                                             <tr>
                                                 <td>Id</td>
-                                                <td>Marca</td>
-                                                <td>Modelo</td>
-                                                <td>Sérial</td>
+                                                <td>Descrição</td>
+                                                <td>Quantidade</td>
+                                                <td>Preço</td>
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {devices && devices.map((device, i) => (
-                                                <tr key={device.device_id === 0 ? i : device.device_id}>
-                                                    <td>{device.device_id === 0 ? i : device.device_id}</td>
-                                                    <td>{device.device_brand}</td>
-                                                    <td>{device.device_model}</td>
-                                                    <td>{device.device_serial_number}</td>
-                                                    
+                                            {listPos && listPos.map((pos, i) => (
+                                                <tr key={pos.pas_id === 0 ? i : pos.pas_id}>
+                                                    <td>{pos.pas_id === 0 ? i : pos.pas_id}</td>
+                                                    <td>{pos.pas_description}</td>
+                                                    <td>{pos.pas_quantity}</td>
+                                                    <td>{pos.pas_price}</td>
+
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -578,8 +631,9 @@ export const WorkOrderForm = () => {
 
 
 
-                    {showModalSearchClient && <ModalSearchClient body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
-                    {ShowModalCreateClient && <ModalCreateClient body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
+                    {showModalSearchClient && <ModalDefault body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
+                    {ShowModalCreateClient && <ModalDefault body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
+                    {ShowModalPos && <ModalDefault body={<Pos closeModalPos={closeModalPos} createPos={createPos} />} />}
                 </WorkOrderForm_Main>
 
 
