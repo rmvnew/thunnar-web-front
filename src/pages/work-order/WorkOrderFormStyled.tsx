@@ -15,7 +15,7 @@ export const WorkOrderForm_Header = styled.div`
     position: fixed;
     top: 0;
     background-color: rgb(38, 67, 80);
-    width: 90vw;
+    width: 100vw;
     height: 80px;
     align-items: center;
     color: #FFF;

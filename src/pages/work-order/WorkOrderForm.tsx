@@ -36,7 +36,7 @@ export const WorkOrderForm = () => {
 
 
             await api.get(`service-order/${dataResult.WorkOrder.service_order_id}`).then(result => {
-                // console.log('Res: ',result.data);
+                // console.log('Res: ',result.data.devices);
 
                 setOrderId(dataResult.WorkOrder.service_order_id)
                 setOrderNumber(result.data.service_order_number)
@@ -46,7 +46,9 @@ export const WorkOrderForm = () => {
                 setOptions(result.data.technician.technician_id)
                 setSelect(result.data.technician.technician_name)
                 setDevices(result.data.devices)
+                // setParts_and_services(result.data.devices.parts_and_services)
                 setOrderEdit(true)
+                sumPos()
 
 
             })
@@ -231,6 +233,21 @@ export const WorkOrderForm = () => {
         devices[devicePosition].parts_and_services = parts_and_services
     }
 
+    const sumPos = () => {
+
+        let value = 0
+
+        devices.forEach(data => {
+
+            const result = data.parts_and_services!.reduce((a, b) => a + b.pas_price, 0)
+            value += result
+
+        })
+
+        setOrderValue(value)
+
+    }
+
     function clear() {
         setOrderEdit(false)
         clearDevice()
@@ -375,6 +392,10 @@ export const WorkOrderForm = () => {
         setOrder()
     }, [])
 
+    // useEffect(()=>{
+    //     sumPos()
+    // },[parts_and_services])
+
     return (
         <>
             <AnimatePageOpacity>
@@ -403,7 +424,7 @@ export const WorkOrderForm = () => {
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label>Valor da ordem</WorkOrderForm_Label>
-                                <h2>{orderValue}</h2>
+                                <h2>{orderValue.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h2>
                             </WorkOrderTopCardInternal>
 
                         </WorkOrderTopCard>
