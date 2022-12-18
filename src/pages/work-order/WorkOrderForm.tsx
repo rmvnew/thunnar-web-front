@@ -53,7 +53,9 @@ export const WorkOrderForm = () => {
                 setDevices(result.data.devices)
                 setOrderEdit(true)
 
-
+                // if(result.data.devices.parts_and_services.length > 0){
+                //     setHaveDetails()
+                // }
 
 
 
@@ -422,8 +424,7 @@ export const WorkOrderForm = () => {
     useEffect(() => {
         setTimeout(() => {
             if (parts_and_services.length > 0) {
-                devices[devicePosition].parts_and_services = parts_and_services
-                console.log('Dev: ', devices);
+                devices[devicePosition].parts_and_services = parts_and_services     
             }
         }, 1000)
     }, [createdPos])
@@ -637,8 +638,8 @@ export const WorkOrderForm = () => {
                                                     <td>{device.device_serial_number}</td>
                                                     {orderEdit && <td>{<button className='btn btn-warning' onClick={() => showModalCreatePos(device.device_id === 0 ? i : device.device_id, i)}><BiAddToQueue /></button>}</td>}
                                                     <td>{<button className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id, i)}><ImPencil2 /></button>}</td>
-                                                    {devices[i].parts_and_services && <td>{<button className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></button>}</td>}
-                                                    {!devices[i].parts_and_services && <td>{<button className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></button>}</td>}
+                                                    {(devices[i].parts_and_services?.length! > 0) && <td>{<button className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></button>}</td>}
+                                                    {!(devices[i].parts_and_services?.length! > 0) && <td>{<button className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></button>}</td>}
                                                 </tr>
                                             ))}
                                         </tbody>
