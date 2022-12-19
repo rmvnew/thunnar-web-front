@@ -122,7 +122,11 @@ export const WorkOrderForm = () => {
                     console.log('Error: ', error);
                 });
         } else {
-            showAlert(AlertTypes.ERROR, 'Preencha todos campos para salvar a Ordem', 5000)
+            showAlert(AlertTypes.ERROR, 'Preencha todos campos e adicione um aparelho para salvar a Ordem!', 7000)
+            setDataOrderInputFails('fail')
+            setTimeout(()=>{
+                setDataOrderInputFails('pass')
+            },7000)
         }
     }
 
@@ -158,7 +162,11 @@ export const WorkOrderForm = () => {
                     console.log('Error: ', error);
                 });
         } else {
-            alert("Preencha todos dados")
+            showAlert(AlertTypes.ERROR, 'Preencha todos campos para salvar a Ordem', 7000)
+            setDataOrderInputFails('fail')
+            setTimeout(()=>{
+                setDataOrderInputFails('pass')
+            },7000)
         }
     }
 
@@ -317,6 +325,8 @@ export const WorkOrderForm = () => {
         setShowPosList(false)
         setCreatedPos(false)
         setDeviceInputFails('pass')
+        setDataOrderInputFails('pass')
+
     }
 
     function clearDevice() {
@@ -449,6 +459,7 @@ export const WorkOrderForm = () => {
     const [showPosList, setShowPosList] = useState(false)
     const [listPos, setListPos] = useState<Pas[]>([])
     const [deviceInputsFails, setDeviceInputFails] = useState('pass')
+    const [dataOrderInputFails, setDataOrderInputFails] = useState('pass')
 
 
     useEffect(() => {
@@ -524,7 +535,11 @@ export const WorkOrderForm = () => {
 
                                 <div className="col-lg-7">
                                     <WorkOrderForm_Label>Nome do cliente</WorkOrderForm_Label>
-                                    <WorkOrderClientInputs
+                                    {/* <WorkOrderClientInputs */}
+                                    <WorkOrderDeviceInput
+                                        alt={dataOrderInputFails}
+                                        property='10px'
+                                        itemProp={dataOrderInputFails}
                                         className="form-control form-control"
                                         type="text"
                                         placeholder="Digite o nome do cliente"
@@ -535,7 +550,11 @@ export const WorkOrderForm = () => {
 
                                 <div className="col-lg-5">
                                     <WorkOrderForm_Label>Telefone do cliente</WorkOrderForm_Label>
-                                    <WorkOrderClientInputs
+                                    {/* <WorkOrderClientInputs */}
+                                    <WorkOrderDeviceInput
+                                        alt={dataOrderInputFails}
+                                        property='10px'
+                                        itemProp={dataOrderInputFails}
                                         className="form-control form-control"
                                         type="text"
                                         placeholder="Digite o telefone"
