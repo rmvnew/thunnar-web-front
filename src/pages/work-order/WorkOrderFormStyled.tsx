@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 
 
@@ -147,9 +147,40 @@ export const WorkOrderClientInputs = styled.input`
 
 export const WorkOrderproblemInput = styled.input`
 
+    
+
     margin-left: 10px;
     width: 97%;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+
+`
+
+const failCondition = keyframes`
+    0%{
+        transform: translateX(0%);
+        opacity: 1;
+    }50%{
+        transform: translateX(-1%);
+        opacity: 0.6;
+    }100%{
+        transform: translateX(0%);
+        opacity: 1;
+        
+    }
+    
+`
+export const WorkOrderDeviceInput = styled.input`
+
+    
+
+    margin-left: ${props => props.property};
+    width: 97%;
+    box-shadow: ${props => props.alt == 'pass' ? "#FFF 0px 0px 0px" : "#F00 0px 0px 20px"};
+    animation: ${props => props.itemProp == 'pass' ? "" : failCondition};
+    animation-duration: 0.3s;
+    overflow: hidden;
+
+
 
     
 `
@@ -158,7 +189,7 @@ export const WorkOrderButtonController = styled.button`
 
     width: 200px;
     /* margin-left: 10px; */
-    margin-top: 20px;
+    margin-top: 10px;
     color: #FFF;
 
     
@@ -169,6 +200,7 @@ export const WorkOrderButtonDevice = styled.button`
     width: 200px;
     margin-left: 10px;
     margin-bottom: 20px;
+    margin-top: 20px;
 
     
 `

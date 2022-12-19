@@ -7,7 +7,7 @@ import { BiAddToQueue } from "react-icons/bi";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla, WorkOrderSelectTechnician, WorkOrderDeviceCard } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
@@ -19,6 +19,9 @@ import { Device } from '../../interfaces/Device.interface';
 import { Pas } from '../../interfaces/Pas.interface';
 import { ModalDefault } from '../../components/Modal';
 import { Pos } from '../../components/PartsOrService/Pas';
+import { AlertTypes } from '../../enums/enums';
+import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
+import AlertMessage from '../../components/AlertMessage';
 
 
 export const WorkOrderForm = () => {
@@ -31,12 +34,34 @@ export const WorkOrderForm = () => {
     const navigate = useNavigate()
 
 
+    function showAlert(type: AlertTypes, message: string, time: number) {
+
+
+
+        const props: AlertTypesInterface = {
+            message: message,
+            aletTypes: type,
+            time: time
+        }
+
+        setAlertProps(props)
+
+        setOpen(true)
+
+        setTimeout(() => {
+            setOpen(false)
+
+        }, time)
+
+    }
+
+
     const setOrder = async () => {
         if (dataResult !== undefined) {
 
 
             await api.get(`service-order/${dataResult.WorkOrder.service_order_id}`).then(result => {
-                console.log('Res: ',result.data);
+                console.log('Res: ', result.data);
 
                 const initialDate = new Date(result.data.service_order_date)
                 const finalDate = new Date(result.data.service_order_expiration)
@@ -68,9 +93,9 @@ export const WorkOrderForm = () => {
 
     function createOrder() {
 
-        console.log('ClientId: ', clientId);
-        console.log('Options: ', options);
-        console.log('devices length: ', devices.length);
+        // console.log('ClientId: ', clientId);
+        // console.log('Options: ', options);
+        // console.log('devices length: ', devices.length);
 
         if (clientId && options && devices.length > 0) {
             const order = {
@@ -97,7 +122,7 @@ export const WorkOrderForm = () => {
                     console.log('Error: ', error);
                 });
         } else {
-            alert("Preencha todos dados")
+            showAlert(AlertTypes.ERROR, 'Preencha todos campos para salvar a Ordem', 5000)
         }
     }
 
@@ -161,27 +186,15 @@ export const WorkOrderForm = () => {
             setDevices(dev)
             clearDevice()
 
+        } else {
+            setDeviceInputFails('fail')
+            showAlert(AlertTypes.ERROR, 'Preencha todos campos', 7000)
+            setTimeout(() => {
+                setDeviceInputFails('pass')
+            }, 7000)
         }
 
     }
-
-
-    function loadDeviceToEdit(id: number, position: number) {
-
-        console.log('load id: ', id);
-
-        setDeviceId(id)
-        setBrand(devices[position].device_brand)
-        setModel(devices[position].device_model)
-        setSerialNumber(devices[position].device_serial_number)
-        setImei(devices[position].device_imei)
-        setProblemReported(devices[position].device_problem_reported)
-        setParts_and_services(devices[position].parts_and_services!)
-        setEditDevice(true)
-
-
-    }
-
 
     function updateDeviceAfterEdit() {
 
@@ -209,8 +222,34 @@ export const WorkOrderForm = () => {
             setDevices(currentDev)
             clearDevice()
 
+        } else {
+            setDeviceInputFails('fail')
+            showAlert(AlertTypes.ERROR, 'Preencha todos campos', 7000)
+            setTimeout(() => {
+                setDeviceInputFails('pass')
+            }, 7000)
         }
     }
+
+
+
+    function loadDeviceToEdit(id: number, position: number) {
+
+        console.log('load id: ', id);
+
+        setDeviceId(id)
+        setBrand(devices[position].device_brand)
+        setModel(devices[position].device_model)
+        setSerialNumber(devices[position].device_serial_number)
+        setImei(devices[position].device_imei)
+        setProblemReported(devices[position].device_problem_reported)
+        setParts_and_services(devices[position].parts_and_services!)
+        setEditDevice(true)
+
+
+    }
+
+
 
 
     function showModalCreatePos(device_id: number, devicePosition: number) {
@@ -228,14 +267,14 @@ export const WorkOrderForm = () => {
         let list = devices[devicePosition].parts_and_services!
 
         // console.log('List - 1: ',list);
-        
+
         const pos: Pas = {
             pas_id: 0,
             pas_description: obj.pos.description,
             pas_quantity: obj.pos.quantity,
             pas_price: obj.pos.price
         }
-        
+
         // devices[devicePosition].parts_and_services?.push(pos)
         list.push(pos)
         // console.log('List - 2: ',list);
@@ -277,6 +316,7 @@ export const WorkOrderForm = () => {
         setDeviceId(0)
         setShowPosList(false)
         setCreatedPos(false)
+        setDeviceInputFails('pass')
     }
 
     function clearDevice() {
@@ -376,7 +416,8 @@ export const WorkOrderForm = () => {
         setSowModalCreateClient(status)
     }
 
-
+    const [alertProps, setAlertProps] = useState({})
+    const [open, setOpen] = useState(false);
     const [orderId, setOrderId] = useState(0)
     const [orderNumber, setOrderNumber] = useState(0)
     const [orderEdit, setOrderEdit] = useState(false)
@@ -407,6 +448,7 @@ export const WorkOrderForm = () => {
     const [createdPos, setCreatedPos] = useState(false)
     const [showPosList, setShowPosList] = useState(false)
     const [listPos, setListPos] = useState<Pas[]>([])
+    const [deviceInputsFails, setDeviceInputFails] = useState('pass')
 
 
     useEffect(() => {
@@ -424,7 +466,7 @@ export const WorkOrderForm = () => {
     useEffect(() => {
         setTimeout(() => {
             if (parts_and_services.length > 0) {
-                devices[devicePosition].parts_and_services = parts_and_services     
+                devices[devicePosition].parts_and_services = parts_and_services
             }
         }, 1000)
     }, [createdPos])
@@ -530,7 +572,10 @@ export const WorkOrderForm = () => {
                                         <div className="col-lg-6">
                                             <WorkOrderForm_Label>Marca</WorkOrderForm_Label>
 
-                                            <input
+                                            <WorkOrderDeviceInput
+                                                alt={deviceInputsFails}
+                                                property='0'
+                                                itemProp={deviceInputsFails}
                                                 className="form-control form-control"
                                                 type="text"
                                                 placeholder="Digite a marca do aparelho"
@@ -543,7 +588,10 @@ export const WorkOrderForm = () => {
                                         <div className="col-lg-6">
                                             <WorkOrderForm_Label>Modelo</WorkOrderForm_Label>
 
-                                            <input
+                                            <WorkOrderDeviceInput
+                                                alt={deviceInputsFails}
+                                                property='0'
+                                                itemProp={deviceInputsFails}
                                                 className="form-control form-control"
                                                 type="text"
                                                 placeholder="Digite a marca do aparelho"
@@ -560,7 +608,9 @@ export const WorkOrderForm = () => {
                                         <div className="col-lg-6">
                                             <WorkOrderForm_Label>Número de série</WorkOrderForm_Label>
 
-                                            <input
+                                            <WorkOrderDeviceInput
+                                                alt='pass'
+                                                property='0'
                                                 className="form-control form-control"
                                                 type="text"
                                                 placeholder="Digite a marca do aparelho"
@@ -573,7 +623,9 @@ export const WorkOrderForm = () => {
                                         <div className="col-lg-6">
                                             <WorkOrderForm_Label>Imei</WorkOrderForm_Label>
 
-                                            <input
+                                            <WorkOrderDeviceInput
+                                                alt='pass'
+                                                property='0'
                                                 className="form-control form-control"
                                                 type="text"
                                                 placeholder="Digite a marca do aparelho"
@@ -588,7 +640,10 @@ export const WorkOrderForm = () => {
                                     <div className="row">
                                         <WorkOrderForm_Label>Defeito Informado</WorkOrderForm_Label>
 
-                                        <WorkOrderproblemInput
+                                        <WorkOrderDeviceInput
+                                            alt={deviceInputsFails}
+                                            property='10px'
+                                            itemProp={deviceInputsFails}
                                             className="form-control form-control"
                                             type="text"
                                             placeholder="Digite a marca do aparelho"
@@ -688,6 +743,7 @@ export const WorkOrderForm = () => {
                     {showModalSearchClient && <ModalDefault body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
                     {ShowModalCreateClient && <ModalDefault body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
                     {ShowModalPos && <ModalDefault body={<Pos closeModalPos={closeModalPos} createPos={createPos} />} />}
+                    {open && <AlertMessage props={alertProps} />}
                 </WorkOrderForm_Main>
 
 
