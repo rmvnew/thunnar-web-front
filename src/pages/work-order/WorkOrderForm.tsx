@@ -334,16 +334,23 @@ export const WorkOrderForm = () => {
 
     }
 
-    function editPos(pos_id: Pas) {
+    function editPos(pos: any) {
 
-        console.log('editando: ', pos_id);
+        console.log('editando: ', pos);
 
     }
 
 
-    function deletePos(pos_id: Pas) {
+    function deletePos(pos: any) {
 
-        console.log('deletando: ', pos_id);
+        console.log('deletando: ', pos);
+        api.delete(`parts-and-services/${pos.pas_id}`)
+            .then(res => {
+                clear()
+                setOrder()
+            }).catch(error => {
+                console.log('Error: ', error);
+            })
 
     }
 
