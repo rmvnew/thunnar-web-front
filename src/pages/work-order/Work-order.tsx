@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom"
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
 import { WorkOrderButtonNewOrder, WorkOrderInputSearch, WorkOrderMain, WorkorderNewOrder, WorkOrderTable, WorkOrderTitle } from "./WorkOrderStyled"
+import { getDateBr } from "../../utils/date.utils";
 
 
 
@@ -127,8 +128,8 @@ export const WorkOrder = () => {
                                         <td>{so.service_order_number}</td>
                                         <td>{so.client.client_name}</td>
                                         <td>{so.client.client_phone}</td>
-                                        <td>{so.service_order_date}</td>
-                                        <td>{so.service_order_expiration}</td>
+                                        <td>{getDateBr(so.service_order_date)}</td>
+                                        <td>{getDateBr(so.service_order_expiration)}</td>
 
                                         <td>
 
