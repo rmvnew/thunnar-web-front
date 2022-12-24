@@ -22,6 +22,7 @@ import { Pos } from '../../components/PartsOrService/Pas';
 import { AlertTypes } from '../../enums/enums';
 import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import AlertMessage from '../../components/AlertMessage';
+import { TablePos } from './tables/TablePos';
 
 
 export const WorkOrderForm = () => {
@@ -723,32 +724,8 @@ export const WorkOrderForm = () => {
 
                             {showPosList && <WorkOrderTableCard >
 
-                                <WorkOrderInternalTebla>
-                                    <WorkOrderTitle>lista de peças e/ou serviços</WorkOrderTitle>
+                                <TablePos posList={listPos}/>
 
-                                    <table className='table table-striped'>
-                                        <thead >
-                                            <tr>
-                                                <td>Id</td>
-                                                <td>Descrição</td>
-                                                <td>Quantidade</td>
-                                                <td>Preço</td>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {listPos && listPos.map((pos, i) => (
-                                                <tr key={pos.pas_id === 0 ? i : pos.pas_id}>
-                                                    <td>{pos.pas_id === 0 ? i : pos.pas_id}</td>
-                                                    <td>{pos.pas_description}</td>
-                                                    <td>{pos.pas_quantity}</td>
-                                                    <td>{pos.pas_price}</td>
-
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </WorkOrderInternalTebla>
                             </WorkOrderTableCard>}
 
                             {!orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={createOrder}><GiSave /> Salvar</WorkOrderButtonController>}
