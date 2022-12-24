@@ -62,7 +62,7 @@ export const WorkOrderForm = () => {
 
 
             await api.get(`service-order/${dataResult.WorkOrder.service_order_id}`).then(result => {
-                console.log('Res: ', result.data);
+                // console.log('Res: ', result.data);
 
                 const initialDate = new Date(result.data.service_order_date)
                 const finalDate = new Date(result.data.service_order_expiration)
@@ -76,12 +76,28 @@ export const WorkOrderForm = () => {
                 setClientPhone(result.data.client.client_phone)
                 setOptions(result.data.technician.technician_id)
                 setSelect(result.data.technician.technician_name)
-                setDevices(result.data.devices)
                 setOrderEdit(true)
 
-                // if(result.data.devices.parts_and_services.length > 0){
-                //     setHaveDetails()
-                // }
+                const oldList: any[] = result.data.devices
+
+                const newList = oldList.map(data => {
+
+                    const res = data.parts_and_services.map((result: any) => {
+
+                        let currentPos = result
+                        currentPos.isSaved = true
+                        return currentPos
+
+                    })
+
+                    data.parts_and_services = res
+                    return data
+
+                })
+
+                setDevices(newList)
+
+
 
 
 
@@ -125,9 +141,9 @@ export const WorkOrderForm = () => {
         } else {
             showAlert(AlertTypes.ERROR, 'Preencha todos campos e adicione um aparelho para salvar a Ordem!', 7000)
             setDataOrderInputFails('fail')
-            setTimeout(()=>{
+            setTimeout(() => {
                 setDataOrderInputFails('pass')
-            },7000)
+            }, 7000)
         }
     }
 
@@ -165,9 +181,9 @@ export const WorkOrderForm = () => {
         } else {
             showAlert(AlertTypes.ERROR, 'Preencha todos campos para salvar a Ordem', 7000)
             setDataOrderInputFails('fail')
-            setTimeout(()=>{
+            setTimeout(() => {
                 setDataOrderInputFails('pass')
-            },7000)
+            }, 7000)
         }
     }
 
@@ -259,7 +275,7 @@ export const WorkOrderForm = () => {
     }
 
 
-
+    //& ## initial POS 
 
     function showModalCreatePos(device_id: number, devicePosition: number) {
         setDevicePosition(devicePosition)
@@ -281,7 +297,8 @@ export const WorkOrderForm = () => {
             pas_id: 0,
             pas_description: obj.pos.description,
             pas_quantity: obj.pos.quantity,
-            pas_price: obj.pos.price
+            pas_price: obj.pos.price,
+            isSaved: false
         }
 
         // devices[devicePosition].parts_and_services?.push(pos)
@@ -316,6 +333,23 @@ export const WorkOrderForm = () => {
         setOrderValue(value)
 
     }
+
+    function editPos(pos_id: Pas) {
+
+        console.log('editando: ', pos_id);
+
+    }
+
+
+    function deletePos(pos_id: Pas) {
+
+        console.log('deletando: ', pos_id);
+
+    }
+
+
+
+    // & ## final POS
 
     function clear() {
         setOrderEdit(false)
@@ -724,7 +758,7 @@ export const WorkOrderForm = () => {
 
                             {showPosList && <WorkOrderTableCard >
 
-                                <TablePos posList={listPos}/>
+                                <TablePos posList={listPos} editPos={editPos} deletePos={deletePos} />
 
                             </WorkOrderTableCard>}
 
