@@ -108,7 +108,7 @@ export const WorkOrderTableCard = styled.div`
     padding-top: 10px;
     border-radius: 10px;
     color: #FFF;
-    height: 294px;
+    height: 274px;
     
     
     table{
