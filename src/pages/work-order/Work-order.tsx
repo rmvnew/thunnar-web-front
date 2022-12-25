@@ -5,7 +5,7 @@ import { FiCheck } from "react-icons/fi";
 import { NavLink } from "react-router-dom"
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
-import { WorkOrderButtonNewOrder, WorkOrderInputSearch, WorkOrderMain, WorkorderNewOrder, WorkOrderTable, WorkOrderTitle } from "./WorkOrderStyled"
+import { WorkOrderButtonNewOrder, WorkOrderButtonTable, WorkOrderInputSearch, WorkOrderMain, WorkOrderNavLinkTable, WorkorderNewOrder, WorkOrderTable, WorkOrderTitle } from "./WorkOrderStyled"
 import { getDateBr } from "../../utils/date.utils";
 
 
@@ -67,7 +67,7 @@ export const WorkOrder = () => {
             })
     }
 
-    const completOrder = async (order_id: number = 0) =>{
+    const completOrder = async (order_id: number = 0) => {
 
     }
 
@@ -124,38 +124,38 @@ export const WorkOrder = () => {
                         </thead>
                         <tbody>
                             {serviceOrder.map((so) => (
-                                    <tr key={so.service_order_number}>
-                                        <td>{so.service_order_number}</td>
-                                        <td>{so.client.client_name}</td>
-                                        <td>{so.client.client_phone}</td>
-                                        <td>{getDateBr(so.service_order_date)}</td>
-                                        <td>{getDateBr(so.service_order_expiration)}</td>
+                                <tr key={so.service_order_number}>
+                                    <td>{so.service_order_number}</td>
+                                    <td>{so.client.client_name}</td>
+                                    <td>{so.client.client_phone}</td>
+                                    <td>{getDateBr(so.service_order_date)}</td>
+                                    <td>{getDateBr(so.service_order_expiration)}</td>
 
-                                        <td>
+                                    <td>
 
-                                            <div className="d-flex justify-content-around base-options">
+                                        <div className="d-flex justify-content-around base-options">
 
-                                                <button className="btn btn-success btn-delete"
-                                                    onClick={() => completOrder(so.service_order_id)}
-                                                    data-hover="Fechar Ordem"
-                                                ><FiCheck /></button>
+                                            <WorkOrderButtonTable className="btn btn-success btn-delete"
+                                                onClick={() => completOrder(so.service_order_id)}
+                                                data-hover="Fechar Ordem"
+                                            ><FiCheck /></WorkOrderButtonTable>
 
-                                                <NavLink to={"/work-order/form"} state={{
-                                                    data: {
-                                                        WorkOrder: so
-                                                    }
-                                                }} className="btn btn-warning"><ImPencil2 /></NavLink>
+                                            <WorkOrderNavLinkTable to={"/work-order/form"} state={{
+                                                data: {
+                                                    WorkOrder: so
+                                                }
+                                            }} className="btn btn-warning"><ImPencil2 /></WorkOrderNavLinkTable>
 
-                                                <button className="btn btn-danger btn-delete"
-                                                    onClick={() => deleteOrder(so.service_order_id)}
-                                                ><ImBin /></button>
-                                                
+                                            <WorkOrderButtonTable className="btn btn-danger btn-delete"
+                                                onClick={() => deleteOrder(so.service_order_id)}
+                                            ><ImBin /></WorkOrderButtonTable>
 
-                                            </div>
 
-                                        </td>
-                                    </tr>
-                                ))}
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </WorkOrderTable>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
