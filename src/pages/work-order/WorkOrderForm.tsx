@@ -7,7 +7,7 @@ import { BiAddToQueue } from "react-icons/bi";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
@@ -743,7 +743,7 @@ export const WorkOrderForm = () => {
 
                             <WorkOrderTableCard >
 
-                                <WorkOrderInternalTebla>
+                                <WorkOrderInternalTable>
                                     <WorkOrderTitle>lista de aparelhos</WorkOrderTitle>
 
                                     <table className='table table-striped'>
@@ -774,7 +774,7 @@ export const WorkOrderForm = () => {
                                             ))}
                                         </tbody>
                                     </table>
-                                </WorkOrderInternalTebla>
+                                </WorkOrderInternalTable>
                             </WorkOrderTableCard>
 
                             {showPosList && <WorkOrderTableCard >

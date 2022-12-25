@@ -248,7 +248,7 @@ export const WorkOrderTopCardInternal = styled.div`
 
 
 
-export const WorkOrderInternalTebla = styled.div`
+export const WorkOrderInternalTable = styled.div`
 
     display: flex;
     flex-direction: column;
