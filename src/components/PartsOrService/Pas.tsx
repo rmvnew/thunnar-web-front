@@ -5,6 +5,7 @@ import { api } from "../../hooks/useApi"
 import { AlertTypesInterface } from "../../interfaces/AlertTypesInterface"
 import AlertMessage from "../AlertMessage"
 import { CreatePosButton, CreatePosCols, CreatePoslabel, CreatePosMain, CreatePosTitle } from "./PasStyled"
+import { toast } from 'react-toastify';
 
 
 
@@ -42,7 +43,7 @@ export const Pos = (props: any) => {
     }
 
 
-    function createClient() {
+    function createPos() {
         if (posDescription && posQuantity && posPrice) {
             const pos = {
                 description: posDescription,
@@ -60,7 +61,7 @@ export const Pos = (props: any) => {
         }
     }
 
-    function updateClient() {
+    function updatePos() {
         if (posDescription && posQuantity && posPrice) {
 
             api.put(`parts-and-services/${pasId}`, {
@@ -70,6 +71,7 @@ export const Pos = (props: any) => {
                 pas_price: posPrice
             }).then(response => {
                 props.operationAfterEditPos()
+                toast.success('Item atualizado com sucesso!')
             }).catch(error => {
                 console.log('Error update: ', error);
             })
@@ -151,8 +153,8 @@ export const Pos = (props: any) => {
                     </CreatePosCols>
                 </div>
 
-                {!isUpdate && <CreatePosButton className="btn btn-primary" onClick={createClient}>Salvar</CreatePosButton>}
-                {isUpdate && <CreatePosButton className="btn btn-primary" onClick={updateClient}>Atualizar</CreatePosButton>}
+                {!isUpdate && <CreatePosButton className="btn btn-primary" onClick={createPos}>Salvar</CreatePosButton>}
+                {isUpdate && <CreatePosButton className="btn btn-primary" onClick={updatePos}>Atualizar</CreatePosButton>}
                 <CreatePosButton className="btn btn-secondary" onClick={exit}>Sair</CreatePosButton>
 
             </CreatePosMain>
