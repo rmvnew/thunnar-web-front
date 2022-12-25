@@ -1,13 +1,15 @@
 import React from 'react';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'
 import './App.css';
-import Login from './pages/login/Login';
 import RouterElements from './routes/routes';
 
 function App() {
   return (
-   <RouterElements/>
-  // <Login/>
+    <>
+      <RouterElements />
+      <ToastContainer />
+    </>
   );
 }
 

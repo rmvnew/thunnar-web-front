@@ -5,6 +5,7 @@ import { AlertTypes } from "../../../enums/enums";
 import { AlertTypesInterface } from "../../../interfaces/AlertTypesInterface";
 import AlertMessage from "../../AlertMessage";
 import { phoneMask } from "../../../utils/mask";
+import { toast } from 'react-toastify';
 
 
 
@@ -14,25 +15,17 @@ export const CreateClient = (props: any) => {
 
 
 
-    function showAlert(type: AlertTypes, message: string, time: number) {
-
-
-
-        const props: AlertTypesInterface = {
-            message: message,
-            aletTypes: type,
-            time: time
-        }
-
-        setAlertProps(props)
-
-        setOpen(true)
-
-        setTimeout(() => {
-            setOpen(false)
-
-        }, time)
-
+    function msgError(msg: string, timer: number) {
+        toast.error(msg, {
+            position: "bottom-center",
+            autoClose: timer,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        })
     }
 
 
@@ -44,7 +37,7 @@ export const CreateClient = (props: any) => {
                 phone: adjustingPhoneNumber(clientPhone)
             };
 
-            // console.log('Client: ', client);
+            
 
             api
                 .post("/client", {
@@ -54,7 +47,7 @@ export const CreateClient = (props: any) => {
                 })
                 .then((res) => {
 
-                    // console.log('Bom;', res);
+                    toast.success('Client cadastrado com sucesso!')
                     props.getNewClient({
                         client: res.data,
                         showModal: false
@@ -66,19 +59,19 @@ export const CreateClient = (props: any) => {
 
 
                     if (error.response.data.message.indexOf('não pode ter mais que 11 caracteres!') >= 0) {
-                        showAlert(AlertTypes.ERROR, 'não pode ter mais que 11 caracteres!', 3000)
+                        msgError('não pode ter mais que 11 caracteres!', 5000)
                     } else if (error.response.data.message.indexOf('não pode ter menos que 11 caracteres!') >= 0) {
-                        showAlert(AlertTypes.ERROR, 'não pode ter menos que 11 caracteres!', 3000)
+                        msgError('não pode ter menos que 11 caracteres!', 5000)
                     } else if (error.response.data.message.indexOf('Cliente já cadastrado') >= 0) {
-                        showAlert(AlertTypes.ERROR, 'Cliente já cadastrado', 3000)
+                        msgError('Cliente já cadastrado', 5000)
                     } else if (error.response.data.message.indexOf('Número de cpf inválido') >= 0) {
-                        showAlert(AlertTypes.ERROR, 'Número de cpf inválido', 3000)
+                        msgError('Número de cpf inválido', 5000)
                     } else {
-                        showAlert(AlertTypes.ERROR, `Error: ${error}`, 3000)
+                        msgError(`Error: ${error}`, 5000)
                     }
                 });
         } else {
-            alert("Preencha todos dados")
+            msgError('Preencha todos dados',3000)
         }
     }
 
@@ -90,13 +83,7 @@ export const CreateClient = (props: any) => {
         return phone
     }
 
-    // const phoneMask = (value: string) => {
-    //     if (!value) return ""
-    //     value = value.replace(/\D/g, '')
-    //     value = value.replace(/(\d{2})(\d)/, "($1) $2")
-    //     value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-    //     setClientPhone(value)
-    // }
+
 
     function cpfMask(cpf: string) {
         cpf = cpf.replace(/\D/g, "")

@@ -19,10 +19,9 @@ import { Device } from '../../interfaces/Device.interface';
 import { Pas } from '../../interfaces/Pas.interface';
 import { ModalDefault } from '../../components/Modal';
 import { Pos } from '../../components/PartsOrService/Pas';
-import { AlertTypes } from '../../enums/enums';
-import { AlertTypesInterface } from '../../interfaces/AlertTypesInterface';
 import AlertMessage from '../../components/AlertMessage';
 import { TablePos } from './tables/TablePos';
+import { toast } from 'react-toastify';
 
 
 export const WorkOrderForm = () => {
@@ -33,29 +32,6 @@ export const WorkOrderForm = () => {
 
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
-
-
-    function showAlert(type: AlertTypes, message: string, time: number) {
-
-
-
-        const props: AlertTypesInterface = {
-            message: message,
-            aletTypes: type,
-            time: time
-        }
-
-        setAlertProps(props)
-
-        setOpen(true)
-
-        setTimeout(() => {
-            setOpen(false)
-
-        }, time)
-
-    }
-
 
     const setOrder = async () => {
         if (dataResult !== undefined) {
@@ -139,7 +115,19 @@ export const WorkOrderForm = () => {
                     console.log('Error: ', error);
                 });
         } else {
-            showAlert(AlertTypes.ERROR, 'Preencha todos campos e adicione um aparelho para salvar a Ordem!', 7000)
+            toast.error(
+                'Preencha todos campos e adicione um aparelho para salvar a Ordem!',
+                {
+                    position: "bottom-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                }
+            )
             setDataOrderInputFails('fail')
             setTimeout(() => {
                 setDataOrderInputFails('pass')
@@ -174,12 +162,26 @@ export const WorkOrderForm = () => {
 
                     clear()
                     navigate("/work-order")
+                    toast.success('Ordem atualizada com sucesso!')
                 })
                 .catch((error) => {
+                    toast.error('Falha ao atualizar a ordem!')
                     console.log('Error: ', error);
                 });
         } else {
-            showAlert(AlertTypes.ERROR, 'Preencha todos campos para salvar a Ordem', 7000)
+            toast.error(
+                'Preencha todos campos e adicione um aparelho para salvar a Ordem!',
+                {
+                    position: "bottom-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                }
+            )
             setDataOrderInputFails('fail')
             setTimeout(() => {
                 setDataOrderInputFails('pass')
@@ -213,7 +215,18 @@ export const WorkOrderForm = () => {
 
         } else {
             setDeviceInputFails('fail')
-            showAlert(AlertTypes.ERROR, 'Preencha todos campos', 7000)
+            toast.error(
+                'Preencha todos campos',
+                {
+                    position: "bottom-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
             setTimeout(() => {
                 setDeviceInputFails('pass')
             }, 7000)
@@ -249,7 +262,18 @@ export const WorkOrderForm = () => {
 
         } else {
             setDeviceInputFails('fail')
-            showAlert(AlertTypes.ERROR, 'Preencha todos campos', 7000)
+            toast.error(
+                'Preencha todos campos',
+                {
+                    position: "bottom-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
             setTimeout(() => {
                 setDeviceInputFails('pass')
             }, 7000)
@@ -286,13 +310,7 @@ export const WorkOrderForm = () => {
 
     function createPos(obj: any) {
 
-        // console.log(devices[devicePosition].parts_and_services);
-
-        // console.log(obj.pos);
-
         let list = devices[devicePosition].parts_and_services!
-
-        // console.log('List - 1: ',list);
 
         const pos: Pas = {
             pas_id: 0,
@@ -302,16 +320,25 @@ export const WorkOrderForm = () => {
             isSaved: false
         }
 
-        // devices[devicePosition].parts_and_services?.push(pos)
         list.push(pos)
-        // console.log('List - 2: ',list);
-
+        
         setParts_and_services(list)
-
-        // console.log('pos',parts_and_services);
         setHaveDetails(true)
         setShowModalPos(obj.showModal)
         setCreatedPos(true)
+        toast.info(
+            'O item foi adicionado!\n Atualize a ordem para salvar item.',
+            {
+                position: "bottom-center",
+                autoClose: 8000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",  
+            }
+            )
 
 
     }
