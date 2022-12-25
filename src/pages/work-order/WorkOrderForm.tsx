@@ -278,6 +278,7 @@ export const WorkOrderForm = () => {
     //& ## initial POS 
 
     function showModalCreatePos(device_id: number, devicePosition: number) {
+        setPosObject(null!)
         setDevicePosition(devicePosition)
         setDeviceId(device_id)
         setShowModalPos(true)
@@ -336,10 +337,20 @@ export const WorkOrderForm = () => {
 
     function editPos(pos: any) {
 
-        console.log('editando: ', pos);
+        // console.log('editando: ', pos);
+
+        setPosObject(pos)
+        setShowModalPos(true)
+
+
 
     }
 
+    function operationAfterEditPos() {
+        setShowModalPos(false)
+        clear()
+        setOrder()
+    }
 
     function deletePos(pos: any) {
 
@@ -353,6 +364,8 @@ export const WorkOrderForm = () => {
             })
 
     }
+
+
 
 
 
@@ -502,6 +515,7 @@ export const WorkOrderForm = () => {
     const [listPos, setListPos] = useState<Pas[]>([])
     const [deviceInputsFails, setDeviceInputFails] = useState('pass')
     const [dataOrderInputFails, setDataOrderInputFails] = useState('pass')
+    const [posObject, setPosObject] = useState({})
 
 
     useEffect(() => {
@@ -779,7 +793,7 @@ export const WorkOrderForm = () => {
 
                     {showModalSearchClient && <ModalDefault body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
                     {ShowModalCreateClient && <ModalDefault body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
-                    {ShowModalPos && <ModalDefault body={<Pos closeModalPos={closeModalPos} createPos={createPos} />} />}
+                    {ShowModalPos && <ModalDefault body={<Pos posObject={posObject} operationAfterEditPos={operationAfterEditPos} closeModalPos={closeModalPos} createPos={createPos} />} />}
                     {open && <AlertMessage props={alertProps} />}
                 </WorkOrderForm_Main>
 
