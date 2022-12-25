@@ -1,6 +1,6 @@
 
 
-export enum AlertTypes{
+export enum AlertTypes {
     ERROR = 'error',
     WARNING = 'warning',
     INFORMATION = 'information',
@@ -19,4 +19,13 @@ export enum ValidType {
     DATE_BR = 'DATE_BR',
     IS_CNPJ = 'IS_CNPJ'
 
+}
+
+export enum OrderStatus {
+    CREATED = 'CREATED',
+    UNDER_ANALYSIS = 'UNDER_ANALYSIS',
+    WAITING_FOR_APPROVAL = 'WAITING_FOR_APPROVAL',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FINISHED = 'FINISHED',
+    CANCELED = 'CANCELED'
 }

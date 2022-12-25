@@ -7,6 +7,11 @@ import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
 import { WorkOrderButtonNewOrder, WorkOrderButtonTable, WorkOrderInputSearch, WorkOrderMain, WorkOrderNavLinkTable, WorkorderNewOrder, WorkOrderTable, WorkOrderTitle } from "./WorkOrderStyled"
 import { getDateBr } from "../../utils/date.utils";
+import { OrderStatus } from "../../enums/enums";
+import { toast } from 'react-toastify';
+import { ModalDefault } from "../../components/Modal";
+import { ConfirmationModal } from "../../components/conformation/ConfirmationModal";
+import { parseStatus } from '../../utils/ParseOrderStatus';
 
 
 
@@ -35,6 +40,9 @@ export const WorkOrder = () => {
     const [pages, setPages] = useState(0)
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState("")
+    const [showModalcloseOrder, setShowModalcloseOrder] = useState(false)
+    const [messageConfirmation, setMessageConfirmation] = useState("")
+    const [orderNumber, setOrderNumber] = useState(0)
 
     const getServiceOrder = async (page: number = 1) => {
 
@@ -67,8 +75,30 @@ export const WorkOrder = () => {
             })
     }
 
-    const completOrder = async (order_id: number = 0) => {
+    const callConfirmation = async (order_id: number = 0) => {
 
+        setOrderNumber(order_id)
+        setShowModalcloseOrder(true)
+
+
+    }
+
+    const confirmation = (conf: any) => {
+
+        setShowModalcloseOrder(conf.modal)
+        if (conf.status) {
+
+            api.patch(`/change-status/${orderNumber}/${OrderStatus.FINISHED}`)
+                .then(response => {
+                    toast.success('Ordem de serviço fechada com sucesso!')
+                })
+
+        }
+
+    }
+
+    const exit = (conf: any) => {
+        setShowModalcloseOrder(conf.modal)
     }
 
 
@@ -116,6 +146,7 @@ export const WorkOrder = () => {
                                 <td>Telefone Cliente</td>
                                 <td>Data de inicio</td>
                                 <td>Previsão de entrega</td>
+                                <td>Status</td>
                                 <td>Opções</td>
 
 
@@ -130,15 +161,16 @@ export const WorkOrder = () => {
                                     <td>{so.client.client_phone}</td>
                                     <td>{getDateBr(so.service_order_date)}</td>
                                     <td>{getDateBr(so.service_order_expiration)}</td>
+                                    <td>{parseStatus(so.service_order_status)}</td>
 
                                     <td>
 
                                         <div className="d-flex justify-content-around base-options">
 
                                             <WorkOrderButtonTable className="btn btn-success btn-delete"
-                                                onClick={() => completOrder(so.service_order_id)}
-                                                data-hover="Fechar Ordem"
-                                            ><FiCheck /></WorkOrderButtonTable>
+                                                onClick={() => callConfirmation(so.service_order_id)}>
+                                                <FiCheck />
+                                            </WorkOrderButtonTable>
 
                                             <WorkOrderNavLinkTable to={"/work-order/form"} state={{
                                                 data: {
@@ -159,6 +191,11 @@ export const WorkOrder = () => {
                         </tbody>
                     </WorkOrderTable>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+                    {showModalcloseOrder && <ModalDefault body={<ConfirmationModal
+                        messtage={messageConfirmation}
+                        confirmation={confirmation}
+                        exit={exit}
+                    />} />}
                 </WorkOrderMain>
             </AnimatePageOpacity>
         </>
