@@ -323,7 +323,7 @@ export const WorkOrderForm = () => {
 
         devices.forEach(data => {
 
-            const result = data.parts_and_services!.reduce((a, b) => a + b.pas_price, 0)
+            const result = data.parts_and_services!.reduce((a, b) => a + (b.pas_price * b.pas_quantity), 0)
 
             // console.log(result);
 
