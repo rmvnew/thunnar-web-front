@@ -7,7 +7,7 @@ import { BiAddToQueue } from "react-icons/bi";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTebla, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
@@ -766,10 +766,10 @@ export const WorkOrderForm = () => {
                                                     <td>{device.device_brand}</td>
                                                     <td>{device.device_model}</td>
                                                     <td>{device.device_serial_number}</td>
-                                                    {orderEdit && <td>{<button className='btn btn-warning' onClick={() => showModalCreatePos(device.device_id === 0 ? i : device.device_id, i)}><BiAddToQueue /></button>}</td>}
-                                                    <td>{<button className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id, i)}><ImPencil2 /></button>}</td>
-                                                    {(devices[i].parts_and_services?.length! > 0) && <td>{<button className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></button>}</td>}
-                                                    {!(devices[i].parts_and_services?.length! > 0) && <td>{<button className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></button>}</td>}
+                                                    {orderEdit && <td>{<WorkOrderButtonTable className='btn btn-warning' onClick={() => showModalCreatePos(device.device_id === 0 ? i : device.device_id, i)}><BiAddToQueue /></WorkOrderButtonTable>}</td>}
+                                                    <td>{<WorkOrderButtonTable className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id, i)}><ImPencil2 /></WorkOrderButtonTable>}</td>
+                                                    {(devices[i].parts_and_services?.length! > 0) && <td>{<WorkOrderButtonTable className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></WorkOrderButtonTable>}</td>}
+                                                    {!(devices[i].parts_and_services?.length! > 0) && <td>{<WorkOrderButtonTable className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></WorkOrderButtonTable>}</td>}
                                                 </tr>
                                             ))}
                                         </tbody>
