@@ -85,13 +85,18 @@ export const WorkOrder = () => {
 
     const confirmation = (conf: any) => {
 
+
         setShowModalcloseOrder(conf.modal)
         if (conf.status) {
 
-            api.patch(`/change-status/${orderNumber}/${OrderStatus.FINISHED}`)
+            api.patch(`/service-order/change-status/${orderNumber}/${OrderStatus.FINISHED}`)
                 .then(response => {
                     toast.success('Ordem de serviço fechada com sucesso!')
                 })
+
+            setTimeout(() => {
+                getServiceOrder()
+            }, 1000)
 
         }
 
