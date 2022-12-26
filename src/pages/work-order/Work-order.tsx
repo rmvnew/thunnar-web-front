@@ -69,8 +69,11 @@ export const WorkOrder = () => {
 
         await api.delete(`/service-order/${order_id}`)
             .then(response => {
-                getServiceOrder();
+                console.log(response.data);
+                getServiceOrder()
+                toast.warning(`Ordem ${order_id} deletada com sucesso!`)
             }).catch(error => {
+                toast.error('Erro ao deletar ordem!')
                 console.log(error);
             })
     }
