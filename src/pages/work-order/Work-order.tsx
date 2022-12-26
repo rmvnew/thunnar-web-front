@@ -20,9 +20,7 @@ import { parseStatus } from '../../utils/ParseOrderStatus';
 
 export const WorkOrder = () => {
 
-    function getCurrentDate(date: Date) {
 
-    }
 
     function setResponse(res: any) {
 
@@ -41,6 +39,7 @@ export const WorkOrder = () => {
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState("")
     const [showModalcloseOrder, setShowModalcloseOrder] = useState(false)
+    const [showModalDeleteOrder, setShowModalDeleteOrder] = useState(false)
     const [messageConfirmation, setMessageConfirmation] = useState("")
     const [orderNumber, setOrderNumber] = useState(0)
 
@@ -55,30 +54,16 @@ export const WorkOrder = () => {
 
     const getServiceOrderByNameClient = async (page: number = 1, name: string = "") => {
 
-        await api.get(`/service-order?page=${page}&limit=8&sort=DESC&orderBy=ID&search=${name}`).then((response) => {
-            // console.log('Res: ',response);
-            setResponse(response)
-        });
+        await api.get(`/service-order?page=${page}&limit=8&sort=DESC&orderBy=ID&search=${name}`)
+            .then((response) => {
+                setResponse(response)
+            });
     };
 
 
 
-    const deleteOrder = async (order_id: number = 0) => {
 
-        console.log(order_id);
-
-        await api.delete(`/service-order/${order_id}`)
-            .then(response => {
-                console.log(response.data);
-                getServiceOrder()
-                toast.warning(`Ordem ${order_id} deletada com sucesso!`)
-            }).catch(error => {
-                toast.error('Erro ao deletar ordem!')
-                console.log(error);
-            })
-    }
-
-    const callConfirmation = async (order_id: number = 0) => {
+    const callConfirmationClose = async (order_id: number = 0) => {
 
         setMessageConfirmation('Deseja fechar esta ordem?')
         setTimeout(() => {
@@ -89,7 +74,35 @@ export const WorkOrder = () => {
 
     }
 
-    const confirmation = (conf: any) => {
+    const callConfirmationDelete = async (order_id: number = 0) => {
+
+        setMessageConfirmation('Deseja Deletar esta ordem?')
+        setTimeout(() => {
+            setOrderNumber(order_id)
+            setShowModalDeleteOrder(true)
+        }, 500)
+
+
+    }
+
+
+    const confirmationDeleteOrder = async (conf: any) => {
+
+        setShowModalDeleteOrder(conf.modal)
+
+        if (conf.status) {
+            await api.delete(`/service-order/${orderNumber}`)
+                .then(response => {
+                    getServiceOrder()
+                    toast.warning(`Ordem ${orderNumber} deletada com sucesso!`)
+                }).catch(error => {
+                    toast.error('Erro ao deletar ordem!')
+                    console.log(error);
+                })
+        }
+    }
+
+    const confirmationClose = (conf: any) => {
 
 
         setShowModalcloseOrder(conf.modal)
@@ -110,6 +123,7 @@ export const WorkOrder = () => {
 
     const exit = (conf: any) => {
         setShowModalcloseOrder(conf.modal)
+        setShowModalDeleteOrder(conf.modal)
     }
 
 
@@ -197,7 +211,7 @@ export const WorkOrder = () => {
                                         <div className="d-flex justify-content-around base-options">
 
                                             {!(parseStatus(so.service_order_status) === 'FINALIZADA') && <WorkOrderButtonTable className="btn btn-success btn-delete"
-                                                onClick={() => callConfirmation(so.service_order_id)}>
+                                                onClick={() => callConfirmationClose(so.service_order_id)}>
                                                 <FiCheck />
                                             </WorkOrderButtonTable>}
 
@@ -208,7 +222,7 @@ export const WorkOrder = () => {
                                             }} className="btn btn-warning"><ImPencil2 /></WorkOrderNavLinkTable>
 
                                             <WorkOrderButtonTable className="btn btn-danger btn-delete"
-                                                onClick={() => deleteOrder(so.service_order_id)}
+                                                onClick={() => callConfirmationDelete(so.service_order_id)}
                                             ><ImBin /></WorkOrderButtonTable>
 
 
@@ -222,7 +236,12 @@ export const WorkOrder = () => {
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
                     {showModalcloseOrder && <ModalDefault body={<ConfirmationModal
                         message={messageConfirmation}
-                        confirmation={confirmation}
+                        confirmation={confirmationClose}
+                        exit={exit}
+                    />} />}
+                    {showModalDeleteOrder && <ModalDefault body={<ConfirmationModal
+                        message={messageConfirmation}
+                        confirmation={confirmationDeleteOrder}
                         exit={exit}
                     />} />}
                 </WorkOrderMain>
