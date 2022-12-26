@@ -80,8 +80,11 @@ export const WorkOrder = () => {
 
     const callConfirmation = async (order_id: number = 0) => {
 
-        setOrderNumber(order_id)
-        setShowModalcloseOrder(true)
+        setMessageConfirmation('Deseja fechar esta ordem?')
+        setTimeout(() => {
+            setOrderNumber(order_id)
+            setShowModalcloseOrder(true)
+        }, 500)
 
 
     }
@@ -218,7 +221,7 @@ export const WorkOrder = () => {
                     </WorkOrderTable>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
                     {showModalcloseOrder && <ModalDefault body={<ConfirmationModal
-                        messtage={messageConfirmation}
+                        message={messageConfirmation}
                         confirmation={confirmation}
                         exit={exit}
                     />} />}
