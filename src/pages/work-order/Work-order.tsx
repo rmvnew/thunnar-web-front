@@ -135,12 +135,9 @@ export const WorkOrder = () => {
         getServiceOrder();
     }, []);
 
-
-
     useEffect(() => {
         getServiceOrder(page);
     }, [page])
-
 
 
     return (

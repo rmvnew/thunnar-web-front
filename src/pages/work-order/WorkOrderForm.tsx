@@ -4,10 +4,11 @@ import { ImSearch, ImUserPlus, ImPencil2 } from "react-icons/im";
 import { GiSave } from "react-icons/gi";
 import { GrUpdate } from "react-icons/gr";
 import { BiAddToQueue } from "react-icons/bi";
+import { MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable, WorkOrderForm_Label_status } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
@@ -22,6 +23,7 @@ import { Pos } from '../../components/PartsOrService/Pas';
 import AlertMessage from '../../components/AlertMessage';
 import { TablePos } from './tables/TablePos';
 import { toast } from 'react-toastify';
+import { parseStatus } from '../../utils/ParseOrderStatus';
 
 
 export const WorkOrderForm = () => {
@@ -46,6 +48,7 @@ export const WorkOrderForm = () => {
                 setOrderDate(initialDate)
                 setOrderDateExpiration(finalDate)
                 setOrderId(dataResult.WorkOrder.service_order_id)
+                setStatusOrder(parseStatus(result.data.service_order_status))
                 setOrderNumber(result.data.service_order_number)
                 setClientId(result.data.client.client_id)
                 setClientName(result.data.client.client_name)
@@ -321,7 +324,7 @@ export const WorkOrderForm = () => {
         }
 
         list.push(pos)
-        
+
         setParts_and_services(list)
         setHaveDetails(true)
         setShowModalPos(obj.showModal)
@@ -336,9 +339,9 @@ export const WorkOrderForm = () => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",  
+                theme: "colored",
             }
-            )
+        )
 
 
     }
@@ -470,7 +473,7 @@ export const WorkOrderForm = () => {
         const listPos = devices[device_position].parts_and_services
         setListPos(listPos!)
         setShowPosList(!showPosList)
-        
+
 
     }
 
@@ -544,6 +547,7 @@ export const WorkOrderForm = () => {
     const [deviceInputsFails, setDeviceInputFails] = useState('pass')
     const [dataOrderInputFails, setDataOrderInputFails] = useState('pass')
     const [posObject, setPosObject] = useState({})
+    const [statusOrder, setStatusOrder] = useState("")
 
 
     useEffect(() => {
@@ -583,17 +587,22 @@ export const WorkOrderForm = () => {
                         <WorkOrderTopCard>
 
                             <WorkOrderTopCardInternal>
-                                <WorkOrderForm_Label>Data de inicio</WorkOrderForm_Label>
+                                <WorkOrderForm_Label_status>Status Da Ordem</WorkOrderForm_Label_status>
+                                <h2>{statusOrder}</h2>
+                            </WorkOrderTopCardInternal>
+
+                            <WorkOrderTopCardInternal>
+                                <WorkOrderForm_Label_status>Data de inicio</WorkOrderForm_Label_status>
                                 <h2>{orderDate.toLocaleString("ZM", { timeZone: 'America/Bahia' }).substring(0, 10)}</h2>
                             </WorkOrderTopCardInternal>
 
                             <WorkOrderTopCardInternal>
-                                <WorkOrderForm_Label>Previsão de entrega</WorkOrderForm_Label>
+                                <WorkOrderForm_Label_status>Previsão de entrega</WorkOrderForm_Label_status>
                                 <h2>{orderDateExpiration.toLocaleString("ZM", { timeZone: 'America/Bahia' }).substring(0, 10)}</h2>
                             </WorkOrderTopCardInternal>
 
                             <WorkOrderTopCardInternal>
-                                <WorkOrderForm_Label>Valor da ordem</WorkOrderForm_Label>
+                                <WorkOrderForm_Label_status>Valor da ordem</WorkOrderForm_Label_status>
                                 <h2>{orderValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
                             </WorkOrderTopCardInternal>
 
@@ -812,7 +821,8 @@ export const WorkOrderForm = () => {
                             </WorkOrderTableCard>}
 
                             {!orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={createOrder}><GiSave /> Salvar</WorkOrderButtonController>}
-                            {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={updateOrder}><GrUpdate /> Atualizar</WorkOrderButtonController>}
+                            {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={updateOrder}><MdUpdate /> Atualizar</WorkOrderButtonController>}
+                            {orderEdit && <WorkOrderButtonController className='btn btn-primary'><ImPencil2 /> Editar Status</WorkOrderButtonController>}
 
                         </div>
                     </div>

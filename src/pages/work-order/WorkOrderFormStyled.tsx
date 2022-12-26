@@ -55,8 +55,19 @@ export const WorkOrderForm_Title = styled.h1`
 
 export const WorkOrderForm_Label = styled.label`
     
+    
     margin-top: 10px;
     margin-left: 15px;
+    font-style: italic;
+    font-weight: bold;
+
+`
+
+export const WorkOrderForm_Label_status = styled.label`
+    
+    font-size: 1.4rem;
+    align-items: center;
+    margin-top: 10px;
     font-style: italic;
     font-weight: bold;
 
@@ -190,9 +201,15 @@ export const WorkOrderButtonController = styled.button`
 
     width: 200px;
     /* margin-left: 10px; */
+    margin-right: 15px;
     margin-top: 10px;
     color: #FFF;
-
+    border: 2px solid #000;
+    &:hover{
+        border: 2px solid #000;
+        font-weight: 600;
+        color: #FFF;
+    }
     
 `
 
@@ -236,8 +253,12 @@ export const WorkOrderTopCardInternal = styled.div`
 
     display: flex;
     flex-direction: column;
-    background-color: #1e1e1e;
-    width: 25%;
+    background-image: linear-gradient(
+        to top, #1b232e, #1c2a37,
+         #1c3140, #1a3948, #164150,
+         #164150, #164150, #164150, 
+         #1a3948, #1c3140, #1c2a37, #1b232e);
+    width: 23%;
     align-items: center;
     border-radius: 10px;
     box-shadow: #4fc1eb 3px 3px 9px;
