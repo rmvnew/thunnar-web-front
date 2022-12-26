@@ -469,7 +469,8 @@ export const WorkOrderForm = () => {
 
         const listPos = devices[device_position].parts_and_services
         setListPos(listPos!)
-        setShowPosList(true)
+        setShowPosList(!showPosList)
+        
 
     }
 
