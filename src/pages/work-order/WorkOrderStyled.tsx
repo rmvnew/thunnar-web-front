@@ -13,6 +13,7 @@ export const WorkOrderInputSearch = styled.input`
 
 export const WorkOrderMain = styled.div`
     display: flex;
+    
     width: 85vw;
     height: 80vh;
     flex-direction: column;
@@ -52,12 +53,15 @@ export const WorkOrderButtonComplet = styled.button`
 `
 
 export const WorkOrderTable = styled.table`
+    width: 85vw;
+    margin-bottom: 15px;
     margin-top: 10px;
     thead{
         background-color:rgb(38, 67, 80);
         color: #FFF;
         font-size: 1.2rem;
         font-weight: bold;
+       
     }
     td{     
         border: solid 1px #000;
@@ -83,3 +87,12 @@ export const WorkOrderNavLinkTable = styled(NavLink)`
             border: solid 1px black;
         }
 `
+
+
+export const WorkOrderTableTd = styled.td`
+    
+    background-color: ${props => props.scope === 'FINALIZADA'?'#cefdde':'#FFF'} ;
+
+
+`
+

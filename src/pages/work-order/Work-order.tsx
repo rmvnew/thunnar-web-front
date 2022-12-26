@@ -5,7 +5,7 @@ import { FiCheck } from "react-icons/fi";
 import { NavLink } from "react-router-dom"
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
-import { WorkOrderButtonNewOrder, WorkOrderButtonTable, WorkOrderInputSearch, WorkOrderMain, WorkOrderNavLinkTable, WorkorderNewOrder, WorkOrderTable, WorkOrderTitle } from "./WorkOrderStyled"
+import { WorkOrderButtonNewOrder, WorkOrderButtonTable, WorkOrderInputSearch, WorkOrderMain, WorkOrderNavLinkTable, WorkorderNewOrder, WorkOrderTable, WorkOrderTableTd, WorkOrderTitle } from "./WorkOrderStyled"
 import { getDateBr } from "../../utils/date.utils";
 import { OrderStatus } from "../../enums/enums";
 import { toast } from 'react-toastify';
@@ -143,7 +143,7 @@ export const WorkOrder = () => {
                         onChange={(e) => setSearch(e.target.value)}
                     />
 
-                    <WorkOrderTable className="table table-striped">
+                    <WorkOrderTable >
                         <thead>
                             <tr>
                                 <td>Nr Ordem</td>
@@ -161,21 +161,39 @@ export const WorkOrder = () => {
                         <tbody>
                             {serviceOrder.map((so) => (
                                 <tr key={so.service_order_number}>
-                                    <td>{so.service_order_number}</td>
-                                    <td>{so.client.client_name}</td>
-                                    <td>{so.client.client_phone}</td>
-                                    <td>{getDateBr(so.service_order_date)}</td>
-                                    <td>{getDateBr(so.service_order_expiration)}</td>
-                                    <td>{parseStatus(so.service_order_status)}</td>
 
-                                    <td>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                        {so.service_order_number}
+                                    </WorkOrderTableTd>
+
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                        {so.client.client_name}
+                                    </WorkOrderTableTd>
+
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                        {so.client.client_phone}
+                                    </WorkOrderTableTd>
+
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                        {getDateBr(so.service_order_date)}
+                                    </WorkOrderTableTd>
+
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                        {getDateBr(so.service_order_expiration)}
+                                    </WorkOrderTableTd>
+
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                        {parseStatus(so.service_order_status)}
+                                    </WorkOrderTableTd>
+
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
 
                                         <div className="d-flex justify-content-around base-options">
 
-                                            <WorkOrderButtonTable className="btn btn-success btn-delete"
+                                            {!(parseStatus(so.service_order_status) === 'FINALIZADA') && <WorkOrderButtonTable className="btn btn-success btn-delete"
                                                 onClick={() => callConfirmation(so.service_order_id)}>
                                                 <FiCheck />
-                                            </WorkOrderButtonTable>
+                                            </WorkOrderButtonTable>}
 
                                             <WorkOrderNavLinkTable to={"/work-order/form"} state={{
                                                 data: {
@@ -190,7 +208,7 @@ export const WorkOrder = () => {
 
                                         </div>
 
-                                    </td>
+                                    </WorkOrderTableTd>
                                 </tr>
                             ))}
                         </tbody>
