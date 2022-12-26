@@ -7,13 +7,19 @@ import styled from 'styled-components';
 
 export const ChangeStatusSelect = styled.select`
     
-    width: 400px;
+    width: 430px;
 
 `
 
 export const ChangeStatusButton = styled.button`
     
     width: 200px;
+    margin-right: 15px;
+    border: 2px solid #000;
+    font-weight: 600;
+    &:hover{
+        border: 2px solid #000;
+    }
 
 `
 

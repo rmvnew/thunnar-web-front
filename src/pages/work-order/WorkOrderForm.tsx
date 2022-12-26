@@ -8,7 +8,7 @@ import { MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable, WorkOrderForm_Label_status } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable, WorkOrderForm_Label_status, WorkOrderResponseStatus } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
@@ -460,6 +460,16 @@ export const WorkOrderForm = () => {
         })
     }
 
+    function reloadOrder(){
+        setTimeout(()=>{
+            setOrder()
+        },1000)
+    }
+
+    function closeModalChangeStatus(){
+        setShowModalChangeStatus(false)
+    }
+
     function exit(obj: any) {
 
         setShowModalSearchClient(obj.statusModal)
@@ -603,22 +613,22 @@ export const WorkOrderForm = () => {
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label_status>Status Da Ordem</WorkOrderForm_Label_status>
-                                <h2>{statusOrder}</h2>
+                                <WorkOrderResponseStatus>{statusOrder}</WorkOrderResponseStatus>
                             </WorkOrderTopCardInternal>
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label_status>Data de inicio</WorkOrderForm_Label_status>
-                                <h2>{orderDate.toLocaleString("ZM", { timeZone: 'America/Bahia' }).substring(0, 10)}</h2>
+                                <WorkOrderResponseStatus>{orderDate.toLocaleString("ZM", { timeZone: 'America/Bahia' }).substring(0, 10)}</WorkOrderResponseStatus>
                             </WorkOrderTopCardInternal>
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label_status>Previsão de entrega</WorkOrderForm_Label_status>
-                                <h2>{orderDateExpiration.toLocaleString("ZM", { timeZone: 'America/Bahia' }).substring(0, 10)}</h2>
+                                <WorkOrderResponseStatus>{orderDateExpiration.toLocaleString("ZM", { timeZone: 'America/Bahia' }).substring(0, 10)}</WorkOrderResponseStatus>
                             </WorkOrderTopCardInternal>
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label_status>Valor da ordem</WorkOrderForm_Label_status>
-                                <h2>{orderValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h2>
+                                <WorkOrderResponseStatus>{orderValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</WorkOrderResponseStatus>
                             </WorkOrderTopCardInternal>
 
                         </WorkOrderTopCard>
@@ -847,7 +857,7 @@ export const WorkOrderForm = () => {
                     {showModalSearchClient && <ModalDefault body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
                     {ShowModalCreateClient && <ModalDefault body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
                     {ShowModalPos && <ModalDefault body={<Pos posObject={posObject} operationAfterEditPos={operationAfterEditPos} closeModalPos={closeModalPos} createPos={createPos} />} />}
-                    {showModalChangeStatus && <ModalDefault body={<ChangeStatusOrder status={changeStatusModalChangeStatusOrder} />} />}
+                    {showModalChangeStatus && <ModalDefault body={<ChangeStatusOrder status={changeStatusModalChangeStatusOrder} orderNumber={orderNumber} exit={closeModalChangeStatus} reload={reloadOrder} />} />}
                     {open && <AlertMessage props={alertProps} />}
                 </WorkOrderForm_Main>
 

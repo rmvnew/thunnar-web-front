@@ -307,3 +307,11 @@ export const WorkOrderButtonTable = styled.button`
             border: solid 2px black;
         }
 `
+
+export const WorkOrderResponseStatus = styled.h3`
+
+    font-size: 1.3rem;
+    color: #3dff33;
+    font-weight: 600;
+    
+`

@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { api } from '../../../hooks/useApi';
+import { parseStatus } from '../../../utils/ParseOrderStatus';
 import { ChangeStatusButton, ChangeStatusLabel, ChangeStatusSelect, ChangeStatusTytle } from './ChangeStatusOrderStyled';
 
 
@@ -7,10 +10,19 @@ import { ChangeStatusButton, ChangeStatusLabel, ChangeStatusSelect, ChangeStatus
 
 export const ChangeStatusOrder = (props: any) => {
 
-    const updateStatus = () =>{
+    const updateStatus = () => {
 
-        props.status()
+        api.patch(`/service-order/change-status/${props.orderNumber}/${option}`)
+            .then(response => {
+                toast.success(`Status modificado para:\n ${parseStatus(option)}`)
+                props.status()
+                props.reload()
+            })
 
+    }
+
+    function exit() {
+        props.exit()
     }
 
 
@@ -42,6 +54,15 @@ export const ChangeStatusOrder = (props: any) => {
 
 
     const [option, setOption] = useState("")
+    const [showEdit, setShowEdit] = useState(false)
+
+    useEffect(() => {
+        if (option !== "") {
+            setShowEdit(true)
+        } else {
+            setShowEdit(false)
+        }
+    }, [option])
 
     return (
         <>
@@ -55,7 +76,8 @@ export const ChangeStatusOrder = (props: any) => {
                 <option value="EM PROGRESSO">EM PROGRESSO</option>
                 <option value="CANCELADA">CANCELADA</option>
             </ChangeStatusSelect>
-            <ChangeStatusButton className='btn btn-primary' onClick={updateStatus}>Editar</ChangeStatusButton>
+            {showEdit && <ChangeStatusButton className='btn btn-primary' onClick={updateStatus}>Editar</ChangeStatusButton>}
+            <ChangeStatusButton className='btn btn-danger' onClick={exit}>exit</ChangeStatusButton>
         </>
     )
 }
