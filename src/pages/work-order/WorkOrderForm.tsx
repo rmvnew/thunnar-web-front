@@ -24,6 +24,7 @@ import AlertMessage from '../../components/AlertMessage';
 import { TablePos } from './tables/TablePos';
 import { toast } from 'react-toastify';
 import { parseStatus } from '../../utils/ParseOrderStatus';
+import { ChangeStatusOrder } from './status/ChangeStatusOrder';
 
 
 export const WorkOrderForm = () => {
@@ -512,6 +513,19 @@ export const WorkOrderForm = () => {
         setSowModalCreateClient(status)
     }
 
+
+    const callChangeStatus = () => {
+
+        changeStatusModalChangeStatusOrder()
+
+    }
+
+    const changeStatusModalChangeStatusOrder = () => {
+        setShowModalChangeStatus(!showModalChangeStatus)
+    }
+
+
+
     const [alertProps, setAlertProps] = useState({})
     const [open, setOpen] = useState(false);
     const [orderId, setOrderId] = useState(0)
@@ -523,6 +537,7 @@ export const WorkOrderForm = () => {
     const [showModalSearchClient, setShowModalSearchClient] = useState(false)
     const [ShowModalCreateClient, setSowModalCreateClient] = useState(false)
     const [ShowModalPos, setShowModalPos] = useState(false)
+    const [showModalChangeStatus, setShowModalChangeStatus] = useState(false)
     const [clientId, setClientId] = useState(0)
     const [userId, setUserId] = useState(0)
     const [options, setOptions] = useState("")
@@ -670,7 +685,7 @@ export const WorkOrderForm = () => {
 
                                         ))}
 
-                                    </WorkOrderSelectTechnician>
+                                        https://www.youtube.com/watch?v=i5adIHvGcFA        </WorkOrderSelectTechnician>
 
                                 </div>
                             </WorkOrderClientCard>
@@ -822,7 +837,7 @@ export const WorkOrderForm = () => {
 
                             {!orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={createOrder}><GiSave /> Salvar</WorkOrderButtonController>}
                             {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={updateOrder}><MdUpdate /> Atualizar</WorkOrderButtonController>}
-                            {orderEdit && <WorkOrderButtonController className='btn btn-primary'><ImPencil2 /> Editar Status</WorkOrderButtonController>}
+                            {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={callChangeStatus}><ImPencil2 /> Editar Status</WorkOrderButtonController>}
 
                         </div>
                     </div>
@@ -832,11 +847,12 @@ export const WorkOrderForm = () => {
                     {showModalSearchClient && <ModalDefault body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
                     {ShowModalCreateClient && <ModalDefault body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
                     {ShowModalPos && <ModalDefault body={<Pos posObject={posObject} operationAfterEditPos={operationAfterEditPos} closeModalPos={closeModalPos} createPos={createPos} />} />}
+                    {showModalChangeStatus && <ModalDefault body={<ChangeStatusOrder status={changeStatusModalChangeStatusOrder} />} />}
                     {open && <AlertMessage props={alertProps} />}
                 </WorkOrderForm_Main>
 
 
-
+                https://www.youtube.com/watch?v=i5adIHvGcFA
             </AnimatePageOpacity>
         </>
     )
