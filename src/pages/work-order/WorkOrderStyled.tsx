@@ -90,7 +90,7 @@ export const WorkOrderNavLinkTable = styled(NavLink)`
 
 export const WorkOrderTableTd = styled.td`
     
-    background-color: ${props => props.scope === 'FINALIZADA'?'#cefdde':'#FFF'} ;
+    background-color: ${props => props.scope === 'FINALIZADA' ? '#cefdde' : props.about === '0' ? '#DDD' : '#FFF'} ;
 
 
 `

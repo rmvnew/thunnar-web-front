@@ -176,34 +176,34 @@ export const WorkOrder = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {serviceOrder.map((so) => (
+                            {serviceOrder.map((so, i) => (
                                 <tr key={so.service_order_number}>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
                                         {so.service_order_number}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
                                         {so.client.client_name}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
                                         {so.client.client_phone}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
                                         {getDateBr(so.service_order_date)}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
                                         {getDateBr(so.service_order_expiration)}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
                                         {parseStatus(so.service_order_status)}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
 
                                         <div className="d-flex justify-content-around base-options">
 
