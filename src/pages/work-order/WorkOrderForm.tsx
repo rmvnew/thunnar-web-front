@@ -77,6 +77,12 @@ export const WorkOrderForm = () => {
 
                 setDevices(newList)
 
+                if (parseStatus(result.data.service_order_status) === 'FINALIZADA') {
+                    setStatusEditable(false)
+                } else {
+                    setStatusEditable(true)
+                }
+
 
 
 
@@ -460,13 +466,13 @@ export const WorkOrderForm = () => {
         })
     }
 
-    function reloadOrder(){
-        setTimeout(()=>{
+    function reloadOrder() {
+        setTimeout(() => {
             setOrder()
-        },1000)
+        }, 1000)
     }
 
-    function closeModalChangeStatus(){
+    function closeModalChangeStatus() {
         setShowModalChangeStatus(false)
     }
 
@@ -573,6 +579,7 @@ export const WorkOrderForm = () => {
     const [dataOrderInputFails, setDataOrderInputFails] = useState('pass')
     const [posObject, setPosObject] = useState({})
     const [statusOrder, setStatusOrder] = useState("")
+    const [statusEditable, setStatusEditable] = useState(false)
 
 
     useEffect(() => {
@@ -613,7 +620,7 @@ export const WorkOrderForm = () => {
 
                             <WorkOrderTopCardInternal>
                                 <WorkOrderForm_Label_status>Status Da Ordem</WorkOrderForm_Label_status>
-                                <WorkOrderResponseStatus>{statusOrder}</WorkOrderResponseStatus>
+                                <WorkOrderResponseStatus about={statusOrder}>{statusOrder}</WorkOrderResponseStatus>
                             </WorkOrderTopCardInternal>
 
                             <WorkOrderTopCardInternal>
@@ -847,7 +854,7 @@ export const WorkOrderForm = () => {
 
                             {!orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={createOrder}><GiSave /> Salvar</WorkOrderButtonController>}
                             {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={updateOrder}><MdUpdate /> Atualizar</WorkOrderButtonController>}
-                            {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={callChangeStatus}><ImPencil2 /> Editar Status</WorkOrderButtonController>}
+                            {orderEdit && statusEditable && <WorkOrderButtonController className='btn btn-primary' onClick={callChangeStatus}><ImPencil2 /> Editar Status</WorkOrderButtonController>}
 
                         </div>
                     </div>

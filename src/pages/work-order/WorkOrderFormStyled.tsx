@@ -311,7 +311,7 @@ export const WorkOrderButtonTable = styled.button`
 export const WorkOrderResponseStatus = styled.h3`
 
     font-size: 1.3rem;
-    color: #3dff33;
+    color: ${props => props.about === 'CANCELADA'?'#e80000': props.about === 'FINALIZADA'?'#00e1ff':'#3dff33'} ;
     font-weight: 600;
     
 `
