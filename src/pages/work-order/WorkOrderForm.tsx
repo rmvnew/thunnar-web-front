@@ -859,8 +859,6 @@ export const WorkOrderForm = () => {
                         </div>
                     </div>
 
-
-
                     {showModalSearchClient && <ModalDefault body={<SearchClient exit={exit} setCurrentClient={afterSearchClient} />} />}
                     {ShowModalCreateClient && <ModalDefault body={<CreateClient afterCreate={closeModalCreateClient} getNewClient={afterCreateClient} />} />}
                     {ShowModalPos && <ModalDefault body={<Pos posObject={posObject} operationAfterEditPos={operationAfterEditPos} closeModalPos={closeModalPos} createPos={createPos} />} />}
@@ -868,8 +866,6 @@ export const WorkOrderForm = () => {
                     {open && <AlertMessage props={alertProps} />}
                 </WorkOrderForm_Main>
 
-
-                https://www.youtube.com/watch?v=i5adIHvGcFA
             </AnimatePageOpacity>
         </>
     )

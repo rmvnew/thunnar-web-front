@@ -51,7 +51,7 @@ export const TablePos = (props: any) => {
                                 <td>{pos.pas_id === 0 ? i : pos.pas_id}</td>
                                 <td>{pos.pas_description}</td>
                                 <td>{pos.pas_quantity}</td>
-                                <td>{pos.pas_price}</td>
+                                <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(pos.pas_price)}</td>
                                 <td>{pos.isSaved === true ? 'Saved' : 'cash'}</td>
                                 <td>
                                     <Td_Options>
