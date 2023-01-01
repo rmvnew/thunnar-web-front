@@ -204,7 +204,24 @@ export const WorkOrderButtonController = styled.button`
     margin-right: 15px;
     margin-top: 10px;
     color: #FFF;
-    border: 2px solid #000;
+    border: 1px solid #000;
+    &:hover{
+        border: 2px solid #000;
+        font-weight: 600;
+        color: #FFF;
+    }
+    
+`
+
+export const WorkOrderButtonUpdate = styled.button`
+
+    width: 200px;
+    /* margin-left: 10px; */
+    margin-right: 15px;
+    margin-top: 10px;
+    color: #FFF;
+    border: 1px solid #000;
+    box-shadow: ${props => props.about}; //#0b811993 0px 1px 9px 9px;
     &:hover{
         border: 2px solid #000;
         font-weight: 600;

@@ -8,7 +8,7 @@ import { MdUpdate } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
-import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable, WorkOrderForm_Label_status, WorkOrderResponseStatus } from "./WorkOrderFormStyled"
+import { WorkOrderClientButton, WorkOrderClientCard, WorkOrderClientCardButtons, WorkOrderClientInputs, WorkOrderTitle, WorkOrderForm_Header, WorkOrderForm_Label, WorkOrderForm_Main, WorkOrderForm_NumberOrder, WorkOrderForm_Title, WorkOrderproblemInput, WorkOrderButtonController, WorkOrderTopCard, WorkOrderTopCardInternal, WorkOrderButtonDevice, WorkOrderTableCard, WorkOrderInternalTable, WorkOrderSelectTechnician, WorkOrderDeviceCard, WorkOrderDeviceInput, WorkOrderButtonTable, WorkOrderForm_Label_status, WorkOrderResponseStatus, WorkOrderButtonUpdate } from "./WorkOrderFormStyled"
 import { SearchClient } from "../../components/client/search-client/SearchClient";
 import { CreateClient } from "../../components/client/create-client/CreateClient";
 import { AuthContext } from "../../contexts/auth/AuthContext";
@@ -152,11 +152,14 @@ export const WorkOrderForm = () => {
         // console.log('devices length: ', devices.length);
 
         if (clientId && options && devices.length > 0) {
+
+            console.log('Devices: ', devices);
             const order = {
                 client_id: clientId,
                 user_id: userId,
                 options: Number(options),
                 devices: devices
+
             };
 
             // console.log('Order: ', order);
@@ -206,7 +209,7 @@ export const WorkOrderForm = () => {
 
         let dev = devices
 
-        if (brand && model && probelmReported) {
+        if (brand && model && problemReported) {
 
             const device: Device = {
                 device_id: 0,
@@ -214,7 +217,7 @@ export const WorkOrderForm = () => {
                 device_model: model,
                 device_serial_number: serialNumber,
                 device_imei: imei,
-                device_problem_reported: probelmReported,
+                device_problem_reported: problemReported,
                 parts_and_services: parts_and_services
             }
 
@@ -222,6 +225,22 @@ export const WorkOrderForm = () => {
 
             setDevices(dev)
             clearDevice()
+            setMarkUpdate("#0b811993 0px 1px 9px 9px")
+            setTimeout(() => {
+                setMarkUpdate("")
+            }, 7000)
+            toast.success(
+                'Aparelho adicionado a ordem. Atualize a ordem para salvar o aparelho',
+                {
+                    position: "bottom-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
 
         } else {
             setDeviceInputFails('fail')
@@ -246,7 +265,7 @@ export const WorkOrderForm = () => {
 
     function updateDeviceAfterEdit() {
 
-        if (brand && model && probelmReported) {
+        if (brand && model && problemReported) {
 
             const device: Device = {
                 device_id: deviceId,
@@ -254,8 +273,9 @@ export const WorkOrderForm = () => {
                 device_model: model,
                 device_serial_number: serialNumber,
                 device_imei: imei,
-                device_problem_reported: probelmReported,
-                parts_and_services: parts_and_services
+                device_problem_reported: problemReported,
+                device_problem_detected: problemDetected === "" ? undefined : problemDetected,
+                parts_and_services: parts_and_services,
             }
 
             const currentDev = devices.map(data => {
@@ -267,8 +287,28 @@ export const WorkOrderForm = () => {
                 }
             })
 
+            // console.log('>>>',currentDev);
+
+            setMarkUpdate("#0b811993 0px 1px 9px 9px")
+            setTimeout(() => {
+                setMarkUpdate("")
+            }, 7000)
+            toast.success(
+                'Modificações adicionadas com sucesso. Atualize a ordem para salvar',
+                {
+                    position: "bottom-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
+
             setDevices(currentDev)
             clearDevice()
+
 
         } else {
             setDeviceInputFails('fail')
@@ -302,6 +342,7 @@ export const WorkOrderForm = () => {
         setSerialNumber(devices[position].device_serial_number)
         setImei(devices[position].device_imei)
         setProblemReported(devices[position].device_problem_reported)
+        setProblemDetected(devices[position].device_problem_detected ?? "")
         setParts_and_services(devices[position].parts_and_services!)
         setEditDevice(true)
 
@@ -333,9 +374,13 @@ export const WorkOrderForm = () => {
         list.push(pos)
 
         setParts_and_services(list)
-        setHaveDetails(true)
+        // setHaveDetails(true)
         setShowModalPos(obj.showModal)
         setCreatedPos(true)
+        setMarkUpdate("#0b811993 0px 1px 9px 9px")
+        setTimeout(() => {
+            setMarkUpdate("")
+        }, 7000)
         toast.info(
             'O item foi adicionado!\n Atualize a ordem para salvar item.',
             {
@@ -427,8 +472,9 @@ export const WorkOrderForm = () => {
         setSerialNumber("")
         setImei("")
         setProblemReported("")
+        setProblemDetected("")
         setEditDevice(false)
-        setHaveDetails(false)
+        // setHaveDetails(false)
 
     }
 
@@ -547,7 +593,7 @@ export const WorkOrderForm = () => {
     const [orderId, setOrderId] = useState(0)
     const [orderNumber, setOrderNumber] = useState(0)
     const [orderEdit, setOrderEdit] = useState(false)
-    const [haveDetails, setHaveDetails] = useState(false)
+    // const [haveDetails, setHaveDetails] = useState(false)
     const [clientName, setClientName] = useState("")
     const [clientPhone, setClientPhone] = useState("")
     const [showModalSearchClient, setShowModalSearchClient] = useState(false)
@@ -563,7 +609,8 @@ export const WorkOrderForm = () => {
     const [model, setModel] = useState("")
     const [serialNumber, setSerialNumber] = useState("")
     const [imei, setImei] = useState("")
-    const [probelmReported, setProblemReported] = useState("")
+    const [problemReported, setProblemReported] = useState("")
+    const [problemDetected, setProblemDetected] = useState("")
     const [deviceId, setDeviceId] = useState(0)
     const [devicePosition, setDevicePosition] = useState(0)
     const [editDevice, setEditDevice] = useState(false)
@@ -580,6 +627,7 @@ export const WorkOrderForm = () => {
     const [posObject, setPosObject] = useState({})
     const [statusOrder, setStatusOrder] = useState("")
     const [statusEditable, setStatusEditable] = useState(false)
+    const [markUpdate, setMarkUpdate] = useState("")
 
 
     useEffect(() => {
@@ -702,7 +750,7 @@ export const WorkOrderForm = () => {
 
                                         ))}
 
-                                        https://www.youtube.com/watch?v=i5adIHvGcFA        </WorkOrderSelectTechnician>
+                                    </WorkOrderSelectTechnician>
 
                                 </div>
                             </WorkOrderClientCard>
@@ -791,13 +839,34 @@ export const WorkOrderForm = () => {
                                             className="form-control form-control"
                                             type="text"
                                             placeholder="Digite a marca do aparelho"
-                                            value={probelmReported}
+                                            value={problemReported}
                                             onChange={(e) => setProblemReported(e.target.value)}
                                         />
 
-                                        {editDevice && <WorkOrderButtonDevice className='btn btn-secondary' onClick={updateDeviceAfterEdit}>Atualizar</WorkOrderButtonDevice>}
-                                        {!editDevice && <WorkOrderButtonDevice className='btn btn-primary' onClick={createDevice}><MdOutlinePlaylistAdd /> Adicionar</WorkOrderButtonDevice>}
 
+
+                                    </div>
+
+                                    {orderEdit && <div className="row">
+                                        <WorkOrderForm_Label>Defeito Detectado</WorkOrderForm_Label>
+
+                                        <WorkOrderDeviceInput
+                                            alt={deviceInputsFails}
+                                            property='10px'
+                                            className="form-control form-control"
+                                            type="text"
+                                            placeholder="Informe o defeito detectado"
+                                            value={problemDetected}
+                                            onChange={(e) => setProblemDetected(e.target.value)}
+                                        />
+
+
+
+                                    </div>}
+
+                                    <div className="row">
+                                        {editDevice && <WorkOrderButtonDevice className='btn btn-secondary' onClick={updateDeviceAfterEdit}><MdUpdate /> Atualizar</WorkOrderButtonDevice>}
+                                        {!editDevice && <WorkOrderButtonDevice className='btn btn-primary' onClick={createDevice}><MdOutlinePlaylistAdd /> Adicionar</WorkOrderButtonDevice>}
                                     </div>
                                 </WorkOrderDeviceCard>
                             </WorkOrderClientCard>
@@ -853,7 +922,7 @@ export const WorkOrderForm = () => {
                             </WorkOrderTableCard>}
 
                             {!orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={createOrder}><GiSave /> Salvar</WorkOrderButtonController>}
-                            {orderEdit && <WorkOrderButtonController className='btn btn-primary' onClick={updateOrder}><MdUpdate /> Atualizar</WorkOrderButtonController>}
+                            {orderEdit && <WorkOrderButtonUpdate className='btn btn-primary' about={markUpdate} onClick={updateOrder}><MdUpdate /> Atualizar</WorkOrderButtonUpdate>}
                             {orderEdit && statusEditable && <WorkOrderButtonController className='btn btn-primary' onClick={callChangeStatus}><ImPencil2 /> Editar Status</WorkOrderButtonController>}
 
                         </div>

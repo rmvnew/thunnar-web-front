@@ -6,6 +6,8 @@ import { AlertTypesInterface } from "../../interfaces/AlertTypesInterface"
 import AlertMessage from "../AlertMessage"
 import { CreatePosButton, CreatePosCols, CreatePoslabel, CreatePosMain, CreatePosTitle } from "./PasStyled"
 import { toast } from 'react-toastify';
+import { MdOutlinePlaylistAdd, MdUpdate } from 'react-icons/md';
+import { ImExit } from 'react-icons/im';
 
 
 
@@ -58,6 +60,19 @@ export const Pos = (props: any) => {
             })
 
 
+        }else{
+            toast.error(
+                'Preencha todos campos',
+                {
+                    position: "top-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
         }
     }
 
@@ -77,6 +92,19 @@ export const Pos = (props: any) => {
             })
 
 
+        }else{
+            toast.error(
+                'Preencha todos campos',
+                {
+                    position: "top-center",
+                    autoClose: 7000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
         }
     }
 
@@ -153,9 +181,9 @@ export const Pos = (props: any) => {
                     </CreatePosCols>
                 </div>
 
-                {!isUpdate && <CreatePosButton className="btn btn-primary" onClick={createPos}>Salvar</CreatePosButton>}
-                {isUpdate && <CreatePosButton className="btn btn-primary" onClick={updatePos}>Atualizar</CreatePosButton>}
-                <CreatePosButton className="btn btn-secondary" onClick={exit}>Sair</CreatePosButton>
+                {!isUpdate && <CreatePosButton className="btn btn-primary" onClick={createPos}><MdOutlinePlaylistAdd />Salvar</CreatePosButton>}
+                {isUpdate && <CreatePosButton className="btn btn-primary" onClick={updatePos}><MdUpdate /> Atualizar</CreatePosButton>}
+                <CreatePosButton className="btn btn-secondary" onClick={exit}><ImExit/> Sair</CreatePosButton>
 
             </CreatePosMain>
             {open && <AlertMessage props={alertProps} />}

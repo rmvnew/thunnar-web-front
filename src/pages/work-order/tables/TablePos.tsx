@@ -51,12 +51,16 @@ export const TablePos = (props: any) => {
                                 <td>{pos.pas_id === 0 ? i : pos.pas_id}</td>
                                 <td>{pos.pas_description}</td>
                                 <td>{pos.pas_quantity}</td>
-                                <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(pos.pas_price)}</td>
+                                <td>{new Intl.
+                                    NumberFormat('pt-BR',{ style: 'currency', currency: 'BRL' })
+                                    .format(pos.pas_price)}</td>
                                 <td>{pos.isSaved === true ? 'Saved' : 'cash'}</td>
                                 <td>
                                     <Td_Options>
-                                        <button className='btn btn-warning' onClick={() => editPos(i)}><ImPencil2 /></button>
-                                        <button className='btn btn-danger' onClick={() => deletePos(i)}><ImBin /></button>
+                                        <button className='btn btn-warning'
+                                            onClick={() => editPos(i)}><ImPencil2 /></button>
+                                        <button className='btn btn-danger'
+                                            onClick={() => deletePos(i)}><ImBin /></button>
                                     </Td_Options>
                                 </td>
 
