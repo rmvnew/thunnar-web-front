@@ -95,3 +95,11 @@ export const WorkOrderTableTd = styled.td`
 
 `
 
+export const WorkOrderTableOptions = styled.div`
+    
+   display: flex;
+   justify-content: space-around;
+
+
+`
+
