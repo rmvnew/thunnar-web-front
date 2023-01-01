@@ -6,6 +6,8 @@ import { AlertTypes, ValidType } from '../../../enums/enums';
 import { AlertTypesInterface } from "../../../interfaces/AlertTypesInterface"
 import AlertMessage from "../../AlertMessage"
 import { Validations } from '../../../common/validations';
+import { ImExit } from "react-icons/im";
+import { GoSearch } from "react-icons/go";
 
 
 
@@ -126,8 +128,8 @@ export const SearchClient = (props: any) => {
                 onChange={(e) => verifiCpf(e.target.value)}
 
             />
-            <SearchClientButtonSearch className="btn btn-primary" onClick={searchCurrentClient}>Buscar</SearchClientButtonSearch>
-            <SearchClientButtonSearch className="btn btn-secondary" onClick={callTeste}>Sair</SearchClientButtonSearch>
+            <SearchClientButtonSearch className="btn btn-primary" onClick={searchCurrentClient}><GoSearch/> Buscar</SearchClientButtonSearch>
+            <SearchClientButtonSearch className="btn btn-secondary" onClick={callTeste}><ImExit/> Sair</SearchClientButtonSearch>
             {open && <AlertMessage props={alertProps} />}
         </>
 

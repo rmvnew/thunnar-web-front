@@ -6,6 +6,8 @@ import { AlertTypesInterface } from "../../../interfaces/AlertTypesInterface";
 import AlertMessage from "../../AlertMessage";
 import { phoneMask } from "../../../utils/mask";
 import { toast } from 'react-toastify';
+import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { ImExit } from "react-icons/im";
 
 
 
@@ -152,8 +154,8 @@ export const CreateClient = (props: any) => {
                 </div>
 
                 <div>
-                    <CreateClientButton className="btn btn-primary" onClick={createClient}>Salvar</CreateClientButton>
-                    <CreateClientButton className="btn btn-secondary" onClick={exit}>Sair</CreateClientButton>
+                    <CreateClientButton className="btn btn-primary" onClick={createClient}><MdOutlinePlaylistAdd /> Salvar</CreateClientButton>
+                    <CreateClientButton className="btn btn-secondary" onClick={exit}><ImExit/> Sair</CreateClientButton>
                 </div>
             </CreateClientMain>
             {open && <AlertMessage props={alertProps} />}
