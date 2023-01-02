@@ -1,4 +1,4 @@
-import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable } from './SaleStyled';
+import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1 } from './SaleStyled';
 
 
 
@@ -139,7 +139,13 @@ export const Sale = () => {
                 </SaleTop>
 
                 <SaleBody1>
-                    <h2>teste</h2>
+
+                    <CardBody1 className="row">
+                        <label>Busca</label>
+                        <input type="text"
+                        className="form-control form-control" />
+                    </CardBody1>
+
                 </SaleBody1>
 
                 <SaleBody2>
@@ -160,13 +166,17 @@ export const Sale = () => {
                             </thead>
                             <tbody>
                                 {products.map((prod, i) => (
-                                    <SaleTableTBodyTr onClick={() => alert(i+1)} key={i}>
+                                    <SaleTableTBodyTr onClick={() => alert(i + 1)} key={i}>
                                         <SaleTableTBodyTd >{i + 1}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.id}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.name}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.quantity}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(prod.price)}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(prod.price * prod.quantity)}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR',
+                                            { style: 'currency', currency: 'BRL' })
+                                            .format(prod.price)}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR',
+                                            { style: 'currency', currency: 'BRL' })
+                                            .format(prod.price * prod.quantity)}</SaleTableTBodyTd>
                                     </SaleTableTBodyTr>
                                 ))}
                             </tbody>

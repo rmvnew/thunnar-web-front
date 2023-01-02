@@ -133,3 +133,20 @@ export const SaleFooter = styled.div`
     padding: 10px;
     
 `
+
+
+export const CardBody1 = styled.div`
+
+    /* background-color: #a5f2f7; */
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+
+    label{
+        color: #FFF;
+        font-style: italic;
+        font-weight: 600;
+    }
+    
+`
