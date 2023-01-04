@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../hooks/useApi';
-import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1 } from './SaleStyled';
+import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1, CardSuggestion, Suggestion } from './SaleStyled';
 
 
 
@@ -8,20 +8,19 @@ import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, 
 
 export const Sale = () => {
 
-    const getProduct = async (page: number = 1) => {
+    // const getProduct = async (page: number = 1) => {
 
-        await api.get(`/product?page=${page}&limit=0&sort=DESC&orderBy=ID`).then((response) => {
+    //     await api.get(`/product?page=${page}&limit=0&sort=DESC&orderBy=ID`).then((response) => {
 
-            setProducts(response.data.items)
-        });
-    };
+    //         setProducts(response.data.items)
+    //     });
+    // };
 
     const getProductByName = async (page: number = 1, name: string = "") => {
 
-        await api.get(`/product?page=${page}&limit=8&sort=DESC&orderBy=ID&search=${name}`)
+        await api.get(`/product?page=${page}&limit=10&sort=DESC&orderBy=ID&search=${name}`)
             .then((response) => {
 
-                console.log('>>>>', response.data.items);
                 setProducts(response.data.items)
 
             });
@@ -30,20 +29,49 @@ export const Sale = () => {
 
     const [products, setProducts] = useState<any[]>([])
     const [search, setSearch] = useState("")
+    const [suggestions, setSuggestions] = useState<any[]>([])
 
-    // useEffect(() => {
 
 
-    //     getProductByName(1, search)
+    const onChangeHandler = (text: string) => {
 
-    // }, [search])
+        setTimeout(() => {
 
+            let matches: any[] = []
+
+            if (text.length > 0) {
+
+                for (let prod of products) {
+
+                    console.log('&& ', prod.product_name.toUpperCase());
+
+                    if (prod.product_name.toUpperCase().indexOf(text.toUpperCase()) != -1) {
+                        matches.push(prod)
+                    }
+
+                }
+
+            }
+
+            setSuggestions(matches)
+            setSearch(text)
+        }, 300)
+
+    }
+
+    const setChooice = (prod: any) => {
+
+        setSuggestions([])
+        setSearch(prod.product_name)
+
+    }
 
     useEffect(() => {
 
-        getProduct()
 
-    }, [])
+        getProductByName(1, search)
+
+    }, [search])
 
 
     const itemsProduct = [
@@ -182,9 +210,23 @@ export const Sale = () => {
                 <SaleBody1>
 
                     <CardBody1 className="row">
-                        <label>Busca</label>
-                        <input type="text"
-                        className="form-control form-control" />
+                        <>
+                            <label>Busca</label>
+                            <input type="text"
+                                className="form-control form-control"
+                                value={search}
+                                onChange={e => onChangeHandler(e.target.value)}
+                            />
+                            <CardSuggestion>
+                                {suggestions && suggestions.map((sugges, i) =>
+                                    <Suggestion onClick={() => setChooice(sugges)} key={i}>{sugges.product_name}</Suggestion>
+                                )}
+                            </CardSuggestion>
+
+                            <h1>aqui</h1>
+                        </>
+
+
                     </CardBody1>
 
                 </SaleBody1>

@@ -150,3 +150,33 @@ export const CardBody1 = styled.div`
     }
     
 `
+
+
+
+export const CardSuggestion = styled.div`
+    position: absolute;
+    
+    margin-top: 68px;
+`
+
+export const Suggestion = styled.div`
+    
+    background-color: #fff;
+    width: 500px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+
+    &:hover{
+        cursor: pointer;
+        background-color: #4a809f;
+        color: #fff;
+    }
+   
+    
+
+`
