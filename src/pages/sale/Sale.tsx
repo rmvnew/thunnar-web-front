@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { api } from '../../hooks/useApi';
 import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1 } from './SaleStyled';
 
 
@@ -6,7 +8,45 @@ import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, 
 
 export const Sale = () => {
 
-    const products = [
+    const getProduct = async (page: number = 1) => {
+
+        await api.get(`/product?page=${page}&limit=0&sort=DESC&orderBy=ID`).then((response) => {
+
+            setProducts(response.data.items)
+        });
+    };
+
+    const getProductByName = async (page: number = 1, name: string = "") => {
+
+        await api.get(`/product?page=${page}&limit=8&sort=DESC&orderBy=ID&search=${name}`)
+            .then((response) => {
+
+                console.log('>>>>', response.data.items);
+                setProducts(response.data.items)
+
+            });
+    };
+
+
+    const [products, setProducts] = useState<any[]>([])
+    const [search, setSearch] = useState("")
+
+    // useEffect(() => {
+
+
+    //     getProductByName(1, search)
+
+    // }, [search])
+
+
+    useEffect(() => {
+
+        getProduct()
+
+    }, [])
+
+
+    const itemsProduct = [
         {
             id: 1,
             name: 'Xbox serie x',
@@ -130,6 +170,7 @@ export const Sale = () => {
 
 
 
+
     return (
         <>
             <SaleMain>
@@ -165,7 +206,7 @@ export const Sale = () => {
                                 </SaleTableTheadTr>
                             </thead>
                             <tbody>
-                                {products.map((prod, i) => (
+                                {itemsProduct.map((prod, i) => (
                                     <SaleTableTBodyTr onClick={() => alert(i + 1)} key={i}>
                                         <SaleTableTBodyTd >{i + 1}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.id}</SaleTableTBodyTd>
