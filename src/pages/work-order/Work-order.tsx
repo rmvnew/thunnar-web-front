@@ -5,7 +5,7 @@ import { FiCheck } from "react-icons/fi";
 import { NavLink } from "react-router-dom"
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity"
 import { api } from "../../hooks/useApi"
-import { WorkOrderButtonNewOrder, WorkOrderButtonTable, WorkOrderInputSearch, WorkOrderMain, WorkOrderNavLinkTable, WorkorderNewOrder, WorkOrderTable, WorkOrderTableTd, WorkOrderTitle } from "./WorkOrderStyled"
+import { PaginationCardworkOrder, WorkOrderButtonNewOrder, WorkOrderButtonTable, WorkOrderInputSearch, WorkOrderMain, WorkOrderNavLinkTable, WorkorderNewOrder, WorkOrderTable, WorkOrderTableTd, WorkOrderTitle } from "./WorkOrderStyled"
 import { getDateBr } from "../../utils/date.utils";
 import { OrderStatus } from "../../enums/enums";
 import { toast } from 'react-toastify';
@@ -187,23 +187,23 @@ export const WorkOrder = () => {
                                         {so.client.client_name}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
                                         {so.client.client_phone}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
                                         {getDateBr(so.service_order_date)}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
                                         {getDateBr(so.service_order_expiration)}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
                                         {parseStatus(so.service_order_status)}
                                     </WorkOrderTableTd>
 
-                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)}about={`${i % 2}`}>
+                                    <WorkOrderTableTd scope={parseStatus(so.service_order_status)} about={`${i % 2}`}>
 
                                         <div className="d-flex justify-content-around base-options">
 
@@ -230,7 +230,9 @@ export const WorkOrder = () => {
                             ))}
                         </tbody>
                     </WorkOrderTable>
-                    <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+                    <PaginationCardworkOrder>
+                        <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+                    </PaginationCardworkOrder>
                     {showModalcloseOrder && <ModalDefault body={<ConfirmationModal
                         message={messageConfirmation}
                         confirmation={confirmationClose}

@@ -13,7 +13,7 @@ export const WorkOrderInputSearch = styled.input`
 export const WorkOrderMain = styled.div`
     display: flex;
     
-    width: 85vw;
+    width: 80vw;
     height: 80vh;
     flex-direction: column;
     align-items: center;
@@ -52,38 +52,43 @@ export const WorkOrderButtonComplet = styled.button`
 `
 
 export const WorkOrderTable = styled.table`
-    width: 85vw;
+   margin-top: 10px;
     margin-bottom: 15px;
-    margin-top: 10px;
+    width: 100%;
     thead{
         background-color:rgb(38, 67, 80);
         color: #FFF;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
-       
     }
     td{     
         border: solid 1px #000;
-        padding: 10px 10px;
         text-align: center;
     }
 `
 
 export const WorkOrderButtonTable = styled.button`
     
-    box-shadow: rgba(23, 42, 64, 0.4) 2px 0px 3px 2px, rgba(139, 140, 141, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #000;
 
     &:hover{
-        border: solid 1px black;
-}
+        border: 1px solid #000;
+        box-shadow: #000 0px 2px 5px;
+    }
+
 `
 
 export const WorkOrderNavLinkTable = styled(NavLink)`
     
-    box-shadow: rgba(23, 42, 64, 0.4) 2px 0px 3px 2px, rgba(139, 140, 141, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #000;
 
     &:hover{
-        border: solid 1px black;
+        border: 1px solid #000;
+        box-shadow: #000 0px 2px 5px;
     }
 `
 
@@ -99,6 +104,14 @@ export const WorkOrderTableOptions = styled.div`
     
    display: flex;
    justify-content: space-around;
+
+
+`
+
+export const PaginationCardworkOrder = styled.div`
+    /* background-color: aliceblue; */
+    display: flex;
+    justify-content: center;
 
 
 `
