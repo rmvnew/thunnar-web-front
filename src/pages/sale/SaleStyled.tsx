@@ -163,7 +163,7 @@ export const SaleTableTBodyTr = styled.tr`
     height: 40px;
     background-color: #FFF;
     
-     &:nth-child(even){
+    &:nth-child(even){
         background-color: #d1d1d1;
     }
     &:nth-child(odd){

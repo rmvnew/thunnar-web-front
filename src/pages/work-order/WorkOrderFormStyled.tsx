@@ -17,7 +17,7 @@ export const WorkOrderForm_Header = styled.div`
     top: 0;
     background-color: rgb(38, 67, 80);
     width: 100vw;
-    height: 80px;
+    height: 30px;
     align-items: center;
     color: #FFF;
 
@@ -28,7 +28,7 @@ export const WorkOrderForm_Main = styled.div`
    position: relative;
    flex-direction: row;
    margin-left: 20px;
-   margin-top: 100px;
+   margin-top: 40px;
    width: 80vw;
    height: 90vh;
    /* overflow: scroll; */
@@ -42,6 +42,8 @@ export const WorkOrderForm_NumberOrder = styled.h1`
     position: absolute;
     justify-content: flex-start;
     margin-left: 20px;
+    padding-top: 5px;
+    font-size: 1.3rem;
     
 
 `
@@ -50,6 +52,8 @@ export const WorkOrderForm_Title = styled.h1`
     
     position: absolute;
     left: 40%;
+    padding-top: 5px;
+    font-size: 1.3rem;
 
 `
 
@@ -65,7 +69,7 @@ export const WorkOrderForm_Label = styled.label`
 
 export const WorkOrderForm_Label_status = styled.label`
     
-    font-size: 1.4rem;
+    font-size: 0.8rem;
     align-items: center;
     margin-top: 10px;
     font-style: italic;
@@ -244,7 +248,10 @@ export const WorkOrderTitle = styled.h2`
 
     @import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&family=Zen+Dots&display=swap');
     font-family: 'Zen Dots', cursive;
-    margin: 10px;
+    font-size: 1.2rem;
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: #00bbff;
     text-align: center;
    
 `
@@ -327,7 +334,7 @@ export const WorkOrderButtonTable = styled.button`
 
 export const WorkOrderResponseStatus = styled.h3`
 
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: ${props => props.about === 'CANCELADA'?'#e80000': props.about === 'FINALIZADA'?'#00e1ff':'#3dff33'} ;
     font-weight: 600;
     

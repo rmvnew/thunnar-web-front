@@ -62,6 +62,17 @@ export const UserTable = styled.table`
         border: solid 1px #000;
         text-align: center;
     }
+    tbody{
+        tr{
+            &:nth-child(even){
+            background-color: #d1d1d1;
+            }
+            &:nth-child(odd){
+                background-color: #FFF;
+                
+            } 
+        }
+    }
 `
 
 export const UserTableTheadTd = styled.td`

@@ -65,6 +65,7 @@ export const ProductTable = styled.table`
     margin-top: 10px;
     margin-bottom: 15px;
     width: 100%;
+    
     thead{
         background-color:rgb(38, 67, 80);
         color: #FFF;
@@ -75,11 +76,26 @@ export const ProductTable = styled.table`
         border: solid 1px #000;
         text-align: center;
     }
+    
+    tbody{
+        tr{
+            &:nth-child(even){
+            background-color: #d1d1d1;
+            }
+            &:nth-child(odd){
+                background-color: #FFF;
+                
+            } 
+        }
+    }
+    
     `
 
 export const ProductTableTheadTd = styled.td`
     padding: 10px 10px;
     font-style: italic;
+
+    
     
 `
 

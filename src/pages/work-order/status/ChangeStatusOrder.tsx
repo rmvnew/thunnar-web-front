@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { api } from '../../../hooks/useApi';
 import { parseStatus } from '../../../utils/ParseOrderStatus';
 import { ChangeStatusButton, ChangeStatusLabel, ChangeStatusSelect, ChangeStatusTytle } from './ChangeStatusOrderStyled';
-
+import { ImExit } from "react-icons/im";
 
 
 
@@ -77,7 +77,7 @@ export const ChangeStatusOrder = (props: any) => {
                 <option value="CANCELADA">CANCELADA</option>
             </ChangeStatusSelect>
             {showEdit && <ChangeStatusButton className='btn btn-primary' onClick={updateStatus}>Editar</ChangeStatusButton>}
-            <ChangeStatusButton className='btn btn-danger' onClick={exit}>exit</ChangeStatusButton>
+            <ChangeStatusButton className='btn btn-danger' onClick={exit}><ImExit/> Sair</ChangeStatusButton>
         </>
     )
 }
