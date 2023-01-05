@@ -131,6 +131,8 @@ export const SaleFooter = styled.div`
     background-color: rgb(38, 67, 80);
     border-radius: 10px;
     padding: 10px;
+    display: flex;
+    justify-content: space-around;
     
 `
 
@@ -147,6 +149,7 @@ export const CardBody1 = styled.div`
         color: #FFF;
         font-style: italic;
         font-weight: 600;
+        margin-left: 10px;
     }
     
 `
@@ -156,7 +159,7 @@ export const CardBody1 = styled.div`
 export const CardSuggestion = styled.div`
     position: absolute;
     
-    margin-top: 68px;
+    /* margin-top: 30px; */
 `
 
 export const Suggestion = styled.div`
@@ -179,4 +182,40 @@ export const Suggestion = styled.div`
    
     
 
+`
+
+export const CardSellResult = styled.div`
+    
+    /* background-color: #2e3131; */
+    background-image: linear-gradient(
+        to top, #1b232e, #1c2a37,
+        #1c3140, #1a3948, #164150,
+        #164150, #164150, #164150, 
+        #1a3948, #1c3140, #1c2a37, #1b232e);
+    color: #fff;
+    width: 23%;
+    padding-left: 15px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: #1cacff 0px 4px 8px;
+    z-index: 3;
+
+`
+
+
+export const ImputProductProcessQuantity = styled.input`
+
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.2rem;
+    
+`
+
+export const ImputProductProcessSearch = styled.input`
+
+        
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding-left: 20px;
+    
 `

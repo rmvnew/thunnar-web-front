@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../hooks/useApi';
-import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1, CardSuggestion, Suggestion } from './SaleStyled';
+import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1, CardSuggestion, Suggestion, CardSellResult, ImputProductProcessQuantity, ImputProductProcessSearch } from './SaleStyled';
 
 
 
@@ -8,14 +8,7 @@ import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, 
 
 export const Sale = () => {
 
-    // const getProduct = async (page: number = 1) => {
-
-    //     await api.get(`/product?page=${page}&limit=0&sort=DESC&orderBy=ID`).then((response) => {
-
-    //         setProducts(response.data.items)
-    //     });
-    // };
-
+   
     const getProductByName = async (page: number = 1, name: string = "") => {
 
         await api.get(`/product?page=${page}&limit=10&sort=DESC&orderBy=ID&search=${name}`)
@@ -30,171 +23,67 @@ export const Sale = () => {
     const [products, setProducts] = useState<any[]>([])
     const [search, setSearch] = useState("")
     const [suggestions, setSuggestions] = useState<any[]>([])
-
-
+    const [itemsInProcess, setItemsInProcess] = useState<any[]>([])
+    const [totalValue, setTotalValue] = useState(0)
+    const [itemQuantity, setItemQuantity] = useState(1)
 
     const onChangeHandler = (text: string) => {
 
-        setTimeout(() => {
+        let matches: any[] = []
 
-            let matches: any[] = []
+        if (text.length > 0) {
 
-            if (text.length > 0) {
+            for (let prod of products) {
 
-                for (let prod of products) {
-
-                    console.log('&& ', prod.product_name.toUpperCase());
-
-                    if (prod.product_name.toUpperCase().indexOf(text.toUpperCase()) != -1) {
-                        matches.push(prod)
-                    }
-
+                if (prod.product_name.toUpperCase().indexOf(text.toUpperCase()) != -1) {
+                    matches.push(prod)
                 }
 
             }
 
-            setSuggestions(matches)
-            setSearch(text)
-        }, 300)
+        }
 
+        setSuggestions(matches)
+        setSearch(text)
+       
     }
 
     const setChooice = (prod: any) => {
 
+        console.log('Prod: >>', prod);
+        prod.product_quantity = itemQuantity
         setSuggestions([])
-        setSearch(prod.product_name)
+        setSearch('')
+        const currentItems = itemsInProcess
+        currentItems.push(prod)
+        setItemsInProcess(currentItems)
+        setTimeout(() => {
+            sumProducts()
+            setItemQuantity(1)
+        }, 1000)
 
     }
 
     useEffect(() => {
 
-
         getProductByName(1, search)
 
     }, [search])
 
-
-    const itemsProduct = [
-        {
-            id: 1,
-            name: 'Xbox serie x',
-            quantity: 1,
-            price: 4300
-        },
-        {
-            id: 2,
-            name: 'Xbox serie s',
-            quantity: 2,
-            price: 2100
-        },
-        {
-            id: 3,
-            name: 'Monitor games 144Hz Sansumg',
-            quantity: 1,
-            price: 3200
-        },
-        {
-            id: 4,
-            name: 'Camera GoPro Hero 4',
-            quantity: 1,
-            price: 1920
-        }, {
-            id: 1,
-            name: 'Xbox serie x',
-            quantity: 1,
-            price: 4300
-        },
-        {
-            id: 2,
-            name: 'Xbox serie s',
-            quantity: 2,
-            price: 2100
-        },
-        {
-            id: 3,
-            name: 'Monitor games 144Hz Sansumg',
-            quantity: 1,
-            price: 3200
-        },
-        {
-            id: 4,
-            name: 'Camera GoPro Hero 4',
-            quantity: 1,
-            price: 1920
-        }, {
-            id: 1,
-            name: 'Xbox serie x',
-            quantity: 1,
-            price: 4300
-        },
-        {
-            id: 2,
-            name: 'Xbox serie s',
-            quantity: 2,
-            price: 2100
-        },
-        {
-            id: 3,
-            name: 'Monitor games 144Hz Sansumg',
-            quantity: 1,
-            price: 3200
-        },
-        {
-            id: 4,
-            name: 'Camera GoPro Hero 4',
-            quantity: 1,
-            price: 1920
-        }, {
-            id: 1,
-            name: 'Xbox serie x',
-            quantity: 1,
-            price: 4300
-        },
-        {
-            id: 2,
-            name: 'Xbox serie s',
-            quantity: 2,
-            price: 2100
-        },
-        {
-            id: 3,
-            name: 'Monitor games 144Hz Sansumg',
-            quantity: 1,
-            price: 3200
-        },
-        {
-            id: 4,
-            name: 'Camera GoPro Hero 4',
-            quantity: 1,
-            price: 1920
-        }, {
-            id: 1,
-            name: 'Xbox serie x',
-            quantity: 1,
-            price: 4300
-        },
-        {
-            id: 2,
-            name: 'Xbox serie s',
-            quantity: 2,
-            price: 2100
-        },
-        {
-            id: 3,
-            name: 'Monitor games 144Hz Sansumg',
-            quantity: 1,
-            price: 3200
-        },
-        {
-            id: 4,
-            name: 'Camera GoPro Hero 4',
-            quantity: 1,
-            price: 1920
-        }
-    ]
+   
+    const sumProducts = async () => {
 
 
+        let value = 0
 
+        const result = await itemsInProcess.reduce((a: any, b: any) => a + (b.product_price * b.product_quantity), 0)
+
+        value += result
+
+
+        setTotalValue(value)
+
+    }
 
 
 
@@ -211,19 +100,31 @@ export const Sale = () => {
 
                     <CardBody1 className="row">
                         <>
-                            <label>Busca</label>
-                            <input type="text"
-                                className="form-control form-control"
-                                value={search}
-                                onChange={e => onChangeHandler(e.target.value)}
-                            />
-                            <CardSuggestion>
-                                {suggestions && suggestions.map((sugges, i) =>
-                                    <Suggestion onClick={() => setChooice(sugges)} key={i}>{sugges.product_name}</Suggestion>
-                                )}
-                            </CardSuggestion>
+                            <div className="col-2">
+                                <label>Quantidade</label>
+                                <ImputProductProcessQuantity type="text"
+                                    className="form-control form-control"
+                                    value={itemQuantity}
+                                    onChange={e => setItemQuantity(Number(e.target.value))}
+                                />
 
-                            <h1>aqui</h1>
+                            </div>
+
+                            <div className="col-10">
+                                <label>Busca</label>
+                                <ImputProductProcessSearch type="text"
+                                    className="form-control form-control"
+                                    value={search}
+                                    onChange={e => onChangeHandler(e.target.value)}
+                                />
+                                <CardSuggestion>
+                                    {suggestions && suggestions.map((sugges, i) =>
+                                        <Suggestion onClick={() => setChooice(sugges)} key={i}>{sugges.product_name}</Suggestion>
+                                    )}
+                                </CardSuggestion>
+
+                                <h1>aqui</h1>
+                            </div>
                         </>
 
 
@@ -248,18 +149,18 @@ export const Sale = () => {
                                 </SaleTableTheadTr>
                             </thead>
                             <tbody>
-                                {itemsProduct.map((prod, i) => (
+                                {itemsInProcess.map((prod, i) => (
                                     <SaleTableTBodyTr onClick={() => alert(i + 1)} key={i}>
                                         <SaleTableTBodyTd >{i + 1}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{prod.id}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{prod.name}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{prod.quantity}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{prod.product_id}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{prod.product_name}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{prod.product_quantity}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR',
                                             { style: 'currency', currency: 'BRL' })
-                                            .format(prod.price)}</SaleTableTBodyTd>
+                                            .format(prod.product_price)}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR',
                                             { style: 'currency', currency: 'BRL' })
-                                            .format(prod.price * prod.quantity)}</SaleTableTBodyTd>
+                                            .format(prod.product_price * prod.product_quantity)}</SaleTableTBodyTd>
                                     </SaleTableTBodyTr>
                                 ))}
                             </tbody>
@@ -271,6 +172,28 @@ export const Sale = () => {
                 </SaleBody2>
 
                 <SaleFooter>
+
+                    <CardSellResult>
+                        <label>valor</label>
+                        <h2>teste</h2>
+                    </CardSellResult>
+
+                    <CardSellResult>
+                        <label>valor</label>
+                        <h2>teste</h2>
+                    </CardSellResult>
+
+                    <CardSellResult>
+                        <label>valor</label>
+                        <h2>teste</h2>
+                    </CardSellResult>
+
+                    <CardSellResult>
+                        <label>valor</label>
+                        <h2>{new Intl.NumberFormat('pt-BR',
+                            { style: 'currency', currency: 'BRL' })
+                            .format(totalValue)}</h2>
+                    </CardSellResult>
 
                 </SaleFooter>
 
