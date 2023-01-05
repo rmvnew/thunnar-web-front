@@ -9,7 +9,7 @@ export interface ProductInterface {
     quantity:number,
     minimalQuantity:number,
     options:number,
-    price:number,
-    priceBuy:number
+    purchasePrice:number,
+    salePrice:number
     invoice:string
 }

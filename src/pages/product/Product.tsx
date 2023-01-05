@@ -6,6 +6,7 @@ import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
 import '../../App.css'
 import { PaginationCard, ProductBaseOption, ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTableButton, ProductTableButtonNavLink, ProductTableTheadTd, ProductTitle } from "./ProductStyled";
+import { BrCurrencyFormat } from "../../utils/currencyBrFormat";
 
 
 
@@ -130,7 +131,7 @@ const Product = () => {
                   <td>{product.product_name}</td>
                   <td>{product.product_barcode}</td>
                   <td>{product.product_quantity}</td>
-                  <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.product_price)}</td>
+                  <td>{BrCurrencyFormat(product.product_sale_price)}</td>
                   <td>{product.is_active === true ? "Ativo" : "Inativo"}</td>
                   <td>
 
@@ -146,8 +147,8 @@ const Product = () => {
                           product_location: product.product_location,
                           product_quantity: product.product_quantity,
                           product_quantity_minimal: product.product_quantity_minimal,
-                          product_price: product.product_price,
-                          product_price_buy: product.product_price_buy,
+                          product_purchase_price: product.product_purchase_price,
+                          product_sale_price: product.product_sale_price,
                           category_id: product.category.category_id,
                           category: product.category.category_name,
 

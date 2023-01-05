@@ -31,7 +31,7 @@ const ProductForm = () => {
             location &&
             quantity &&
             minimalQuantity &&
-            price
+            purchasePrice
         ) {
             return true
         }
@@ -66,8 +66,8 @@ const ProductForm = () => {
                 quantity: quantity,
                 minimalQuantity: minimalQuantity,
                 options: Number(options),
-                price: price,
-                priceBuy: priceBuy,
+                purchasePrice: purchasePrice,
+                salePrice: salePrice,
                 invoice: invoice_id
             }
 
@@ -84,8 +84,8 @@ const ProductForm = () => {
                     product_quantity: product.quantity,
                     product_quantity_minimal: product.minimalQuantity,
                     product_category_id: product.options,
-                    product_price: product.price,
-                    product_price_buy: product.priceBuy,
+                    product_purchase_price: product.purchasePrice,
+                    product_sale_price: product.salePrice,
                     invoice_id: product.invoice
 
                 })
@@ -114,8 +114,8 @@ const ProductForm = () => {
                 quantity: quantity,
                 minimalQuantity: minimalQuantity,
                 options: Number(options),
-                price: price,
-                priceBuy: priceBuy,
+                purchasePrice: purchasePrice,
+                salePrice: salePrice,
                 invoice: invoice_id
             }
 
@@ -130,9 +130,9 @@ const ProductForm = () => {
                     product_quantity: product.quantity,
                     product_quantity_minimal: product.minimalQuantity,
                     product_category_id: product.options,
-                    product_price: product.price,
+                    product_purchase_price: product.purchasePrice,
                     invoice_id: product.invoice,
-                    product_price_buy: product.priceBuy,
+                    product_sale_price: product.salePrice,
                 })
                 .then(response => {
                     navigate("/product")
@@ -160,8 +160,8 @@ const ProductForm = () => {
         setProductLocation("")
         setQuantity(0)
         setMinimalQuantity(0)
-        setPrice(0)
-        setPriceBuy(0)
+        setPurchasePrice(0)
+        setSalePrice(0)
         setOptions("")
         setSelect("")
         setInvoice("")
@@ -180,8 +180,8 @@ const ProductForm = () => {
             setProductLocation(dataResult.product_location)
             setQuantity(dataResult.product_quantity)
             setMinimalQuantity(dataResult.product_quantity_minimal)
-            setPrice(dataResult.product_price)
-            setPriceBuy(dataResult.product_price_buy)
+            setPurchasePrice(dataResult.product_purchase_price)
+            setSalePrice(dataResult.product_sale_price)
             setSelect(dataResult.category)
             setOptions(dataResult.category_id)
         } else {
@@ -198,8 +198,8 @@ const ProductForm = () => {
     const [productLocation, setProductLocation] = useState("")
     const [quantity, setQuantity] = useState(0)
     const [minimalQuantity, setMinimalQuantity] = useState(0)
-    const [price, setPrice] = useState(0)
-    const [priceBuy, setPriceBuy] = useState(0)
+    const [purchasePrice, setPurchasePrice] = useState(0)
+    const [salePrice, setSalePrice] = useState(0)
     const [select, setSelect] = useState("")
     const [options, setOptions] = useState("")
     const [invoice, setInvoice] = useState("")
@@ -334,13 +334,13 @@ const ProductForm = () => {
                             </div>
 
                             <div className="col-lg-2">
-                                <ProductLabel>Preço</ProductLabel>
+                                <ProductLabel>Preço de compra</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="number"
                                     placeholder="Preço"
-                                    value={price}
-                                    onChange={(e) => setPrice(Number(e.target.value))}
+                                    value={purchasePrice}
+                                    onChange={(e) => setPurchasePrice(Number(e.target.value))}
                                 />
                             </div>
 
@@ -354,13 +354,13 @@ const ProductForm = () => {
 
 
                             <div className="col-lg-2">
-                                <ProductLabel>Preço de compra</ProductLabel>
+                                <ProductLabel>Preço de venda</ProductLabel>
                                 <input
                                     className="form-control form-control-lg"
                                     type="number"
                                     placeholder="Preço"
-                                    value={priceBuy}
-                                    onChange={(e) => setPriceBuy(Number(e.target.value))}
+                                    value={salePrice}
+                                    onChange={(e) => setSalePrice(Number(e.target.value))}
                                 />
                             </div>
 
