@@ -1,6 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { api } from '../../hooks/useApi';
-import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, SaleTableTBodyTr, SaleTableTBodyTd, SaleTable, SaleTableTheadTd, SaleCardTable, CardBody1, CardSuggestion, Suggestion, CardSellResult, ImputProductProcessQuantity, ImputProductProcessSearch } from './SaleStyled';
+import { BrCurrencyFormat } from '../../utils/currencyBrFormat';
+import {
+    SaleMain,
+    SaleTop,
+    SaleBody1,
+    SaleBody2,
+    SaleFooter,
+    SaleTableTheadTr,
+    SaleTableTBodyTr,
+    SaleTableTBodyTd,
+    SaleTable,
+    SaleTableTheadTd,
+    SaleCardTable,
+    CardBody1,
+    CardSuggestion,
+    Suggestion,
+    CardSellResult,
+    ImputProductProcessQuantity,
+    ImputProductProcessSearch,
+    CardBody2,
+    ImputProductProcessLastNumber,
+    ImputProductProcessLastName,
+    CardBody2b,
+    LabelTytleLastInput
+} from './SaleStyled';
+
 
 
 
@@ -8,7 +33,7 @@ import { SaleMain, SaleTop, SaleBody1, SaleBody2, SaleFooter, SaleTableTheadTr, 
 
 export const Sale = () => {
 
-   
+
     const getProductByName = async (page: number = 1, name: string = "") => {
 
         await api.get(`/product?page=${page}&limit=10&sort=DESC&orderBy=ID&search=${name}`)
@@ -19,6 +44,7 @@ export const Sale = () => {
             });
     };
 
+    const nameInputRef = useRef<HTMLInputElement>(null)
 
     const [products, setProducts] = useState<any[]>([])
     const [search, setSearch] = useState("")
@@ -26,6 +52,8 @@ export const Sale = () => {
     const [itemsInProcess, setItemsInProcess] = useState<any[]>([])
     const [totalValue, setTotalValue] = useState(0)
     const [itemQuantity, setItemQuantity] = useState(1)
+    const [showButtonClose, setShowButtonClose] = useState(false)
+    const [chosenItem, setChosenItem] = useState<any>(null!)
 
     const onChangeHandler = (text: string) => {
 
@@ -41,11 +69,26 @@ export const Sale = () => {
 
             }
 
+            if (matches.length > 0) {
+                setSuggestions(matches)
+                setSearch(text)
+                setShowButtonClose(true)
+            } else {
+                clearSearch(text)
+            }
+        } else {
+            clearSearch(text)
         }
 
-        setSuggestions(matches)
+
+    }
+
+
+    const clearSearch = (text: string = '') => {
+        setSuggestions([])
         setSearch(text)
-       
+        setShowButtonClose(false)
+        nameInputRef.current?.focus()
     }
 
     const setChooice = (prod: any) => {
@@ -57,10 +100,14 @@ export const Sale = () => {
         const currentItems = itemsInProcess
         currentItems.push(prod)
         setItemsInProcess(currentItems)
+        setShowButtonClose(false)
         setTimeout(() => {
             sumProducts()
             setItemQuantity(1)
-        }, 1000)
+            nameInputRef.current?.focus()
+            setChosenItem(prod)
+            console.log('>>>', chosenItem);
+        }, 500)
 
     }
 
@@ -70,7 +117,7 @@ export const Sale = () => {
 
     }, [search])
 
-   
+
     const sumProducts = async () => {
 
 
@@ -86,6 +133,7 @@ export const Sale = () => {
     }
 
 
+    console.log('renderizou');
 
 
     return (
@@ -113,22 +161,64 @@ export const Sale = () => {
                             <div className="col-10">
                                 <label>Busca</label>
                                 <ImputProductProcessSearch type="text"
+                                    ref={nameInputRef}
                                     className="form-control form-control"
                                     value={search}
                                     onChange={e => onChangeHandler(e.target.value)}
                                 />
                                 <CardSuggestion>
+                                    {showButtonClose && <button onClick={() => clearSearch()}>X</button>}
                                     {suggestions && suggestions.map((sugges, i) =>
                                         <Suggestion onClick={() => setChooice(sugges)} key={i}>{sugges.product_name}</Suggestion>
                                     )}
                                 </CardSuggestion>
 
-                                <h1>aqui</h1>
+
                             </div>
                         </>
 
 
                     </CardBody1>
+
+                    <CardBody2 className="row">
+
+
+                        <LabelTytleLastInput>Ultimo Lancamento</LabelTytleLastInput>
+                        <CardBody2b>
+                            <div className="col-2">
+                                <label>ID</label>
+                                <ImputProductProcessLastNumber type="text"
+                                    className="form-control form-control"
+                                    value={chosenItem != null ? chosenItem.product_id : ''}
+                                />
+                            </div>
+
+                            <div className="col-5">
+                                <label>Nome</label>
+                                <ImputProductProcessLastName type="text"
+                                    className="form-control form-control"
+                                    value={chosenItem != null ? chosenItem.product_name : ''}
+                                />
+                            </div>
+
+                            <div className="col-2">
+                                <label>Qtde</label>
+                                <ImputProductProcessLastNumber type="text"
+                                    className="form-control form-control"
+                                    value={chosenItem != null ? chosenItem.product_quantity : ''}
+                                />
+                            </div>
+
+                            <div className="col-2">
+                                <label>Valor</label>
+                                <ImputProductProcessLastNumber type="text"
+                                    className="form-control form-control"
+                                    value={chosenItem != null ? BrCurrencyFormat(chosenItem.product_price) : ''}
+                                />
+                            </div>
+                        </CardBody2b>
+
+                    </CardBody2>
 
                 </SaleBody1>
 
@@ -143,8 +233,8 @@ export const Sale = () => {
                                     <SaleTableTheadTd>item</SaleTableTheadTd>
                                     <SaleTableTheadTd>Id</SaleTableTheadTd>
                                     <SaleTableTheadTd>Nome</SaleTableTheadTd>
-                                    <SaleTableTheadTd>Quantidade</SaleTableTheadTd>
-                                    <SaleTableTheadTd>preço</SaleTableTheadTd>
+                                    <SaleTableTheadTd>Qtde</SaleTableTheadTd>
+                                    <SaleTableTheadTd>Preço</SaleTableTheadTd>
                                     <SaleTableTheadTd>Sub total</SaleTableTheadTd>
                                 </SaleTableTheadTr>
                             </thead>
@@ -155,12 +245,8 @@ export const Sale = () => {
                                         <SaleTableTBodyTd >{prod.product_id}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.product_name}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.product_quantity}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR',
-                                            { style: 'currency', currency: 'BRL' })
-                                            .format(prod.product_price)}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{new Intl.NumberFormat('pt-BR',
-                                            { style: 'currency', currency: 'BRL' })
-                                            .format(prod.product_price * prod.product_quantity)}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{BrCurrencyFormat(prod.product_price)}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{BrCurrencyFormat(prod.product_price * prod.product_quantity)}</SaleTableTBodyTd>
                                     </SaleTableTBodyTr>
                                 ))}
                             </tbody>
@@ -190,9 +276,7 @@ export const Sale = () => {
 
                     <CardSellResult>
                         <label>valor</label>
-                        <h2>{new Intl.NumberFormat('pt-BR',
-                            { style: 'currency', currency: 'BRL' })
-                            .format(totalValue)}</h2>
+                        <h2>{BrCurrencyFormat(totalValue)}</h2>
                     </CardSellResult>
 
                 </SaleFooter>

@@ -30,10 +30,71 @@ export const SaleBody1 = styled.div`
     padding: 10px;
 
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: flex-start;
     
 `
+
+export const CardBody1 = styled.div`
+
+    /* background-color: #a5f2f7; */
+    width: 100%;
+    
+    margin-top: 10px;
+
+    label{
+        color: #FFF;
+        font-style: italic;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    
+`
+export const CardBody2 = styled.div`
+
+    /* background-color: #a5f2f7; */
+    width: 100%;
+    /* margin-top: 30px; */
+    padding-top: 30px;
+    padding-bottom: 20px;
+    /* margin-bottom: 30px; */
+    display: flex;
+    justify-content: center;
+    
+
+    label{
+        color: #FFF;
+        font-style: italic;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    
+`
+
+export const CardBody2b = styled.div`
+
+    /* background-color: aqua; */
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 30px;
+    border-top: 3px solid #FFF;
+    border-bottom: 3px solid #FFF;
+    
+    
+    
+`
+
+export const LabelTytleLastInput = styled.label`
+    
+    text-align: center;
+    font-size: 1.4rem;
+    color: #09c6ff;
+
+`
+
+
 //^ Body2 start
 
 export const SaleBody2 = styled.div`
@@ -72,7 +133,11 @@ export const SaleTable = styled.table`
 export const SaleTableTheadTr = styled.tr`
 
     
-    background-color: rgb(38, 45, 63);
+background-image: linear-gradient(
+        to top, #1b232e, #1c2a37,
+        #1c3140, #1a3948, #164150,
+        #164150, #164150, #164150, 
+        #1a3948, #1c3140, #1c2a37, #1b232e);
     text-align: center;
     height: 40px;
     padding: 5px;
@@ -137,22 +202,6 @@ export const SaleFooter = styled.div`
 `
 
 
-export const CardBody1 = styled.div`
-
-    /* background-color: #a5f2f7; */
-    width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
-
-    label{
-        color: #FFF;
-        font-style: italic;
-        font-weight: 600;
-        margin-left: 10px;
-    }
-    
-`
 
 
 
@@ -160,6 +209,17 @@ export const CardSuggestion = styled.div`
     position: absolute;
     
     /* margin-top: 30px; */
+    button{
+        position: absolute;
+        width: 30px;
+        border-radius: 50px;
+        background-color: #7e0903;
+        font-weight: 600;
+        color: #ffea00;
+        border: 2px solid #fbff00;
+        right: 0;
+
+    }
 `
 
 export const Suggestion = styled.div`
@@ -217,5 +277,26 @@ export const ImputProductProcessSearch = styled.input`
         font-weight: 600;
         font-size: 1.2rem;
         padding-left: 20px;
+    
+`
+
+export const ImputProductProcessLastName = styled.input`
+
+        
+        font-weight: 600;
+        font-size: 1.3rem;
+        padding-left: 20px;
+       
+    
+`
+
+export const ImputProductProcessLastNumber = styled.input`
+
+        
+        font-weight: 600;
+        font-size: 1.3rem;
+        padding-left: 20px;
+        text-align: center;
+        
     
 `
