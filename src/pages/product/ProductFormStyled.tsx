@@ -41,7 +41,7 @@ export const ProductFormSelect = styled.select`
    margin-bottom: 0;
 `
 
-export const ProductInputButton = styled.input`
+export const ProductInputButton = styled.button`
     width: 200px;
     margin-left: 15px;
     

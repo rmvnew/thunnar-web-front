@@ -11,7 +11,8 @@ import { Profile } from "../../interfaces/Profile.interface";
 import { cpfMask } from "../../utils/mask";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 import { UserFormForm, UserFormLabel, UserFormMain, UserInputButton } from "./UserFormStyled";
-
+import { MdOutlinePlaylistAdd, MdUpdate } from "react-icons/md";
+import { BsCheckSquare } from "react-icons/bs";
 
 const UserForm = () => {
 
@@ -275,27 +276,21 @@ const UserForm = () => {
                         <div className="btn-actions">
 
                             <UserInputButton
-                                type="submit"
-                                value={"Novo"}
                                 className="btn btn-primary"
                                 onClick={clearOperation}
 
-                            />
+                            ><BsCheckSquare/>  Novo</UserInputButton>
 
                             {!isUpdate && <UserInputButton
-                                type="submit"
-                                value={"Salvar"}
                                 className="btn btn-primary "
                                 onClick={createUser}
-                            />}
+                            ><MdOutlinePlaylistAdd/> Salvar</UserInputButton>}
 
 
                             {isUpdate && <UserInputButton
-                                type="submit"
-                                value={"Atualizar"}
                                 className="btn btn-secondary "
                                 onClick={updateUser}
-                            />}
+                            ><MdUpdate/> Atualizar</UserInputButton>}
 
                         </div>
                     </UserFormForm>

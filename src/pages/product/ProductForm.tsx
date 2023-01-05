@@ -7,6 +7,8 @@ import { ProductInterface } from '../../interfaces/Product.interface';
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 import '../../App.css'
 import { ProductFormForm, ProductFormLabelOptional, ProductFormMain, ProductFormSelect, ProductFormText, ProductInputButton, ProductLabel } from "./ProductFormStyled";
+import { MdOutlinePlaylistAdd, MdUpdate } from "react-icons/md";
+import { BsCheckSquare } from "react-icons/bs";
 
 
 
@@ -396,27 +398,22 @@ const ProductForm = () => {
                         <div className="btn-actions">
 
                             <ProductInputButton
-                                type="submit"
-                                value={"Novo"}
+                               
                                 className="btn btn-primary"
                                 onClick={clearOperation}
 
-                            />
+                            ><BsCheckSquare/> Novo</ProductInputButton>
 
                             {!isUpdate && <ProductInputButton
-                                type="submit"
-                                value={"Salvar"}
                                 className="btn btn-primary"
                                 onClick={createProduct}
-                            />}
+                            ><MdOutlinePlaylistAdd /> Salvar</ProductInputButton>}
 
 
                             {isUpdate && <ProductInputButton
-                                type="submit"
-                                value={"Atualizar"}
                                 className="btn btn-secondary"
                                 onClick={updateUser}
-                            />}
+                            ><MdUpdate /> Atualizar</ProductInputButton>}
 
                         </div>
                     </ProductFormForm>

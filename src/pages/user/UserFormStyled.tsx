@@ -46,7 +46,7 @@ export const UserFormForm = styled.div`
     
 `
 
-export const UserInputButton = styled.input`
+export const UserInputButton = styled.button`
     width: 200px;
     margin-left: 15px;
     
