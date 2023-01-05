@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { api } from "../../hooks/useApi";
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
-import { UserBaseOption, UserBtnNewUser, UserInputSearch, UserMain, UserNewUser, UserTable, UserTitle } from "./UserStyled";
+import { PaginationCardUser, UserBaseOption, UserBtnNewUser, UserInputSearch, UserMain, UserNewUser, UserTable, UserTableButton, UserTableButtonNavLink, UserTableTheadTd, UserTitle } from "./UserStyled";
 
 const User = () => {
 
@@ -79,9 +79,9 @@ const User = () => {
     <AnimatePageOpacity>
       <UserMain >
 
-        
-          <UserTitle>Gerenciamento de usuários</UserTitle>
-        
+
+        <UserTitle>Gerenciamento de usuários</UserTitle>
+
 
 
         <UserNewUser >
@@ -98,16 +98,16 @@ const User = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <UserTable className="my-table table table-striped">
+        <UserTable >
           <thead>
             <tr>
-              <td>id</td>
-              <td>Nome</td>
-              <td>E-mail</td>
-              <td>Cpf</td>
-              <td>Perfil</td>
-              <td>Status</td>
-              <td>Opções</td>
+              <UserTableTheadTd>Id</UserTableTheadTd>
+              <UserTableTheadTd>Nome</UserTableTheadTd>
+              <UserTableTheadTd>E-mail</UserTableTheadTd>
+              <UserTableTheadTd>Cpf</UserTableTheadTd>
+              <UserTableTheadTd>Perfil</UserTableTheadTd>
+              <UserTableTheadTd>Status</UserTableTheadTd>
+              <UserTableTheadTd>Opções</UserTableTheadTd>
             </tr>
           </thead>
           <tbody>
@@ -124,7 +124,7 @@ const User = () => {
 
                     <UserBaseOption >
 
-                      <NavLink to={"/user/form"} state={{
+                      <UserTableButtonNavLink to={"/user/form"} state={{
                         data: {
                           user_id: user.user_id,
                           user_name: user.user_name,
@@ -133,11 +133,11 @@ const User = () => {
                           user_profile: user.profile.profile_name,
                           user_profile_id: user.profile.profile_id,
                         }
-                      }} className="btn btn-warning"><ImPencil2 /></NavLink>
+                      }} className="btn btn-warning"><ImPencil2 /></UserTableButtonNavLink>
 
-                      <button className="btn btn-danger"
+                      <UserTableButton className="btn btn-danger"
                         onClick={() => deleteUser(user.user_id)}
-                      ><ImBin /></button>
+                      ><ImBin /></UserTableButton>
 
                     </UserBaseOption>
 
@@ -147,7 +147,9 @@ const User = () => {
           </tbody>
         </UserTable>
 
-        <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+        <PaginationCardUser>
+          <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+        </PaginationCardUser>
       </UserMain>
     </AnimatePageOpacity>
   );

@@ -10,9 +10,9 @@ export const UserTitle = styled.h1`
 
 
 export const UserMain = styled.div`
-    display: flex;
-    width: 85vw;
-    height: 80vh;
+    /* display: flex; */
+    width: 80vw;
+    height: 70vh;
     flex-direction: column;
     align-items: center;
     margin-left: 20px;
@@ -47,18 +47,54 @@ export const UserBaseOption = styled.div`
 
 
 
+
 export const UserTable = styled.table`
-    margin-top: 10px;
+   margin-top: 10px;
+    margin-bottom: 15px;
+    width: 100%;
     thead{
         background-color:rgb(38, 67, 80);
         color: #FFF;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
     }
     td{     
         border: solid 1px #000;
-        padding: 10px 10px;
         text-align: center;
     }
 `
 
+export const UserTableTheadTd = styled.td`
+    padding: 10px 10px;
+    font-style: italic;
+    `
+ 
+ export const UserTableButtonNavLink = styled(NavLink)`
+ margin-top: 5px;
+ margin-bottom: 5px;
+ border: 1px solid #000;
+
+ &:hover{
+  border: 1px solid #000;
+  box-shadow: #000 0px 2px 5px;
+ }
+`
+export const UserTableButton = styled.button`
+ margin-top: 5px;
+ margin-bottom: 5px;
+ border: 1px solid #000;
+
+ &:hover{
+  border: 1px solid #000;
+  box-shadow: #000 0px 2px 5px;
+ }
+`
+
+
+export const PaginationCardUser = styled.div`
+    /* background-color: aliceblue; */
+    display: flex;
+    justify-content: center;
+
+
+`
