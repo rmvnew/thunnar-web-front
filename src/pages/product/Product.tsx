@@ -5,7 +5,7 @@ import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
 import '../../App.css'
-import { ProductBaseOption, ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTitle } from "./ProductStyled";
+import { PaginationCard, ProductBaseOption, ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTableButton, ProductTableButtonNavLink, ProductTableTheadTd, ProductTitle } from "./ProductStyled";
 
 
 
@@ -82,14 +82,16 @@ const Product = () => {
       <ProductMain >
 
 
-        
-          <ProductTitle>Gerenciamento de usuários</ProductTitle>
-        
+
+        <ProductTitle>Gerenciamento de usuários</ProductTitle>
+
 
 
 
         <ProductSectionNewProduct >
-          <ProductButtonNewProduct to={"/product/form"} className="btn btn-primary ">Novo Produto</ProductButtonNewProduct>
+          <ProductButtonNewProduct
+            to={"/product/form"}
+            className="btn btn-primary ">Novo Produto</ProductButtonNewProduct>
         </ProductSectionNewProduct>
 
 
@@ -102,16 +104,16 @@ const Product = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <ProductTable className="table table-striped">
+        <ProductTable >
           <thead>
             <tr>
-              <td>id</td>
-              <td>Nome</td>
-              <td>Código de barras</td>
-              <td>Quantidade</td>
-              <td>preço</td>
-              <td>Status</td>
-              <td>Opções</td>
+              <ProductTableTheadTd>Id</ProductTableTheadTd>
+              <ProductTableTheadTd>Nome</ProductTableTheadTd>
+              <ProductTableTheadTd>Código de barras</ProductTableTheadTd>
+              <ProductTableTheadTd>Quantidade</ProductTableTheadTd>
+              <ProductTableTheadTd>Preço</ProductTableTheadTd>
+              <ProductTableTheadTd>Status</ProductTableTheadTd>
+              <ProductTableTheadTd>Opções</ProductTableTheadTd>
             </tr>
           </thead>
           <tbody>
@@ -126,10 +128,10 @@ const Product = () => {
                   <td>{product.is_active === true ? "Ativo" : "Inativo"}</td>
                   <td>
 
-                   
+
                     <ProductBaseOption >
 
-                      <NavLink to={"/product/form"} state={{
+                      <ProductTableButtonNavLink to={"/product/form"} state={{
                         data: {
                           product_id: product.product_id,
                           product_name: product.product_name,
@@ -144,11 +146,11 @@ const Product = () => {
                           category: product.category.category_name,
 
                         }
-                      }} className="btn btn-warning"><ImPencil2 /></NavLink>
+                      }} className="btn btn-warning"><ImPencil2 /></ProductTableButtonNavLink>
 
-                      <button className="btn btn-danger "
+                      <ProductTableButton className="btn btn-danger "
                         onClick={() => deleteProduct(product.product_id)}
-                      ><ImBin /></button>
+                      ><ImBin /></ProductTableButton>
 
                     </ProductBaseOption>
 
@@ -158,7 +160,9 @@ const Product = () => {
           </tbody>
         </ProductTable>
 
-        <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+        <PaginationCard>
+          <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
+        </PaginationCard>
       </ProductMain>
     </AnimatePageOpacity>
 

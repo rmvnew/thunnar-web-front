@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 export const SaleMain = styled.div`
 
-    width: 88vw;
+    width: 85vw;
     margin-left: 10px;
     margin-top: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 20vh 62vh 10vh;
+    grid-template-rows: 10vh 62vh 15vh;
     grid-template-areas: "top top"
                          "body1 body2"
                          "footer footer";
@@ -284,7 +284,7 @@ export const ImputProductProcessLastName = styled.input`
 
         
         font-weight: 600;
-        font-size: 1.3rem;
+        font-size: 0.8rem;
         padding-left: 20px;
        
     
@@ -294,7 +294,7 @@ export const ImputProductProcessLastNumber = styled.input`
 
         
         font-weight: 600;
-        font-size: 1.3rem;
+        font-size: 0.8rem;
         padding-left: 20px;
         text-align: center;
         
