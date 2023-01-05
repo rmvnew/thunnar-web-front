@@ -1,5 +1,5 @@
 import { Pagination } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from 'react';
 import { NavLink } from "react-router-dom"
 import { api } from "../../hooks/useApi"
 import { ImPencil2, ImBin } from "react-icons/im";
@@ -25,10 +25,13 @@ const Product = () => {
   }
 
 
+  const inputEl = useRef<HTMLInputElement>(null);
+
   const [products, setProducts] = useState<any[]>([])
   const [pages, setPages] = useState(0)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
+
 
   const getProduct = async (page: number = 1) => {
 
@@ -46,7 +49,9 @@ const Product = () => {
     });
   };
 
-
+  const setFocus = () => {
+    inputEl.current?.focus()
+  }
 
   const deleteProduct = async (product_id: number = 0) => {
 
@@ -83,7 +88,7 @@ const Product = () => {
 
 
 
-        <ProductTitle>Gerenciamento de usuários</ProductTitle>
+        <ProductTitle onClick={() => setFocus()}>Gerenciamento de usuários</ProductTitle>
 
 
 
@@ -98,6 +103,7 @@ const Product = () => {
 
         <ProductInputSearch
           className="form-control form-control-lg "
+          ref={inputEl}
           type="text"
           placeholder="Busca de produtos"
           value={search}
@@ -107,19 +113,19 @@ const Product = () => {
         <ProductTable >
           <thead>
             <tr>
-              <ProductTableTheadTd>Id</ProductTableTheadTd>
-              <ProductTableTheadTd>Nome</ProductTableTheadTd>
-              <ProductTableTheadTd>Código de barras</ProductTableTheadTd>
-              <ProductTableTheadTd>Quantidade</ProductTableTheadTd>
-              <ProductTableTheadTd>Preço</ProductTableTheadTd>
-              <ProductTableTheadTd>Status</ProductTableTheadTd>
-              <ProductTableTheadTd>Opções</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Id</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Nome</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Código de barras</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Quantidade</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Preço</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Status</ProductTableTheadTd>
+              <ProductTableTheadTd onClick={() => setFocus()}>Opções</ProductTableTheadTd>
             </tr>
           </thead>
           <tbody>
             {products &&
               products.map((product) => (
-                <tr key={product.product_id}>
+                <tr key={product.product_id} onClick={() => setFocus()}>
                   <td>{product.product_id}</td>
                   <td>{product.product_name}</td>
                   <td>{product.product_barcode}</td>
