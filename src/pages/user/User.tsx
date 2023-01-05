@@ -6,6 +6,7 @@ import { api } from "../../hooks/useApi";
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
 import { PaginationCardUser, UserBaseOption, UserBtnNewUser, UserInputSearch, UserMain, UserNewUser, UserTable, UserTableButton, UserTableButtonNavLink, UserTableTheadTd, UserTitle } from "./UserStyled";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 const User = () => {
 
@@ -85,7 +86,7 @@ const User = () => {
 
 
         <UserNewUser >
-          <UserBtnNewUser to={"/user/form"} className="btn btn-primary">Novo usuário</UserBtnNewUser>
+          <UserBtnNewUser to={"/user/form"} className="btn btn-primary"><AiOutlineAppstoreAdd/> Novo usuário</UserBtnNewUser>
         </UserNewUser>
 
 

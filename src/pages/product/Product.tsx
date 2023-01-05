@@ -7,6 +7,7 @@ import { AnimatePageOpacity } from '../../components/AnimatePageOpacity';
 import '../../App.css'
 import { PaginationCard, ProductBaseOption, ProductButtonNewProduct, ProductInputSearch, ProductMain, ProductSectionNewProduct, ProductTable, ProductTableButton, ProductTableButtonNavLink, ProductTableTheadTd, ProductTitle } from "./ProductStyled";
 import { BrCurrencyFormat } from "../../utils/currencyBrFormat";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 
 
@@ -97,7 +98,7 @@ const Product = () => {
         <ProductSectionNewProduct >
           <ProductButtonNewProduct
             to={"/product/form"}
-            className="btn btn-primary ">Novo Produto</ProductButtonNewProduct>
+            className="btn btn-primary "><AiOutlineAppstoreAdd/> Novo Produto</ProductButtonNewProduct>
         </ProductSectionNewProduct>
 
 

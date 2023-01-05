@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { ModalDefault } from "../../components/Modal";
 import { ConfirmationModal } from "../../components/conformation/ConfirmationModal";
 import { parseStatus } from '../../utils/ParseOrderStatus';
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 
 
@@ -149,7 +150,7 @@ export const WorkOrder = () => {
 
 
                     <WorkorderNewOrder >
-                        <WorkOrderButtonNewOrder to={"/work-order/form"} className="btn btn-primary ">Nova Ordem</WorkOrderButtonNewOrder>
+                        <WorkOrderButtonNewOrder to={"/work-order/form"} className="btn btn-primary "><AiOutlineAppstoreAdd/> Nova Ordem</WorkOrderButtonNewOrder>
                     </WorkorderNewOrder>
 
                     <WorkOrderInputSearch
