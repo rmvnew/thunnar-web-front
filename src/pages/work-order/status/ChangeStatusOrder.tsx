@@ -4,6 +4,7 @@ import { api } from '../../../hooks/useApi';
 import { parseStatus } from '../../../utils/ParseOrderStatus';
 import { ChangeStatusButton, ChangeStatusLabel, ChangeStatusSelect, ChangeStatusTytle } from './ChangeStatusOrderStyled';
 import { ImExit } from "react-icons/im";
+import { BsCheck2All } from 'react-icons/bs';
 
 
 
@@ -76,7 +77,7 @@ export const ChangeStatusOrder = (props: any) => {
                 <option value="EM PROGRESSO">EM PROGRESSO</option>
                 <option value="CANCELADA">CANCELADA</option>
             </ChangeStatusSelect>
-            {showEdit && <ChangeStatusButton className='btn btn-primary' onClick={updateStatus}>Editar</ChangeStatusButton>}
+            {showEdit && <ChangeStatusButton className='btn btn-primary' onClick={updateStatus}><BsCheck2All/> Salvar</ChangeStatusButton>}
             <ChangeStatusButton className='btn btn-danger' onClick={exit}><ImExit/> Sair</ChangeStatusButton>
         </>
     )
