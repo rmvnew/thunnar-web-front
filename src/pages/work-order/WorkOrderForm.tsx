@@ -464,6 +464,7 @@ export const WorkOrderForm = () => {
             .then(res => {
                 clear()
                 setOrder()
+                toast.success('Peça ou Serviço deletado com sucesso!')
             }).catch(error => {
                 console.log('Error: ', error);
             })
