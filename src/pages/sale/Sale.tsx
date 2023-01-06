@@ -93,7 +93,7 @@ export const Sale = () => {
 
     const setChooice = (prod: any) => {
 
-        console.log('Prod: >>', prod);
+        // console.log('Prod: >>', prod);
         prod.product_quantity = itemQuantity
         setSuggestions([])
         setSearch('')
@@ -106,7 +106,7 @@ export const Sale = () => {
             setItemQuantity(1)
             nameInputRef.current?.focus()
             setChosenItem(prod)
-            console.log('>>>', chosenItem);
+            // console.log('>>>', chosenItem);
         }, 500)
 
     }
@@ -123,7 +123,7 @@ export const Sale = () => {
 
         let value = 0
 
-        const result = await itemsInProcess.reduce((a: any, b: any) => a + (b.product_price * b.product_quantity), 0)
+        const result = await itemsInProcess.reduce((a: any, b: any) => a + (b.product_sale_price * b.product_quantity), 0)
 
         value += result
 
@@ -213,7 +213,7 @@ export const Sale = () => {
                                 <label>Valor</label>
                                 <ImputProductProcessLastNumber type="text"
                                     className="form-control form-control"
-                                    value={chosenItem != null ? BrCurrencyFormat(chosenItem.product_price) : ''}
+                                    value={chosenItem != null ? BrCurrencyFormat(chosenItem.product_sale_price) : ''}
                                 />
                             </div>
                         </CardBody2b>
@@ -245,8 +245,8 @@ export const Sale = () => {
                                         <SaleTableTBodyTd >{prod.product_id}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.product_name}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.product_quantity}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{BrCurrencyFormat(prod.product_price)}</SaleTableTBodyTd>
-                                        <SaleTableTBodyTd >{BrCurrencyFormat(prod.product_price * prod.product_quantity)}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{BrCurrencyFormat(prod.product_sale_price)}</SaleTableTBodyTd>
+                                        <SaleTableTBodyTd >{BrCurrencyFormat(prod.product_sale_price * prod.product_quantity)}</SaleTableTBodyTd>
                                     </SaleTableTBodyTr>
                                 ))}
                             </tbody>
