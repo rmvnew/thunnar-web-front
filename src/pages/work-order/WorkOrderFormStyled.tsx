@@ -266,8 +266,9 @@ export const WorkOrderTitle = styled.h2`
     font-size: 1.2rem;
     margin-top: 5px;
     margin-bottom: 0;
-    color: #00bbff;
+    color: #7fcaff;
     text-align: center;
+    text-shadow: #000c01 0px 2px 4px;
    
 `
 

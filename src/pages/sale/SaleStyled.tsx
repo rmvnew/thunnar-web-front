@@ -300,3 +300,50 @@ export const ImputProductProcessLastNumber = styled.input`
         
     
 `
+
+
+
+export const CardButtonCommandServiceOrder = styled.div`
+    
+    width: 100%;
+    /* background-color: #403bdc; */
+    display: flex;
+    justify-content: space-around;
+    /* margin-top: 10px; */
+    height: 80%;
+    align-items: center;
+
+    button{
+        width: 45%;
+        height: 80%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        font-style: italic;
+        border: 2px solid #000;
+
+        &:hover{
+            border: 2px solid #000;
+            box-shadow: #8f8f03 0px 4px 7px;
+            font-size: 1.6rem;
+        }
+
+    }
+
+
+
+`
+
+export const CardBody3 = styled.div`
+    
+/* background-color: brown; */
+display: flex;
+flex-direction: column;
+width: 100%;
+height: 100%;
+justify-content: center;
+align-items: center;
+
+
+`

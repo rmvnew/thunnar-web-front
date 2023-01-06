@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { BsSearch } from 'react-icons/bs';
+import { GiReceiveMoney, GiSellCard } from 'react-icons/gi';
+import { MdOutlineMoneyOffCsred } from 'react-icons/md';
 import { api } from '../../hooks/useApi';
 import { BrCurrencyFormat } from '../../utils/currencyBrFormat';
 import {
@@ -23,7 +26,9 @@ import {
     ImputProductProcessLastNumber,
     ImputProductProcessLastName,
     CardBody2b,
-    LabelTytleLastInput
+    LabelTytleLastInput,
+    CardButtonCommandServiceOrder,
+    CardBody3
 } from './SaleStyled';
 
 
@@ -163,6 +168,7 @@ export const Sale = () => {
                                 <ImputProductProcessSearch type="text"
                                     ref={nameInputRef}
                                     className="form-control form-control"
+                                    placeholder='Busca de produto'
                                     value={search}
                                     onChange={e => onChangeHandler(e.target.value)}
                                 />
@@ -219,6 +225,19 @@ export const Sale = () => {
                         </CardBody2b>
 
                     </CardBody2>
+
+                    <CardBody3>
+                        <CardButtonCommandServiceOrder className="row">
+                            <button className='btn btn-warning'><BsSearch/> Pesquisar Produto</button>
+                            <button className='btn btn-warning'><MdOutlineMoneyOffCsred/> Desconto</button>
+                        </CardButtonCommandServiceOrder>
+
+                        <CardButtonCommandServiceOrder className="row">
+                            <button className='btn btn-warning'><GiSellCard/> Nova Venda</button>
+                            <button className='btn btn-warning'><GiReceiveMoney/> Pagar</button>
+                        </CardButtonCommandServiceOrder>
+                    </CardBody3>
+
 
                 </SaleBody1>
 
