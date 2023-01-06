@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Pas } from "../../../interfaces/Pas.interface"
 import { WorkOrderInternalTable, WorkOrderTitle } from "../WorkOrderFormStyled"
 import { ImBin, ImPencil2 } from "react-icons/im"
-import { Td_Options } from './TablePosStyled';
+import { TablePartsOrService, Td_Options } from './TablePosStyled';
 
 
 
@@ -33,7 +33,7 @@ export const TablePos = (props: any) => {
             <WorkOrderInternalTable>
                 <WorkOrderTitle>lista de peças e/ou serviços</WorkOrderTitle>
 
-                <table className='table table-striped'>
+                <TablePartsOrService >
                     <thead >
                         <tr>
                             <td>Id</td>
@@ -67,7 +67,7 @@ export const TablePos = (props: any) => {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </TablePartsOrService>
             </WorkOrderInternalTable>
         </>
     )

@@ -8,13 +8,53 @@ export const Td_Options = styled.div`
     justify-content: space-around;
 
     button{
-        border: solid 1px black;
-        box-shadow: rgba(23, 42, 64, 0.4) 2px 0px 3px 2px, rgba(139, 140, 141, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-    
+        /* margin-top: 5px;
+        margin-bottom: 5px; */
+        border: 1px solid #000;
+
         &:hover{
-            border: solid 2px black;
+            border: 1px solid #000;
+            box-shadow: #000 0px 2px 5px;
         }
     }
     
 `
 
+export const TablePartsOrService = styled.table`
+
+    color: #000;
+    margin-top: 5px;
+
+    thead{
+        tr{
+            background-image: linear-gradient(
+            to top, #1b232e, #1c2a37,
+            #1c3140, #1a3948, #164150,
+            #164150, #164150, #164150, 
+            #1a3948, #1c3140, #1c2a37, #1b232e);
+            color: #FFF;
+            
+            td{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+        }
+    }
+
+    tbody{
+        tr{
+            td{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+            &:nth-child(even){
+            background-color: #d1d1d1;
+            }
+            &:nth-child(odd){
+                background-color: #FFF;
+                
+            } 
+        }
+    }
+    
+`

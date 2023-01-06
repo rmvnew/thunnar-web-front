@@ -25,7 +25,7 @@ import { TablePos } from './tables/TablePos';
 import { toast } from 'react-toastify';
 import { parseStatus } from '../../utils/ParseOrderStatus';
 import { ChangeStatusOrder } from './status/ChangeStatusOrder';
-import { WorkOrderTableOptions } from './WorkOrderStyled';
+import { TableDevices, WorkOrderTableOptions } from './WorkOrderStyled';
 
 
 export const WorkOrderForm = () => {
@@ -343,9 +343,9 @@ export const WorkOrderForm = () => {
         api.delete(`/device/${id}`)
             .then(response => {
                 toast.success("Aparelho deletado com sucesso!")
-                setTimeout(()=>{
+                setTimeout(() => {
                     setOrder()
-                },1000)
+                }, 1000)
             }).catch(error => {
                 console.log(`Error: `, error);
             })
@@ -907,16 +907,14 @@ export const WorkOrderForm = () => {
                                 <WorkOrderInternalTable>
                                     <WorkOrderTitle>lista de aparelhos</WorkOrderTitle>
 
-                                    <table className='table table-striped'>
+                                    <TableDevices>
                                         <thead >
                                             <tr>
                                                 <td>Id</td>
                                                 <td>Marca</td>
                                                 <td>Modelo</td>
                                                 <td>Sérial</td>
-                                                {orderEdit && <td>Pos</td>}
-                                                {/* <td>Editar</td> */}
-                                                <td>Detalhes</td>
+
                                                 <td>Opções</td>
 
                                             </tr>
@@ -928,12 +926,11 @@ export const WorkOrderForm = () => {
                                                     <td>{device.device_brand}</td>
                                                     <td>{device.device_model}</td>
                                                     <td>{device.device_serial_number}</td>
-                                                    {orderEdit && <td>{<WorkOrderButtonTable className='btn btn-warning' onClick={() => showModalCreatePos(device.device_id === 0 ? i : device.device_id, i)}><BiAddToQueue /></WorkOrderButtonTable>}</td>}
-                                                    {/* <td>{<WorkOrderButtonTable className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id, i)}><ImPencil2 /></WorkOrderButtonTable>}</td> */}
-                                                    {(devices[i].parts_and_services?.length! > 0) && <td>{<WorkOrderButtonTable className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></WorkOrderButtonTable>}</td>}
-                                                    {!(devices[i].parts_and_services?.length! > 0) && <td>{<WorkOrderButtonTable className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></WorkOrderButtonTable>}</td>}
                                                     <td>
                                                         <WorkOrderTableOptions>
+                                                            {orderEdit && <WorkOrderButtonTable className='btn btn-warning' onClick={() => showModalCreatePos(device.device_id === 0 ? i : device.device_id, i)}><BiAddToQueue /></WorkOrderButtonTable>}
+                                                            {(devices[i].parts_and_services?.length! > 0) && <WorkOrderButtonTable className='btn btn-warning' onClick={() => showListPos(device.device_id === 0 ? i : device.device_id, i)}><CgDetailsMore /></WorkOrderButtonTable>}
+                                                            {!(devices[i].parts_and_services?.length! > 0) && <WorkOrderButtonTable className='btn btn-secondary' onClick={() => setShowPosList(false)}><CgDetailsMore /></WorkOrderButtonTable>}
                                                             <WorkOrderButtonTable className='btn btn-warning' onClick={() => loadDeviceToEdit(device.device_id === 0 ? i : device.device_id, i)}><ImPencil2 /></WorkOrderButtonTable>
                                                             <WorkOrderButtonTable className='btn btn-danger' onClick={() => deleteDevice(device.device_id === 0 ? i : device.device_id, i)}><ImBin /></WorkOrderButtonTable>
                                                         </WorkOrderTableOptions>
@@ -941,7 +938,7 @@ export const WorkOrderForm = () => {
                                                 </tr>
                                             ))}
                                         </tbody>
-                                    </table>
+                                    </TableDevices>
                                 </WorkOrderInternalTable>
                             </WorkOrderTableCard>
 

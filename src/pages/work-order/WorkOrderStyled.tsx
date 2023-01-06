@@ -104,7 +104,7 @@ export const WorkOrderTableOptions = styled.div`
     
    display: flex;
    justify-content: space-around;
-
+   
 
 `
 
@@ -114,5 +114,44 @@ export const PaginationCardworkOrder = styled.div`
     justify-content: center;
 
 
+`
+
+export const TableDevices = styled.table`
+
+    color: #000;
+    margin-top: 5px;
+
+    thead{
+        tr{
+            background-image: linear-gradient(
+            to top, #1b232e, #1c2a37,
+            #1c3140, #1a3948, #164150,
+            #164150, #164150, #164150, 
+            #1a3948, #1c3140, #1c2a37, #1b232e);
+            color: #FFF;
+            
+            td{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+        }
+    }
+
+    tbody{
+        tr{
+            td{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+            &:nth-child(even){
+            background-color: #d1d1d1;
+            }
+            &:nth-child(odd){
+                background-color: #FFF;
+                
+            } 
+        }
+    }
+    
 `
 

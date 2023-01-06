@@ -124,7 +124,7 @@ export const WorkOrderTableCard = styled.div`
     padding-top: 10px;
     border-radius: 10px;
     color: #FFF;
-    height: 274px;
+    height: 245px;
     
     
     table{
@@ -148,6 +148,21 @@ export const WorkOrderTableCard = styled.div`
     &:hover{
         box-shadow: #066ba6 0px 3px 5px;
     }
+   
+    
+`
+
+
+export const WorkOrderInternalTable = styled.div`
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 10px;
+    width: 97%;
+    height: 220px;
+    overflow: scroll;
+    
    
     
 `
@@ -293,19 +308,7 @@ export const WorkOrderTopCardInternal = styled.div`
 
 
 
-export const WorkOrderInternalTable = styled.div`
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 10px;
-    width: 97%;
-    height: 250px;
-    overflow: scroll;
-    
-   
-    
-`
 
 export const WorkOrderSelectTechnician = styled.select`
 
@@ -324,12 +327,14 @@ export const WorkOrderDeviceCard = styled.div`
 
 
 export const WorkOrderButtonTable = styled.button`
-    border: solid 1px black;
-        box-shadow: rgba(23, 42, 64, 0.4) 2px 0px 3px 2px, rgba(139, 140, 141, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-    
-        &:hover{
-            border: solid 2px black;
-        }
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    border: 1px solid #000;
+
+    &:hover{
+        border: 1px solid #000;
+        box-shadow: #000 0px 2px 5px;
+    }
 `
 
 export const WorkOrderResponseStatus = styled.h3`
