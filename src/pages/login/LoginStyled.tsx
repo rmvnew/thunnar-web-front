@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { motion } from 'framer-motion';
 
 
 export const LoginTitle = styled.div`
@@ -27,19 +28,38 @@ export const LoginTitle = styled.div`
 
 
 export const LoginCard = styled.div`
-    width: 100vw;
-    height: 100vh;
-    background: #fcfcfd;
+ 
+	background: linear-gradient(-45deg, #00546b, #1d677f, #2e9dc2, #1d677f, #00546b);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 50% 100%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}
+
+
+ 
+
 `
 
 export const LoginInputs = styled.div`
     border-radius: 15px;
     position: relative;
-    background-color: rgb(62, 81, 98);
+    background-color: rgb(40, 40, 40);
     display: flex;
     flex-direction: column;
     width: 600px;
@@ -69,7 +89,12 @@ export const LoginInputs = styled.div`
         font-weight: bold;
     }
 
+    
+
 `
+
+
+
 
 export const LoginRecoverText = styled.a`
     position: absolute;
@@ -82,4 +107,12 @@ export const LoginRecoverText = styled.a`
         color: #FFF;
         cursor: pointer;
     }
+`
+
+export const MotionImgLogo = styled(motion.img)`
+    
+    width: 350px;
+    position: absolute;
+    top: 20px;
+
 `

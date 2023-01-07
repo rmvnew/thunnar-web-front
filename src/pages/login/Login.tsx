@@ -3,8 +3,9 @@ import { AuthContext } from '../../contexts/auth/AuthContext';
 import '../../common/css/bootstrap.min.css'
 import { ModalLogin } from '../../components/Modal.login';
 import { RecoverForm } from '../../components/recover-password/recover-password';
-import { LoginCard, LoginInputs, LoginTitle } from './LoginStyled';
+import { LoginCard, LoginInputs, LoginTitle, MotionImgLogo } from './LoginStyled';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 
 
@@ -83,10 +84,10 @@ const Login = () => {
     return (
         <>
             <LoginCard>
+                    
                 <LoginInputs>
-                    <LoginTitle>
-                        <h2>Login</h2>
-                    </LoginTitle>
+                    
+                    <MotionImgLogo src={require('../../common/assets/logo.png')}></MotionImgLogo>
 
                     <input
                         className='form-control form-control-lg'
@@ -108,6 +109,7 @@ const Login = () => {
                     <button className='btn btn-primary' onClick={handleLogin}>Logar</button>
                 </LoginInputs>
             </LoginCard>
+            <script src="./smoke.js"></script>
             
         </>
     )
