@@ -39,17 +39,23 @@ export const LoginCard = styled.div`
     align-items: center;
 
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 50% 100%;
-	}
-	100% {
-		background-position: 100% 50%;
-	}
-}
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 50% 100%;
+        }
+        100% {
+            background-position: 100% 50%;
+        }
+    }
+
+    @media (max-width: 1400px) {
+    
+
+    
+    }
 
 
  
@@ -64,6 +70,8 @@ export const LoginInputs = styled.div`
     flex-direction: column;
     width: 600px;
     height: 600px;
+    min-width: 400px;
+    min-height: 400px;
     align-items: center;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
@@ -89,6 +97,87 @@ export const LoginInputs = styled.div`
         font-weight: bold;
     }
 
+
+    @media (max-height: 500px) {
+    
+        border-radius: 15px;
+        position: relative;
+        background-color: rgb(40, 40, 40);
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        height: 400px;
+        align-items: center;
+        justify-content: center;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+        input{
+            width: 80%;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 20px;
+            font-size: 1.3rem;
+        }
+
+        button{
+            margin-top: 40px;
+            border-radius: 10px;
+            width: 200px;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        
+        button:hover{
+            font-weight: bold;
+        }
+
+        img{
+            width: 150px;
+        }
+    
+    }
+    
+    @media (max-width: 620px) {
+    
+        border-radius: 15px;
+        position: relative;
+        background-color: rgb(40, 40, 40);
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        height: 400px;
+        min-height: 400px;
+        align-items: center;
+        justify-content: center;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+        input{
+            width: 80%;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 20px;
+            font-size: 1.3rem;
+        }
+
+        button{
+            margin-top: 40px;
+            border-radius: 10px;
+            width: 200px;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        
+        button:hover{
+            font-weight: bold;
+        }
+
+        img{
+            width: 150px;
+        }
+    
+    }
     
 
 `

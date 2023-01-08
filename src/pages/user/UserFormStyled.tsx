@@ -20,17 +20,17 @@ export const UserFormMain = styled.div`
         width: 90vw;
        
        
-  }
+    }
   
-  @media (max-height: 700px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-       
-       
-  }
+    @media (max-height: 700px) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        
+        
+    }
 
 `
 
