@@ -1,7 +1,6 @@
-import { Pagination } from "@mui/material";
+import { Pagination, Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import "../../common/css/bootstrap.min.css";
-import { NavLink } from "react-router-dom";
 import { api } from "../../hooks/useApi";
 import { ImPencil2, ImBin } from "react-icons/im";
 import { AnimatePageOpacity } from "../../components/AnimatePageOpacity";
@@ -29,6 +28,12 @@ const User = () => {
   const [pages, setPages] = useState(0)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState("")
+  const [currentSwitch, setCurrentSwitch] = useState(false)
+
+  // const switchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(event.target.checked);
+  //   setCurrentSwitch(event.target.checked);
+  // };
 
   const getUser = async (page: number = 1) => {
 
@@ -76,6 +81,9 @@ const User = () => {
   }, [page])
 
 
+
+
+
   return (
     <AnimatePageOpacity>
       <UserMain >
@@ -84,9 +92,8 @@ const User = () => {
         <UserTitle>Gerenciamento de usuários</UserTitle>
 
 
-
         <UserNewUser >
-          <UserBtnNewUser to={"/user/form"} className="btn btn-primary"><AiOutlineAppstoreAdd/> Novo usuário</UserBtnNewUser>
+          <UserBtnNewUser to={"/user/form"} className="btn btn-primary"><AiOutlineAppstoreAdd /> Novo usuário</UserBtnNewUser>
         </UserNewUser>
 
 
@@ -107,8 +114,8 @@ const User = () => {
               <UserTableTheadTd>E-mail</UserTableTheadTd>
               <UserTableTheadTd>Cpf</UserTableTheadTd>
               <UserTableTheadTd>Perfil</UserTableTheadTd>
+              <UserTableTheadTd>Editar</UserTableTheadTd>
               <UserTableTheadTd>Status</UserTableTheadTd>
-              <UserTableTheadTd>Opções</UserTableTheadTd>
             </tr>
           </thead>
           <tbody>
@@ -120,7 +127,7 @@ const User = () => {
                   <td>{user.user_email}</td>
                   <td>{user.user_cpf}</td>
                   <td>{user.profile.profile_name}</td>
-                  <td>{user.is_active === true ? "Ativo" : "Inativo"}</td>
+
                   <td>
 
                     <UserBaseOption >
@@ -136,13 +143,18 @@ const User = () => {
                         }
                       }} className="btn btn-warning"><ImPencil2 /></UserTableButtonNavLink>
 
-                      <UserTableButton className="btn btn-danger"
-                        onClick={() => deleteUser(user.user_id)}
-                      ><ImBin /></UserTableButton>
-
                     </UserBaseOption>
 
                   </td>
+
+                  <td>
+                    {user.is_active === true ? "Ativo" : "Inativo"}
+                    <Switch
+                      checked={user.is_active}
+                      onClick={() => deleteUser(user.user_id)}
+                    />
+                  </td>
+
                 </tr>
               ))}
           </tbody>
