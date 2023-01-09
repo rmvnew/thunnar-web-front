@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { GiReceiveMoney, GiSellCard } from 'react-icons/gi';
 import { MdOutlineMoneyOffCsred } from 'react-icons/md';
+import { ModalDefault } from '../../components/Modal';
 import { api } from '../../hooks/useApi';
 import { BrCurrencyFormat } from '../../utils/currencyBrFormat';
 import {
@@ -30,6 +31,7 @@ import {
     CardButtonCommandServiceOrder,
     CardBody3
 } from './SaleStyled';
+import { SearchProduct } from './search/sale.product.search';
 
 
 
@@ -59,6 +61,11 @@ export const Sale = () => {
     const [itemQuantity, setItemQuantity] = useState(1)
     const [showButtonClose, setShowButtonClose] = useState(false)
     const [chosenItem, setChosenItem] = useState<any>(null!)
+    const [showModalSearch, setShowModalSearch] = useState(false)
+
+    const exit = () => {
+        setShowModalSearch(false)
+    }
 
     const onChangeHandler = (text: string) => {
 
@@ -228,13 +235,13 @@ export const Sale = () => {
 
                     <CardBody3>
                         <CardButtonCommandServiceOrder className="row">
-                            <button className='btn btn-warning'><BsSearch/> Pesquisar Produto</button>
-                            <button className='btn btn-warning'><MdOutlineMoneyOffCsred/> Desconto</button>
+                            <button className='btn btn-warning' onClick={() => setShowModalSearch(true)}><BsSearch /> Pesquisar Produto</button>
+                            <button className='btn btn-warning'><MdOutlineMoneyOffCsred /> Desconto</button>
                         </CardButtonCommandServiceOrder>
 
                         <CardButtonCommandServiceOrder className="row">
-                            <button className='btn btn-warning'><GiSellCard/> Nova Venda</button>
-                            <button className='btn btn-warning'><GiReceiveMoney/> Pagar</button>
+                            <button className='btn btn-warning'><GiSellCard /> Nova Venda</button>
+                            <button className='btn btn-warning'><GiReceiveMoney /> Pagar</button>
                         </CardButtonCommandServiceOrder>
                     </CardBody3>
 
@@ -301,6 +308,7 @@ export const Sale = () => {
                 </SaleFooter>
 
             </SaleMain>
+            {showModalSearch && <ModalDefault body={<SearchProduct exit={exit} />} />}
         </>
     )
 }

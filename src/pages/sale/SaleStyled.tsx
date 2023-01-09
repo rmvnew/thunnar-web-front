@@ -151,7 +151,7 @@ export const SaleTableTheadTd = styled.td`
     
    
     font-weight: 600;
-    border: 3px solid #ffffff;
+    border: 1px solid #000;
     padding: 0 15px;
     
        
@@ -173,8 +173,8 @@ export const SaleTableTBodyTr = styled.tr`
 
     &:hover{
         cursor: pointer;
-        background-color: #547fa7;
-        color: white;
+        background-color: #ffc106ff;
+        color: #000000;
         
     }
 
@@ -184,7 +184,7 @@ export const SaleTableTBodyTr = styled.tr`
 
 export const SaleTableTBodyTd = styled.td`
 
-    border: 3px solid #aaa;
+    border: 1px solid #000;
     
    
     
