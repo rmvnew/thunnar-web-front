@@ -80,15 +80,14 @@ export const Sale = () => {
 
         if (product.product_name !== undefined) {
 
-            setChooice(product)
+            setChooiceByBarcode(product)
 
         }
 
     }, [detectEnter])
 
-    const setChooice = (prod: any) => {
+    const process = (prod: any) => {
 
-        prod.product_quantity = itemQuantity
         setSearch('')
         const currentItems = itemsInProcess
         currentItems.push(prod)
@@ -98,8 +97,24 @@ export const Sale = () => {
             setItemQuantity(1)
             nameInputRef.current?.focus()
             setChosenItem(prod)
+            setShowModalSearch(false)
         }, 500)
 
+    }
+
+
+    const setChooiceByName = (prod: any, quantity: number = 1) => {
+
+        prod.product_quantity = quantity
+        process(prod)
+        
+    }
+
+    const setChooiceByBarcode = (prod: any) => {
+
+        prod.product_quantity = itemQuantity
+        process(prod)
+        
     }
 
     const sumProducts = async () => {
@@ -279,7 +294,7 @@ export const Sale = () => {
                 </SaleFooter>
 
             </SaleMain>
-            {showModalSearch && <ModalDefault body={<SearchProduct exit={exit} />} />}
+            {showModalSearch && <ModalDefault body={<SearchProduct exit={exit} process={setChooiceByName} />} />}
         </>
     )
 }

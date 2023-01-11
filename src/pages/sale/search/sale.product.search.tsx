@@ -5,6 +5,7 @@ import { ImExit } from "react-icons/im"
 import { api } from "../../../hooks/useApi"
 import { BrCurrencyFormat } from "../../../utils/currencyBrFormat"
 import { CardButtonCommand, CardSaleProductSearchInput, CardSaleProductSearchPagination, CardSaleProductTable, CardSaleProductTabletQuantity, CardSaleProductTabletSelect, CardTitle } from "./sale.product.search.styled"
+import { toast } from 'react-toastify';
 
 
 
@@ -59,18 +60,31 @@ export const SearchProduct = (props: any) => {
     }, [search, page])
 
 
-    const enableSelect = (i: number, id: number) => {
+    const enableSelect = (id: number) => {
 
-        
+
         setShowSelect(true)
-        
+
         setTimeout(() => {
 
             let currentInput = document.getElementById(`${id}`)
-            currentInput!.innerHTML = '1'
             currentInput?.focus()
 
         }, 1000)
+
+
+    }
+
+
+    const process = (prod: any) => {
+
+        let currentInput = document.getElementById(`${prod.product_id}`) as HTMLInputElement
+        if(currentInput.value === ''){
+            props.process(prod, 1)
+            toast.warn('Quantidade não identificada! Valor 1 adicionado a quantidade')
+        }else{
+            props.process(prod, currentInput.value)
+        }
 
 
     }
@@ -109,7 +123,7 @@ export const SearchProduct = (props: any) => {
 
                             {products.map((prod, i) => (
 
-                                <tr key={prod.product_id} onClick={() => enableSelect(i, prod.product_id)}>
+                                <tr key={prod.product_id} onClick={() => enableSelect(prod.product_id)}>
                                     <td>{prod.product_id}</td>
                                     <td>{prod.product_name}</td>
                                     <td>{prod.product_location}</td>
@@ -120,7 +134,7 @@ export const SearchProduct = (props: any) => {
                                             <input type="text"
                                                 id={prod.product_id}
                                             />
-                                            <button className="btn btn-primary"><BsCheck2All /></button>
+                                            <button className="btn btn-primary" onClick={() => process(prod)}><BsCheck2All /></button>
                                         </CardSaleProductTabletSelect>
                                     </td>}
 
