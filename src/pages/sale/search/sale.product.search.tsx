@@ -1,5 +1,5 @@
 import { Pagination } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef, HTMLInputTypeAttribute } from 'react';
 import { BsCheck2All } from "react-icons/bs"
 import { ImExit } from "react-icons/im"
 import { api } from "../../../hooks/useApi"
@@ -38,6 +38,7 @@ export const SearchProduct = (props: any) => {
     const [showSelect, setShowSelect] = useState(false)
 
 
+
     const getProductByName = async (page: number = 1, name: string = "") => {
 
 
@@ -58,8 +59,20 @@ export const SearchProduct = (props: any) => {
     }, [search, page])
 
 
-    const enableSelect = () => {
+    const enableSelect = (i: number, id: number) => {
+
+        
         setShowSelect(true)
+        
+        setTimeout(() => {
+
+            let currentInput = document.getElementById(`${id}`)
+            currentInput!.innerHTML = '1'
+            currentInput?.focus()
+
+        }, 1000)
+
+
     }
 
 
@@ -94,9 +107,9 @@ export const SearchProduct = (props: any) => {
                         </thead>
                         <tbody>
 
-                            {products.map(prod => (
+                            {products.map((prod, i) => (
 
-                                <tr key={prod.product_id} onClick={()=> enableSelect()}>
+                                <tr key={prod.product_id} onClick={() => enableSelect(i, prod.product_id)}>
                                     <td>{prod.product_id}</td>
                                     <td>{prod.product_name}</td>
                                     <td>{prod.product_location}</td>

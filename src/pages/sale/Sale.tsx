@@ -18,8 +18,6 @@ import {
     SaleTableTheadTd,
     SaleCardTable,
     CardBody1,
-    CardSuggestion,
-    Suggestion,
     CardSellResult,
     ImputProductProcessQuantity,
     ImputProductProcessSearch,
@@ -34,101 +32,75 @@ import {
 import { SearchProduct } from './search/sale.product.search';
 
 
-
-
-
-
 export const Sale = () => {
 
 
-    const getProductByName = async (page: number = 1, name: string = "") => {
+    const getProductByBarcode = async (page: number = 1, name: string = "") => {
 
         await api.get(`/product?page=${page}&limit=10&sort=DESC&orderBy=ID&search=${name}`)
             .then((response) => {
 
-                setProducts(response.data.items)
+                const [item] = response.data.items
+                setProduct(item)
+
+                setTimeout(() => {
+                    setDetectEnter(!detectEnter)
+                }, 1000)
+
 
             });
     };
 
     const nameInputRef = useRef<HTMLInputElement>(null)
 
-    const [products, setProducts] = useState<any[]>([])
+    const [product, setProduct] = useState<any>({})
     const [search, setSearch] = useState("")
-    const [suggestions, setSuggestions] = useState<any[]>([])
     const [itemsInProcess, setItemsInProcess] = useState<any[]>([])
     const [totalValue, setTotalValue] = useState(0)
     const [itemQuantity, setItemQuantity] = useState(1)
-    const [showButtonClose, setShowButtonClose] = useState(false)
     const [chosenItem, setChosenItem] = useState<any>(null!)
     const [showModalSearch, setShowModalSearch] = useState(false)
+    const [detectEnter, setDetectEnter] = useState(false)
 
     const exit = () => {
         setShowModalSearch(false)
     }
 
-    const onChangeHandler = (text: string) => {
+    const onKeyChange = (event: any) => {
 
-        let matches: any[] = []
+        if (event.key === 'Enter') {
 
-        if (text.length > 0) {
+            getProductByBarcode(1, search)
 
-            for (let prod of products) {
-
-                if (prod.product_name.toUpperCase().indexOf(text.toUpperCase()) != -1) {
-                    matches.push(prod)
-                }
-
-            }
-
-            if (matches.length > 0) {
-                setSuggestions(matches)
-                setSearch(text)
-                setShowButtonClose(true)
-            } else {
-                clearSearch(text)
-            }
-        } else {
-            clearSearch(text)
         }
-
-
-    }
-
-
-    const clearSearch = (text: string = '') => {
-        setSuggestions([])
-        setSearch(text)
-        setShowButtonClose(false)
-        nameInputRef.current?.focus()
-    }
-
-    const setChooice = (prod: any) => {
-
-        // console.log('Prod: >>', prod);
-        prod.product_quantity = itemQuantity
-        setSuggestions([])
-        setSearch('')
-        const currentItems = itemsInProcess
-        currentItems.push(prod)
-        setItemsInProcess(currentItems)
-        setShowButtonClose(false)
-        setTimeout(() => {
-            sumProducts()
-            setItemQuantity(1)
-            nameInputRef.current?.focus()
-            setChosenItem(prod)
-            // console.log('>>>', chosenItem);
-        }, 500)
 
     }
 
     useEffect(() => {
 
-        getProductByName(1, search)
+        if (product.product_name !== undefined) {
 
-    }, [search])
+            setChooice(product)
 
+        }
+
+    }, [detectEnter])
+
+    const setChooice = (prod: any) => {
+
+        prod.product_quantity = itemQuantity
+        setSearch('')
+        const currentItems = itemsInProcess
+        currentItems.push(prod)
+        setItemsInProcess(currentItems)
+        setTimeout(() => {
+            sumProducts()
+            setItemQuantity(1)
+            nameInputRef.current?.focus()
+            setChosenItem(prod)
+        }, 500)
+
+    }
 
     const sumProducts = async () => {
 
@@ -145,7 +117,7 @@ export const Sale = () => {
     }
 
 
-    console.log('renderizou');
+    // console.log('renderizou');
 
 
     return (
@@ -177,17 +149,16 @@ export const Sale = () => {
                                     className="form-control form-control"
                                     placeholder='Busca de produto'
                                     value={search}
-                                    onChange={e => onChangeHandler(e.target.value)}
+                                    onChange={e => setSearch(e.target.value)}
+                                    onKeyDown={e => onKeyChange(e)}
                                 />
-                                <CardSuggestion>
-                                    {showButtonClose && <button onClick={() => clearSearch()}>X</button>}
-                                    {suggestions && suggestions.map((sugges, i) =>
-                                        <Suggestion onClick={() => setChooice(sugges)} key={i}>{sugges.product_name}</Suggestion>
-                                    )}
-                                </CardSuggestion>
+
 
 
                             </div>
+
+
+
                         </>
 
 
@@ -202,7 +173,7 @@ export const Sale = () => {
                                 <label>ID</label>
                                 <ImputProductProcessLastNumber type="text"
                                     className="form-control form-control"
-                                    value={chosenItem != null ? chosenItem.product_id : ''}
+                                    defaultValue={chosenItem != null ? chosenItem.product_id : ''}
                                 />
                             </div>
 
@@ -210,7 +181,7 @@ export const Sale = () => {
                                 <label>Nome</label>
                                 <ImputProductProcessLastName type="text"
                                     className="form-control form-control"
-                                    value={chosenItem != null ? chosenItem.product_name : ''}
+                                    defaultValue={chosenItem != null ? chosenItem.product_name : ''}
                                 />
                             </div>
 
@@ -218,7 +189,7 @@ export const Sale = () => {
                                 <label>Qtde</label>
                                 <ImputProductProcessLastNumber type="text"
                                     className="form-control form-control"
-                                    value={chosenItem != null ? chosenItem.product_quantity : ''}
+                                    defaultValue={chosenItem != null ? chosenItem.product_quantity : ''}
                                 />
                             </div>
 
@@ -226,7 +197,7 @@ export const Sale = () => {
                                 <label>Valor</label>
                                 <ImputProductProcessLastNumber type="text"
                                     className="form-control form-control"
-                                    value={chosenItem != null ? BrCurrencyFormat(chosenItem.product_sale_price) : ''}
+                                    defaultValue={chosenItem != null ? BrCurrencyFormat(chosenItem.product_sale_price) : ''}
                                 />
                             </div>
                         </CardBody2b>
