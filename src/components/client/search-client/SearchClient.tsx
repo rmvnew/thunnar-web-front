@@ -124,6 +124,7 @@ export const SearchClient = (props: any) => {
                 className="form-control form-control "
                 type="text"
                 placeholder="Digite o cpf"
+                maxLength={11}
                 value={currentCpf}
                 onChange={(e) => verifiCpf(e.target.value)}
 
