@@ -4,7 +4,7 @@ import { BsCheck2All } from "react-icons/bs"
 import { ImExit } from "react-icons/im"
 import { api } from "../../../hooks/useApi"
 import { BrCurrencyFormat } from "../../../utils/currencyBrFormat"
-import { CardButtonCommand, CardSaleProductSearchInput, CardSaleProductSearchPagination, CardSaleProductTable, CardSaleProductTabletQuantity, CardSaleProductTabletSelect, CardTitle } from "./sale.product.search.styled"
+import { CardButtonCommand, CardSaleProductSearchInput, CardSaleProductSearchPagination, CardSaleProductTable, CardSaleProductTabletSelect, CardTitle } from "./sale.product.search.styled"
 import { toast } from 'react-toastify';
 
 
@@ -79,16 +79,23 @@ export const SearchProduct = (props: any) => {
     const process = (prod: any) => {
 
         let currentInput = document.getElementById(`${prod.product_id}`) as HTMLInputElement
-        if(currentInput.value === ''){
+        if (currentInput.value === '') {
             props.process(prod, 1)
             toast.warn('Quantidade não identificada! Valor 1 adicionado a quantidade')
-        }else{
+        } else {
             props.process(prod, currentInput.value)
         }
 
 
     }
 
+    const setColorChooise = (index: number) => {
+
+
+        const tr = document.getElementById(`${index}`) as HTMLTableRowElement
+        tr.style.backgroundColor = '#ffc106ff'
+
+    }
 
     return (
         <>
@@ -123,7 +130,10 @@ export const SearchProduct = (props: any) => {
 
                             {products.map((prod, i) => (
 
-                                <tr key={prod.product_id} onClick={() => enableSelect(prod.product_id)}>
+                                <tr id={`${i}`} key={prod.product_id} onClick={() => {
+                                    enableSelect(prod.product_id)
+                                    setColorChooise(i)
+                                }}>
                                     <td>{prod.product_id}</td>
                                     <td>{prod.product_name}</td>
                                     <td>{prod.product_location}</td>
