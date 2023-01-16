@@ -253,7 +253,7 @@ export const CardSellResult = styled.div`
         #164150, #164150, #164150, 
         #1a3948, #1c3140, #1c2a37, #1b232e);
     color: #fff;
-    width: 23%;
+    width: 32%;
     padding-left: 15px;
     text-align: center;
     border-radius: 10px;

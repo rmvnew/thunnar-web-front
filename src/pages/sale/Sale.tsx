@@ -30,6 +30,7 @@ import {
     CardBody3
 } from './SaleStyled';
 import { SearchProduct } from './search/sale.product.search';
+import { Button, Modal, Select, SelectProps } from 'antd';
 
 
 export const Sale = () => {
@@ -51,6 +52,20 @@ export const Sale = () => {
             });
     };
 
+    const clear = () =>{
+        setSumPercent(false)
+        setTotalValue(0)
+        setItemQuantity(1)
+        setChosenItem(null)
+        setTotalValue(0)
+        setDiscount(0)
+        setSumPercent(false)
+        setItemsInProcess([])
+        
+    }
+
+    const options = ['2', '5', '7', '10', '12']
+
     const nameInputRef = useRef<HTMLInputElement>(null)
 
     const [product, setProduct] = useState<any>({})
@@ -61,10 +76,35 @@ export const Sale = () => {
     const [chosenItem, setChosenItem] = useState<any>(null!)
     const [showModalSearch, setShowModalSearch] = useState(false)
     const [detectEnter, setDetectEnter] = useState(false)
+    const [finalTotalValue, setFinalTotalvalue] = useState(0)
+    const [discount, setDiscount] = useState(0)
+    const [discountValue, setDiscountValue] = useState(0)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [sumPercent, setSumPercent] = useState(false)
+    const [showPercent,setShowPercent] = useState(false)
+    
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+        setSumPercent(!sumPercent)
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     const exit = () => {
         setShowModalSearch(false)
     }
+
+    const handleChange = (value: string) => {
+        // console.log(`selected ${value}`);
+        setDiscount(Number(value))
+    };
 
     const onKeyChange = (event: any) => {
 
@@ -85,6 +125,23 @@ export const Sale = () => {
         }
 
     }, [detectEnter])
+
+    useEffect(() => {
+        // const result = totalValue - discount
+        const currentPercent = discount / 100
+        const discountValue = totalValue * currentPercent
+        console.log(discountValue);
+        const result = totalValue - discountValue
+        setDiscountValue(discountValue)
+        setFinalTotalvalue(result)
+
+        if(discount > 0){
+            setShowPercent(true)
+        }else{
+            setShowPercent(false)
+        }
+
+    }, [totalValue, sumPercent])
 
     const process = (prod: any) => {
 
@@ -107,14 +164,14 @@ export const Sale = () => {
 
         prod.product_quantity = quantity
         process(prod)
-        
+
     }
 
     const setChooiceByBarcode = (prod: any) => {
 
         prod.product_quantity = itemQuantity
         process(prod)
-        
+
     }
 
     const sumProducts = async () => {
@@ -129,6 +186,8 @@ export const Sale = () => {
 
         setTotalValue(value)
 
+
+
     }
 
 
@@ -140,7 +199,7 @@ export const Sale = () => {
             <SaleMain>
 
                 <SaleTop>
-
+                    {totalValue} {finalTotalValue}
                 </SaleTop>
 
                 <SaleBody1>
@@ -222,11 +281,11 @@ export const Sale = () => {
                     <CardBody3>
                         <CardButtonCommandServiceOrder className="row">
                             <button className='btn btn-warning' onClick={() => setShowModalSearch(true)}><BsSearch /> Pesquisar Produto</button>
-                            <button className='btn btn-warning'><MdOutlineMoneyOffCsred /> Desconto</button>
+                            <button className='btn btn-warning' onClick={() => showModal()}><MdOutlineMoneyOffCsred /> Desconto</button>
                         </CardButtonCommandServiceOrder>
 
                         <CardButtonCommandServiceOrder className="row">
-                            <button className='btn btn-warning'><GiSellCard /> Nova Venda</button>
+                            <button className='btn btn-warning' onClick={()=> clear()} ><GiSellCard /> Nova Venda</button>
                             <button className='btn btn-warning'><GiReceiveMoney /> Pagar</button>
                         </CardButtonCommandServiceOrder>
                     </CardBody3>
@@ -271,29 +330,42 @@ export const Sale = () => {
 
                 <SaleFooter>
 
-                    <CardSellResult>
+                    {/* <CardSellResult>
                         <label>valor</label>
                         <h2>teste</h2>
-                    </CardSellResult>
+                    </CardSellResult> */}
 
                     <CardSellResult>
-                        <label>valor</label>
-                        <h2>teste</h2>
-                    </CardSellResult>
-
-                    <CardSellResult>
-                        <label>valor</label>
-                        <h2>teste</h2>
-                    </CardSellResult>
-
-                    <CardSellResult>
-                        <label>valor</label>
+                        <label>Sub-total</label>
                         <h2>{BrCurrencyFormat(totalValue)}</h2>
+                    </CardSellResult>
+
+                    <CardSellResult>
+                        <label>Desconto {showPercent && `${discount}%`}</label>
+                        <h2>{BrCurrencyFormat(discountValue)}</h2>
+                    </CardSellResult>
+
+                    <CardSellResult>
+                        <label>valor</label>
+                        <h2>{BrCurrencyFormat(finalTotalValue)}</h2>
                     </CardSellResult>
 
                 </SaleFooter>
 
             </SaleMain>
+            <Modal
+                title="Desconto em %"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}>
+
+                <Select
+                    defaultValue={''}
+                    style={{ width: '100%' }}
+                    onChange={handleChange}
+                    options={options.map(op => ({ label: op, value: op }))}
+                />
+            </Modal>
             {showModalSearch && <ModalDefault body={<SearchProduct exit={exit} process={setChooiceByName} />} />}
         </>
     )
