@@ -27,10 +27,14 @@ import {
     CardBody2b,
     LabelTytleLastInput,
     CardButtonCommandServiceOrder,
-    CardBody3
+    CardBody3,
+    SaleTitle,
+    SaleLogo,
+    SaleTitleCard
 } from './SaleStyled';
 import { SearchProduct } from './search/sale.product.search';
-import { Button, Modal, Select, SelectProps } from 'antd';
+import { Modal, Select } from 'antd';
+import cart from '../../common/assets/cart.png'
 
 
 export const Sale = () => {
@@ -52,7 +56,7 @@ export const Sale = () => {
             });
     };
 
-    const clear = () =>{
+    const clear = () => {
         setSumPercent(false)
         setTotalValue(0)
         setItemQuantity(1)
@@ -61,7 +65,7 @@ export const Sale = () => {
         setDiscount(0)
         setSumPercent(false)
         setItemsInProcess([])
-        
+
     }
 
     const options = ['2', '5', '7', '10', '12']
@@ -81,8 +85,8 @@ export const Sale = () => {
     const [discountValue, setDiscountValue] = useState(0)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [sumPercent, setSumPercent] = useState(false)
-    const [showPercent,setShowPercent] = useState(false)
-    
+    const [showPercent, setShowPercent] = useState(false)
+
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -135,9 +139,9 @@ export const Sale = () => {
         setDiscountValue(discountValue)
         setFinalTotalvalue(result)
 
-        if(discount > 0){
+        if (discount > 0) {
             setShowPercent(true)
-        }else{
+        } else {
             setShowPercent(false)
         }
 
@@ -199,7 +203,12 @@ export const Sale = () => {
             <SaleMain>
 
                 <SaleTop>
-                    {totalValue} {finalTotalValue}
+
+                    <SaleTitleCard>
+                        <SaleLogo src={cart} />
+                        <SaleTitle>Venda de produtos</SaleTitle>
+                    </SaleTitleCard>
+
                 </SaleTop>
 
                 <SaleBody1>
@@ -285,7 +294,7 @@ export const Sale = () => {
                         </CardButtonCommandServiceOrder>
 
                         <CardButtonCommandServiceOrder className="row">
-                            <button className='btn btn-warning' onClick={()=> clear()} ><GiSellCard /> Nova Venda</button>
+                            <button className='btn btn-warning' onClick={() => clear()} ><GiSellCard /> Nova Venda</button>
                             <button className='btn btn-warning'><GiReceiveMoney /> Pagar</button>
                         </CardButtonCommandServiceOrder>
                     </CardBody3>

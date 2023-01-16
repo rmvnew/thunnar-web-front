@@ -260,7 +260,7 @@ export const CardSellResult = styled.div`
     box-shadow: #1cacff 0px 4px 8px;
     z-index: 3;
 
-`
+` 
 
 
 export const ImputProductProcessQuantity = styled.input`
@@ -344,6 +344,30 @@ width: 100%;
 height: 100%;
 justify-content: center;
 align-items: center;
+
+
+`
+
+
+export const SaleTitle = styled.h1`
+
+    width: 100%;
+    font-size: 3.5rem;
+    text-align: center;
+    color: #FFF;
+`
+
+export const SaleLogo = styled.img`
+    position: relative;
+    left: 35px;
+    width: 80px;
+    height: 70px;
+`
+
+export const SaleTitleCard = styled.div`
+    
+
+    display: flex;
 
 
 `
